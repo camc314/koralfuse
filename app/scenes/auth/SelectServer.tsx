@@ -5,12 +5,23 @@ import { useTheme } from '@react-navigation/native';
 import Button from '../../components/button';
 import { useColorScheme } from 'react-native-appearance';
 
+import { getPublicSysteminfo } from '../../services/api';
+
 export default function selectServer(): JSX.Element {
   const { colors } = useTheme();
-  const [serverUrl, setUrl] = useState('http://192.168.0.100:8096');
+  const [serverUrl, setUrl] = useState('');
 
-  const checkServer = () => {
-    console.log('Check Server');
+  const checkServer = async () => {
+    try {
+      const response = await getPublicSysteminfo(serverUrl);
+
+      if (response.Id) {
+        // Redirect To Login Screen
+        console.log('Success!');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const scheme = useColorScheme();
