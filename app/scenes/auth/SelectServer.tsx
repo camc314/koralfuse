@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-
 import Button from '../../components/button';
 import { useColorScheme } from 'react-native-appearance';
-
 import { getPublicSysteminfo } from '../../services/api';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/auth';
 
-export default function selectServer(): JSX.Element {
+type SelectServerScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Select Server'
+>;
+
+type Props = {
+  navigation: SelectServerScreenNavigationProp;
+};
+
+export default function selectServer({ navigation }: Props): JSX.Element {
   const { colors } = useTheme();
-  const [serverUrl, setUrl] = useState('');
+  const [serverUrl, setUrl] = useState('http://192.168.0.100:8096');
 
   const checkServer = async () => {
     try {
@@ -17,7 +26,7 @@ export default function selectServer(): JSX.Element {
 
       if (response.Id) {
         // Redirect To Login Screen
-        console.log('Success!');
+        navigation.navigate('Login');
       }
     } catch (error) {
       console.error(error);
