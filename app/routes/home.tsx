@@ -6,26 +6,23 @@ import {
   DarkTheme
 } from '@react-navigation/native';
 
-import SelectServerScreen from '../scenes/auth/SelectServer';
-import LoginScreen from '../scenes/auth/Login';
+import HomeScreen from '../scenes/home/Home';
 
 export type RootStackParamList = {
-  'Select Server': undefined;
-  Login: undefined;
+  Home: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 import { useColorScheme } from 'react-native-appearance';
 
-export default function AuthStack(): JSX.Element {
+export default function HomeStack(): JSX.Element {
   const scheme = useColorScheme();
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
-        <Stack.Screen name="Select Server" component={SelectServerScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
