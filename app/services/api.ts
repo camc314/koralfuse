@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Platform } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import { Configuration, ItemsApi, UserApi } from './fetch-api';
 
-const getHeaders = async (replace: boolean): Promise<string> => {
-  if (!replace) {
+export const getHeaders = async (replace: boolean): Promise<string> => {
+  if (!replace && (await AsyncStorage.getItem('userToken'))) {
     return (await AsyncStorage.getItem('userToken')) || '';
   } else {
     const clientName = 'KoralFuse';
@@ -18,6 +19,11 @@ const getHeaders = async (replace: boolean): Promise<string> => {
     const headers = `MediaBrowser Client="${clientName}", Device="${deviceName}", DeviceId="${deviceId}", Version="${clientVersion}"`;
     return headers;
   }
+};
+
+const getBaseUrl = async (): Promise<string> => {
+  const url = await AsyncStorage.getItem('baseUrl');
+  return url ? url : '';
 };
 
 export async function getPublicSysteminfo(baseUrl: string): Promise<any> {
@@ -37,33 +43,35 @@ export async function getPublicSysteminfo(baseUrl: string): Promise<any> {
   return responseJSON;
 }
 
-type authenticateByNameResponse = {
-  status: number;
-  data: any;
-  headers: string;
+interface ApiInterface {
+  ItemsApi: ItemsApi;
+  UserApi: UserApi;
+}
+
+export const api = {} as ApiInterface;
+
+export const initUserApi = async (): Promise<void> => {
+  const token = await getHeaders(true);
+  const baseUrl = await getBaseUrl();
+  api.UserApi = new UserApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
 };
 
-export async function authenticateByName(
-  username: string,
-  password: string
-): Promise<authenticateByNameResponse> {
-  const baseUrl = await AsyncStorage.getItem('baseUrl');
-
-  const headers = await getHeaders(true);
-
-  const response = await fetch(`${baseUrl}/Users/AuthenticateByName`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Emby-Authorization': headers
-    },
-    body: JSON.stringify({
-      username: username,
-      pw: password
+export const initItemsApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.ItemsApi = new ItemsApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
     })
-  });
-
-  const responseJSON = await response.json();
-  return { status: response.status, data: responseJSON, headers: headers };
-}
+  );
+};
