@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import Button from '../../components/button';
 import { useColorScheme } from 'react-native-appearance';
-import { authenticateByName } from '../../services/api';
+import { getHeaders, api, initUserApi } from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default function selectServer(): JSX.Element {
@@ -12,17 +12,22 @@ export default function selectServer(): JSX.Element {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    initUserApi();
+  }, []);
+
   const login = async () => {
     try {
-      const response = await authenticateByName(username, password);
-
-      console.log(response);
-      if (response.status === 200) {
-        // Redirect To Login Screen
+      const response = await api.UserApi.authenticateUserByName({
+        authenticateUserByName: { username: username, pw: password }
+      });
+      const headers = await getHeaders(false);
+      if (response.user) {
+        // Redirect To Home Screen
         console.log('Logged In!');
         AsyncStorage.setItem(
           'userToken',
-          `${response.headers}, Token="${response.data.AccessToken}"`
+          `${headers}, Token="${response.accessToken}"`
         );
       }
     } catch (error) {

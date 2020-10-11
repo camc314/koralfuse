@@ -60,11 +60,13 @@ export default function router(): JSX.Element {
         console.error(error);
       }
 
-      if (userToken) {
-        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-      } else {
-        dispatch({ type: 'SIGN_OUT' });
-      }
+      // console.log(userToken)
+
+      // if (userToken) {
+      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      // } else {
+      //   dispatch({ type: 'SIGN_OUT' });
+      // }
     };
 
     bootstrapAsync();
@@ -89,7 +91,7 @@ export default function router(): JSX.Element {
   return (
     <AppearanceProvider>
       <AuthContext.Provider value={authContext}>
-        {state.userToken == null ? <AuthStack /> : <HomeStack />}
+        {state.userToken === null ? <AuthStack /> : <HomeStack />}
       </AuthContext.Provider>
     </AppearanceProvider>
   );
