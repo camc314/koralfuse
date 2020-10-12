@@ -23,12 +23,11 @@ export default function selectServer(): JSX.Element {
       });
       const headers = await getHeaders(false);
       if (response.user) {
-        // Redirect To Home Screen
-        console.log('Logged In!');
-        AsyncStorage.setItem(
+        await AsyncStorage.setItem(
           'userToken',
           `${headers}, Token="${response.accessToken}"`
         );
+        await AsyncStorage.setItem('userInfo', JSON.stringify(response));
       }
     } catch (error) {
       console.error(error);

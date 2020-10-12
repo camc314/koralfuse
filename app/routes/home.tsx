@@ -7,9 +7,11 @@ import {
 } from '@react-navigation/native';
 
 import HomeScreen from '../scenes/home/Home';
+import LibraryScreen from '../scenes/home/Library';
 
 export type RootStackParamList = {
   Home: undefined;
+  Library: { libraryId: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -23,6 +25,7 @@ export default function HomeStack(): JSX.Element {
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Library" component={LibraryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

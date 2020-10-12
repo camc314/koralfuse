@@ -35,7 +35,8 @@ export async function getPublicSysteminfo(baseUrl: string): Promise<any> {
   });
 
   if (response.status === 200) {
-    AsyncStorage.setItem('baseUrl', baseUrl);
+    await AsyncStorage.setItem('baseUrl', baseUrl);
+    api.baseUrl = baseUrl;
   }
 
   const responseJSON = await response.json();
@@ -44,6 +45,7 @@ export async function getPublicSysteminfo(baseUrl: string): Promise<any> {
 }
 
 interface ApiInterface {
+  baseUrl: string;
   ItemsApi: ItemsApi;
   UserApi: UserApi;
 }
@@ -74,4 +76,10 @@ export const initItemsApi = async (): Promise<void> => {
       }
     })
   );
+};
+
+type imageType = 'Primary' | 'Backdrop';
+
+export const getImageUrl = (itemId: string, imageType: imageType): string => {
+  return `${api.baseUrl}/Items/${itemId}/Images/${imageType}?quality=90&maxHeight=300`;
 };
