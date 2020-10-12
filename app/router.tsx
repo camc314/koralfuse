@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import AuthStack from './routes/auth';
 import HomeStack from './routes/home';
 import AsyncStorage from '@react-native-community/async-storage';
+import { api } from '../app/services/api';
 
 const AuthContext = React.createContext({});
 
@@ -12,11 +13,13 @@ interface state {
   isLoading: boolean;
   isSignout: boolean;
   userToken: string | null;
+  userInfo: string | null;
+  baseUrl: string | null;
 }
 
 type Action =
-  | { type: 'RESTORE_TOKEN'; token: string }
-  | { type: 'SIGN_IN'; token: string }
+  | { type: 'RESTORE_TOKEN'; token: string; userInfo: string; baseUrl: string }
+  | { type: 'SIGN_IN'; token: string; userInfo: string; baseUrl: string }
   | { type: 'SIGN_OUT' };
 
 export default function router(): JSX.Element {
@@ -27,46 +30,57 @@ export default function router(): JSX.Element {
           return {
             ...prevState,
             userToken: action.token,
-            isLoading: false
+            isLoading: false,
+            userInfo: action.userInfo,
+            baseUrl: action.baseUrl
           };
         case 'SIGN_IN':
           return {
             ...prevState,
             isSignout: false,
-            userToken: action.token
+            userToken: action.token,
+            userInfo: action.userInfo,
+            baseUrl: action.baseUrl
           };
         case 'SIGN_OUT':
           return {
             ...prevState,
             isSignout: true,
-            userToken: null
+            userToken: null,
+            userInfo: null,
+            baseUrl: null
           };
       }
     },
     {
       isLoading: true,
       isSignout: false,
-      userToken: null
+      userToken: null,
+      userInfo: null,
+      baseUrl: null
     }
   );
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken = '';
+      let userInfo = '';
+      let baseUrl = '';
 
       try {
         userToken = (await AsyncStorage.getItem('userToken')) as string;
+        userInfo = (await AsyncStorage.getItem('userInfo')) as string;
+        baseUrl = (await AsyncStorage.getItem('baseUrl')) as string;
       } catch (error) {
         console.error(error);
       }
 
-      // console.log(userToken)
-
-      // if (userToken) {
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-      // } else {
-      //   dispatch({ type: 'SIGN_OUT' });
-      // }
+      dispatch({
+        type: 'RESTORE_TOKEN',
+        token: userToken,
+        userInfo: userInfo,
+        baseUrl: baseUrl
+      });
     };
 
     bootstrapAsync();
@@ -75,10 +89,10 @@ export default function router(): JSX.Element {
   const authContext = React.useMemo(
     () => ({
       signIn: async () => {
-        dispatch({ type: 'SIGN_IN', token: '' });
+        dispatch({ type: 'SIGN_IN', token: '', userInfo: '', baseUrl: '' });
       },
       signOut: async () => {
-        dispatch({ type: 'SIGN_IN', token: '' });
+        dispatch({ type: 'SIGN_IN', token: '', userInfo: '', baseUrl: '' });
       }
     }),
     []
@@ -87,11 +101,20 @@ export default function router(): JSX.Element {
   if (state.isLoading) {
     return <Text>Loading...</Text>;
   }
+  if (state.baseUrl) {
+    api.baseUrl = state.baseUrl;
+  }
 
   return (
     <AppearanceProvider>
       <AuthContext.Provider value={authContext}>
-        {state.userToken === null ? <AuthStack /> : <HomeStack />}
+        {state.userToken === null ||
+        state.userInfo === null ||
+        state.baseUrl === null ? (
+          <AuthStack />
+        ) : (
+          <HomeStack />
+        )}
       </AuthContext.Provider>
     </AppearanceProvider>
   );
