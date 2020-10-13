@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Platform } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { Configuration, ItemsApi, UserApi } from './fetch-api';
+import { Configuration, ItemsApi, UserApi, UserLibraryApi } from './fetch-api';
 
 export const getHeaders = async (replace: boolean): Promise<string> => {
   if (!replace && (await AsyncStorage.getItem('userToken'))) {
@@ -48,6 +48,7 @@ interface ApiInterface {
   baseUrl: string;
   ItemsApi: ItemsApi;
   UserApi: UserApi;
+  UserLibraryApi: UserLibraryApi;
 }
 
 export const api = {} as ApiInterface;
@@ -78,7 +79,20 @@ export const initItemsApi = async (): Promise<void> => {
   );
 };
 
-type imageType = 'Primary' | 'Backdrop';
+export const initUserLibraryApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.UserLibraryApi = new UserLibraryApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export type imageType = 'Primary' | 'Backdrop';
 
 export const getImageUrl = (itemId: string, imageType: imageType): string => {
   return `${api.baseUrl}/Items/${itemId}/Images/${imageType}?quality=90&maxHeight=300`;

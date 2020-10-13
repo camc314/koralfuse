@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 import AuthStack from './routes/auth';
 import HomeStack from './routes/home';
 import AsyncStorage from '@react-native-community/async-storage';
-import { api } from '../app/services/api';
+import { api, initItemsApi, initUserLibraryApi } from '../app/services/api';
 
 const AuthContext = React.createContext({});
 
@@ -71,6 +71,8 @@ export default function router(): JSX.Element {
         userToken = (await AsyncStorage.getItem('userToken')) as string;
         userInfo = (await AsyncStorage.getItem('userInfo')) as string;
         baseUrl = (await AsyncStorage.getItem('baseUrl')) as string;
+        await initUserLibraryApi();
+        await initItemsApi();
       } catch (error) {
         console.error(error);
       }
