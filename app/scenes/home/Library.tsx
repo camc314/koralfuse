@@ -22,7 +22,8 @@ export default function LibraryView({ route }: Props): JSX.Element {
         api.ItemsApi.getItems({
           uId: userInfoParsed?.user?.id || '',
           userId: userInfoParsed?.user?.id,
-          parentId: route.params.libraryId
+          parentId: route.params.libraryId,
+          sortBy: 'sortName'
         }).then((results) => {
           if (results.items) {
             setLibraryItems(results.items);
