@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl, imageType } from '../services/api';
+import { useTheme } from '@react-navigation/native';
 
 type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv';
 
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export default function HomeSection({ data, sectionType }: Props): JSX.Element {
+  const { colors, dark } = useTheme();
   const deviceWidth = Dimensions.get('window').width;
   let sectionTitle = '';
 
@@ -96,18 +98,22 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
         <Text
           style={{
             marginTop: 5,
-            fontSize: 16
+            fontSize: 16,
+            color: colors.text
           }}
         >
           {cardTitle}
         </Text>
         <Text
-          style={{
-            marginTop: 5,
-            fontSize: 14,
-            color: '#333',
-            fontWeight: '400'
-          }}
+          style={[
+            {
+              marginTop: 5,
+              fontSize: 14,
+              color: '#333',
+              fontWeight: '400'
+            },
+            dark ? { color: '#aaa' } : {}
+          ]}
         >
           {cardSubtitle}
         </Text>
@@ -123,7 +129,8 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
             marginLeft: 50,
             marginTop: 30,
             marginBottom: 5,
-            fontWeight: '600'
+            fontWeight: '600',
+            color: colors.text
           },
           deviceWidth < 600 ? { marginLeft: 25 } : {}
         ]}
