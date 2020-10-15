@@ -10,7 +10,7 @@ import { RootStackParamList } from '../../routes/home';
 
 type Props = StackScreenProps<RootStackParamList, 'Library'>;
 
-export default function LibraryView({ route }: Props): JSX.Element {
+export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const [libraryItem, setLibraryItems] = useState([] as BaseItemDto[]);
   const deviceWidth = Dimensions.get('window').width;
   const theme = useTheme();
@@ -37,7 +37,7 @@ export default function LibraryView({ route }: Props): JSX.Element {
     <View>
       <FlatList
         data={libraryItem}
-        renderItem={(item) => card(item, theme)}
+        renderItem={(item) => card(item, theme, navigation)}
         horizontal={false}
         removeClippedSubviews={true}
         numColumns={Math.floor(deviceWidth / 150)}
