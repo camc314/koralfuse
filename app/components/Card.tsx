@@ -3,12 +3,24 @@ import React from 'react';
 import { View, Pressable, Image, Text } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl } from '../services/api';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../routes/home';
+
+type navigationProp = StackScreenProps<RootStackParamList, 'Library'>;
 
 type Props = {
   item: BaseItemDto;
 };
 
-export function card({ item }: Props, theme: Theme): JSX.Element {
+export function card(
+  { item }: Props,
+  theme: Theme,
+  navigation: navigationProp['navigation']
+): JSX.Element {
+  const onPress = () => {
+    navigation.navigate('Item', { itemId: item.id || '' });
+  };
+
   return (
     <View
       style={{
@@ -19,6 +31,7 @@ export function card({ item }: Props, theme: Theme): JSX.Element {
       }}
     >
       <Pressable
+        onPress={onPress}
         style={[
           {
             shadowRadius: 8,
