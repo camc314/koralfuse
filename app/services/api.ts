@@ -114,8 +114,12 @@ export const initMediaInfoApi = async (): Promise<void> => {
   );
 };
 
-export type imageType = 'Primary' | 'Backdrop';
+export type imageType = 'Primary' | 'Backdrop' | 'Logo';
 
-export const getImageUrl = (itemId: string, imageType: imageType): string => {
-  return `${api.baseUrl}/Items/${itemId}/Images/${imageType}?quality=90&maxHeight=300`;
+export const getImageUrl = (
+  itemId: string,
+  imageType: imageType,
+  maxHeight = 300
+): string => {
+  return `${api.baseUrl}/Items/${itemId}/Images/${imageType}?quality=90&maxHeight=${maxHeight}`;
 };
