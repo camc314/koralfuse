@@ -8,10 +8,12 @@ import {
 
 import HomeScreen from '../scenes/home/Home';
 import LibraryScreen from '../scenes/home/Library';
+import PlayScreen from '../scenes/home/Play';
 
 export type RootStackParamList = {
   Home: undefined;
   Library: { libraryId: string };
+  Play: { itemId: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -26,6 +28,7 @@ export default function HomeStack(): JSX.Element {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Library" component={LibraryScreen} />
+        <Stack.Screen name="Play" component={PlayScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
