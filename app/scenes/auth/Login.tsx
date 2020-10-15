@@ -28,6 +28,7 @@ export default function selectServer(): JSX.Element {
           `${headers}, Token="${response.accessToken}"`
         );
         await AsyncStorage.setItem('userInfo', JSON.stringify(response));
+        api.userInfo = response;
       }
     } catch (error) {
       console.error(error);

@@ -4,12 +4,13 @@ import {
   FlatList,
   Image,
   ListRenderItem,
+  Pressable,
   Text,
   View
 } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl, imageType } from '../services/api';
-import { useTheme } from '@react-navigation/native';
+import { useTheme, useNavigation } from '@react-navigation/native';
 
 type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv';
 
@@ -21,6 +22,7 @@ type Props = {
 export default function HomeSection({ data, sectionType }: Props): JSX.Element {
   const { colors, dark } = useTheme();
   const deviceWidth = Dimensions.get('window').width;
+  const navigation = useNavigation();
   let sectionTitle = '';
 
   switch (sectionType) {
@@ -61,6 +63,12 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       imageType = 'Primary';
     }
 
+    const handleNavigation = () => {
+      if (sectionType === 'resumeItems') {
+        navigation.navigate('Play', { itemId: item.id });
+      }
+    };
+
     return (
       <View
         style={{
@@ -68,7 +76,8 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
           marginTop: 15
         }}
       >
-        <View
+        <Pressable
+          onPress={handleNavigation}
           style={{
             minWidth: 100,
             height: 200,
@@ -94,7 +103,7 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
               uri: getImageUrl(item.id || '', imageType)
             }}
           />
-        </View>
+        </Pressable>
         <Text
           style={{
             marginTop: 5,

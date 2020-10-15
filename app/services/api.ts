@@ -2,7 +2,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Platform } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { Configuration, ItemsApi, UserApi, UserLibraryApi } from './fetch-api';
+import {
+  AuthenticationResult,
+  Configuration,
+  ItemsApi,
+  MediaInfoApi,
+  UserApi,
+  UserLibraryApi
+} from './fetch-api';
 
 export const getHeaders = async (replace: boolean): Promise<string> => {
   if (!replace && (await AsyncStorage.getItem('userToken'))) {
@@ -46,9 +53,11 @@ export async function getPublicSysteminfo(baseUrl: string): Promise<any> {
 
 interface ApiInterface {
   baseUrl: string;
+  userInfo: AuthenticationResult;
   ItemsApi: ItemsApi;
   UserApi: UserApi;
   UserLibraryApi: UserLibraryApi;
+  MediaInfoApi: MediaInfoApi;
 }
 
 export const api = {} as ApiInterface;
@@ -83,6 +92,19 @@ export const initUserLibraryApi = async (): Promise<void> => {
   const token = await getHeaders(false);
   const baseUrl = await getBaseUrl();
   api.UserLibraryApi = new UserLibraryApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export const initMediaInfoApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.MediaInfoApi = new MediaInfoApi(
     new Configuration({
       basePath: baseUrl,
       headers: {
