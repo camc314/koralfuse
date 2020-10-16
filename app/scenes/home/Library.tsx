@@ -40,10 +40,11 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         renderItem={(item) => card(item, theme, navigation)}
         horizontal={false}
         removeClippedSubviews={true}
-        numColumns={Math.floor(deviceWidth / 150)}
         style={{
-          height: '100%'
+          marginLeft: (deviceWidth % 150) / 2,
+          width: '100%'
         }}
+        numColumns={Math.floor(deviceWidth / 150)}
       />
     </View>
   );
