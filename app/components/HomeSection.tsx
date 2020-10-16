@@ -66,6 +66,8 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
     const handleNavigation = () => {
       if (sectionType === 'resumeItems') {
         navigation.navigate('Play', { itemId: item.id });
+      } else {
+        navigation.navigate('Item', { itemId: item.id });
       }
     };
 
