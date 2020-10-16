@@ -24,7 +24,8 @@ export function card(
   return (
     <View
       style={{
-        margin: 10,
+        padding: 5,
+        marginBottom: 5,
         flexGrow: 2,
         maxWidth: 150,
         maxHeight: 250
