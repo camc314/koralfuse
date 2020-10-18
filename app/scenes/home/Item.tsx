@@ -40,6 +40,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
           if (results.items) {
             setItem(results.items[0]);
             getSubtitle(results.items[0]);
+            navigation.setOptions({ title: results.items[0].name || '' });
           }
         });
       }
