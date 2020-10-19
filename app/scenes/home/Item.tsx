@@ -16,6 +16,7 @@ import { RootStackParamList } from '../../routes/home';
 import { LinearGradient } from 'expo-linear-gradient';
 import ButtonComponent from '../../components/button';
 import ScalableImage from 'react-native-scalable-image';
+import SeasonView from '../../components/SeasonView';
 
 type Props = StackScreenProps<RootStackParamList, 'Item'>;
 
@@ -232,6 +233,11 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
           {item.overview}
         </Text>
       </View>
+      {item.type === 'Series' ? (
+        <SeasonView itemId={item.id || ''} colors={colors} />
+      ) : (
+        <View></View>
+      )}
     </ScrollView>
   );
 }
