@@ -1,12 +1,10 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
-import { Button, Pressable, ScrollView, Text, View } from 'react-native';
+import React from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
-import { api } from '../../services/api';
-import { AuthenticationResult, BaseItemDto } from '../../services/fetch-api';
-import HomeSection from '../../components/HomeSection';
+
 import { useTheme } from '@react-navigation/native';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
