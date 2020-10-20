@@ -78,9 +78,15 @@ export default function home({ navigation }: Props): JSX.Element {
     });
   }, []);
 
-  const goToLibraries = (libraryId: string | undefined) => {
+  const goToLibraries = (
+    libraryId: string | undefined,
+    libraryName: string | undefined
+  ) => {
     if (libraryId) {
-      navigation.navigate('Library', { libraryId: libraryId });
+      navigation.navigate('Library', {
+        libraryId: libraryId,
+        libraryName: libraryName || ''
+      });
     } else {
       console.error('Missing library Id');
     }
@@ -117,7 +123,7 @@ export default function home({ navigation }: Props): JSX.Element {
                 }}
               >
                 <Pressable
-                  onPress={() => goToLibraries(data.id)}
+                  onPress={() => goToLibraries(data.id, data.name || '')}
                   style={{
                     backgroundColor: '#007AFF',
                     borderRadius: 10,
