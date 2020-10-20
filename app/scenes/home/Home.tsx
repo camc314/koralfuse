@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Button, Pressable, ScrollView, Text, View } from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
 import { api } from '../../services/api';
@@ -23,6 +23,16 @@ export default function home({ navigation }: Props): JSX.Element {
   const [itemsLatestTv, setItemsLatestTv] = useState([] as BaseItemDto[]);
 
   useEffect(() => {
+    navigation.setOptions({
+      // eslint-disable-next-line react/display-name
+      headerRight: () => (
+        <Button
+          onPress={() => navigation.navigate('User Settings')}
+          title={api.userInfo.user?.name || 'User Settings'}
+        />
+      )
+    });
+
     AsyncStorage.getItem('userInfo').then((userInfo) => {
       if (userInfo) {
         const userInfoParsed = JSON.parse(userInfo) as AuthenticationResult;

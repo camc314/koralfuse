@@ -10,12 +10,16 @@ import HomeScreen from '../scenes/home/Home';
 import LibraryScreen from '../scenes/home/Library';
 import PlayScreen from '../scenes/home/Play';
 import ItemScreen from '../scenes/home/Item';
+import SettingsScreen from '../scenes/home/UserSettings';
+import AboutScreen from '../scenes/home/UserSettings/About';
 
 export type RootStackParamList = {
   Home: undefined;
   Library: { libraryId: string; libraryName: string };
   Play: { itemId: string };
   Item: { itemId: string };
+  'User Settings': undefined;
+  About: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -32,6 +36,8 @@ export default function HomeStack(): JSX.Element {
         <Stack.Screen name="Library" component={LibraryScreen} />
         <Stack.Screen name="Play" component={PlayScreen} />
         <Stack.Screen name="Item" component={ItemScreen} />
+        <Stack.Screen name="User Settings" component={SettingsScreen} />
+        <Stack.Screen name="About" component={AboutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
