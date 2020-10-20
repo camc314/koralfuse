@@ -13,7 +13,7 @@ import ItemScreen from '../scenes/home/Item';
 
 export type RootStackParamList = {
   Home: undefined;
-  Library: { libraryId: string };
+  Library: { libraryId: string; libraryName: string };
   Play: { itemId: string };
   Item: { itemId: string };
 };

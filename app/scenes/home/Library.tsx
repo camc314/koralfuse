@@ -16,6 +16,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const theme = useTheme();
 
   useEffect(() => {
+    navigation.setOptions({ title: route.params.libraryName });
     AsyncStorage.getItem('userInfo').then((userInfo) => {
       if (userInfo) {
         const userInfoParsed = JSON.parse(userInfo) as AuthenticationResult;
