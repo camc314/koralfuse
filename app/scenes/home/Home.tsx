@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Button, Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
 import { api } from '../../services/api';
@@ -26,10 +26,26 @@ export default function home({ navigation }: Props): JSX.Element {
     navigation.setOptions({
       // eslint-disable-next-line react/display-name
       headerRight: () => (
-        <Button
+        <Pressable
+          style={{
+            backgroundColor: '#007AFF',
+            height: '70%',
+            marginRight: 10,
+            aspectRatio: 1,
+            borderRadius: 100,
+            justifyContent: 'center'
+          }}
           onPress={() => navigation.navigate('User Settings')}
-          title={api.userInfo.user?.name || 'User Settings'}
-        />
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              color: '#fff'
+            }}
+          >
+            {api.userInfo.user?.name?.charAt(0).toUpperCase()}
+          </Text>
+        </Pressable>
       )
     });
 
