@@ -56,6 +56,33 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
     );
   };
 
+  const footerComponent = () => {
+    if (libraryItem[0]) {
+      let totalRunTime = 0;
+      let runTimeText = '';
+
+      if (libraryItem[0].type === 'Movie') {
+        for (const item of libraryItem) {
+          totalRunTime += item.runTimeTicks || 0;
+        }
+
+        const totalRunTimeMin = totalRunTime / 10000 / 1000 / 60;
+        runTimeText = `${Math.floor(totalRunTimeMin / 60)} hrs ${Math.floor(
+          totalRunTimeMin % 60
+        )} min`;
+      }
+      return (
+        <View style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+          <Text>
+            {libraryItem.length} Items{runTimeText ? `, ${runTimeText}` : ''}
+          </Text>
+        </View>
+      );
+    } else {
+      return <View />;
+    }
+  };
+
   return (
     <View>
       <FlatList
@@ -72,6 +99,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         ListEmptyComponent={renderEmptyContainer()}
         refreshing={refreshing}
         onRefresh={getItems}
+        ListFooterComponent={footerComponent}
       />
     </View>
   );
