@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, View } from 'react-native';
+import { Dimensions, FlatList, View, Text } from 'react-native';
 import { api } from '../../services/api';
 import { AuthenticationResult, BaseItemDto } from '../../services/fetch-api';
 import { card } from '../../components/Card';
@@ -13,6 +13,7 @@ type Props = StackScreenProps<RootStackParamList, 'Library'>;
 export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const [libraryItem, setLibraryItems] = useState([] as BaseItemDto[]);
   const deviceWidth = Dimensions.get('window').width;
+  const deviceHeight = Dimensions.get('window').height;
   const theme = useTheme();
 
   useEffect(() => {
@@ -34,6 +35,26 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
     });
   }, []);
 
+  const renderEmptyContainer = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          height: deviceHeight * 0.8,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Text style={{ fontSize: 30, color: theme.colors.text }}>
+          There&apos;s nothing here...
+        </Text>
+        <Text style={{ color: theme.colors.text, marginTop: 20 }}>
+          Add items to the library in the admin dashboard
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View>
       <FlatList
@@ -43,9 +64,11 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         removeClippedSubviews={true}
         style={{
           marginLeft: (deviceWidth % 150) / 2,
-          width: '100%'
+          width: '100%',
+          height: '100%'
         }}
         numColumns={Math.floor(deviceWidth / 150)}
+        ListEmptyComponent={renderEmptyContainer()}
       />
     </View>
   );

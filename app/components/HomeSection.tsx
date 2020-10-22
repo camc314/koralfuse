@@ -131,6 +131,11 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       </View>
     );
   };
+
+  if (!data.length) {
+    return <View />;
+  }
+
   return (
     <View>
       <Text
