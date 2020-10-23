@@ -1,11 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { locale } from 'expo-localization';
 
 import en from './assets/locales/en-US.json';
 import fr from './assets/locales/fr-FR.json';
 
 // the translations
-// (tip move them in a JSON file and import them)
 const resources = {
   en: {
     translation: en
@@ -19,7 +19,8 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: 'en',
+    whitelist: ['fr', 'en'],
+    lng: locale.split('-')[0],
     fallbackLng: 'en',
 
     keySeparator: false, // we do not use keys in form messages.welcome
