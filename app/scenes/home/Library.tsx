@@ -73,7 +73,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
       }
       return (
         <View style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-          <Text>
+          <Text style={{ color: theme.colors.text }}>
             {libraryItem.length} Items{runTimeText ? `, ${runTimeText}` : ''}
           </Text>
         </View>

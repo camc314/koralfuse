@@ -6,6 +6,7 @@ import { useColorScheme } from 'react-native-appearance';
 import { getPublicSysteminfo } from '../../services/api';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/auth';
+import { useTranslation } from 'react-i18next';
 
 type SelectServerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -18,6 +19,7 @@ type Props = {
 
 export default function selectServer({ navigation }: Props): JSX.Element {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const [serverUrl, setUrl] = useState('http://192.168.0.100:8096');
 
   const checkServer = async () => {
@@ -67,7 +69,7 @@ export default function selectServer({ navigation }: Props): JSX.Element {
         placeholder="https://example.com"
       />
       <Button
-        text="Connect To Server"
+        text={t('connectServer')}
         onPress={checkServer}
         marginHorizontal={10}
       />

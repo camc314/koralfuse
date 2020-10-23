@@ -25,19 +25,45 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 import { useColorScheme } from 'react-native-appearance';
+import { useTranslation } from 'react-i18next';
 
 export default function HomeStack(): JSX.Element {
+  const { t } = useTranslation();
   const scheme = useColorScheme();
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Library" component={LibraryScreen} />
-        <Stack.Screen name="Play" component={PlayScreen} />
-        <Stack.Screen name="Item" component={ItemScreen} />
-        <Stack.Screen name="User Settings" component={SettingsScreen} />
-        <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: t('home') }}
+        />
+        <Stack.Screen
+          name="Library"
+          component={LibraryScreen}
+          options={{ title: t('library') }}
+        />
+        <Stack.Screen
+          name="Play"
+          component={PlayScreen}
+          options={{ title: t('play') }}
+        />
+        <Stack.Screen
+          name="Item"
+          component={ItemScreen}
+          options={{ title: t('item') }}
+        />
+        <Stack.Screen
+          name="User Settings"
+          component={SettingsScreen}
+          options={{ title: t('userSettings') }}
+        />
+        <Stack.Screen
+          name="About"
+          component={AboutScreen}
+          options={{ title: t('about') }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
