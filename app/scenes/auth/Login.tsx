@@ -6,11 +6,13 @@ import Button from '../../components/button';
 import { useColorScheme } from 'react-native-appearance';
 import { getHeaders, api, initUserApi } from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useTranslation } from 'react-i18next';
 
 export default function selectServer(): JSX.Element {
   const { colors } = useTheme();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     initUserApi();
@@ -66,7 +68,7 @@ export default function selectServer(): JSX.Element {
         autoCompleteType="username"
         autoCorrect={false}
         onChangeText={(text) => setUsername(text)}
-        placeholder="Username"
+        placeholder={t('username')}
       />
       <TextInput
         style={[
@@ -90,9 +92,9 @@ export default function selectServer(): JSX.Element {
         autoCorrect={false}
         onSubmitEditing={login}
         onChangeText={(text) => setPassword(text)}
-        placeholder="Password"
+        placeholder={t('password')}
       />
-      <Button text="Login" onPress={login} marginHorizontal={10} />
+      <Button text={t('login')} onPress={login} marginHorizontal={10} />
     </View>
   );
 }

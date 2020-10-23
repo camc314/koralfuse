@@ -14,6 +14,7 @@ import { useTheme, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../routes/home';
+import { useTranslation } from 'react-i18next';
 
 type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv' | 'relatedItems';
 
@@ -26,22 +27,23 @@ type HomeSectionNavigationProps = StackNavigationProp<RootStackParamList>;
 
 export default function HomeSection({ data, sectionType }: Props): JSX.Element {
   const { colors, dark } = useTheme();
+  const { t } = useTranslation();
   const deviceWidth = Dimensions.get('window').width;
   const navigation = useNavigation<HomeSectionNavigationProps>();
   let sectionTitle = '';
 
   switch (sectionType) {
     case 'resumeItems':
-      sectionTitle = 'Continue Watching';
+      sectionTitle = t('continueWatching');
       break;
     case 'latestMovies':
-      sectionTitle = 'Latest Movies';
+      sectionTitle = t('latestMovies');
       break;
     case 'latestTv':
-      sectionTitle = 'Latest TV';
+      sectionTitle = t('latestTv');
       break;
     case 'relatedItems':
-      sectionTitle = 'Related Items';
+      sectionTitle = t('moreLikeThis');
       break;
   }
 

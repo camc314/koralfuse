@@ -6,6 +6,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { RootStackParamList } from '../../routes/home';
 
 import { useTheme } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -15,6 +16,7 @@ type Props = {
 
 export default function home({ navigation }: Props): JSX.Element {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     AsyncStorage.clear();
@@ -31,7 +33,7 @@ export default function home({ navigation }: Props): JSX.Element {
         style={{ flex: 1, marginHorizontal: 20, marginVertical: 10 }}
         onPress={() => navigation.navigate('About')}
       >
-        <Text style={{ fontSize: 20, color: colors.text }}>About</Text>
+        <Text style={{ fontSize: 20, color: colors.text }}>{t('about')}</Text>
       </Pressable>
       <View
         style={{
@@ -44,7 +46,7 @@ export default function home({ navigation }: Props): JSX.Element {
         style={{ flex: 1, marginHorizontal: 20, marginVertical: 10 }}
         onPress={handleLogout}
       >
-        <Text style={{ fontSize: 20, color: colors.text }}>Logout</Text>
+        <Text style={{ fontSize: 20, color: colors.text }}>{t('logout')}</Text>
       </Pressable>
       <View
         style={{
