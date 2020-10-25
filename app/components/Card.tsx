@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Pressable, Image, Text } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl } from '../services/api';
+import { FontAwesome } from '@expo/vector-icons';
 
 type Props = {
   item: BaseItemDto;
@@ -43,16 +44,34 @@ export default function Card({ item }: Props): JSX.Element {
           theme.dark ? { shadowColor: '#aaa' } : {}
         ]}
       >
-        <Image
-          style={{
-            height: '100%',
-            backgroundColor: '#848484',
-            borderRadius: 10
-          }}
-          source={{
-            uri: getImageUrl(item.id || '', 'Primary')
-          }}
-        />
+        {item.imageTags?.primary ? (
+          <Image
+            style={{
+              height: '100%',
+              backgroundColor: '#848484',
+              borderRadius: 10
+            }}
+            source={{
+              uri: getImageUrl(item.id || '', 'Primary')
+            }}
+          />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#848484',
+              borderRadius: 10
+            }}
+          >
+            <FontAwesome
+              name="tv"
+              color={theme.dark ? '#333' : '#ccc'}
+              size={45}
+            />
+          </View>
+        )}
       </Pressable>
       <Text
         style={{
