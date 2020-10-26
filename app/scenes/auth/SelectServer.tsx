@@ -66,7 +66,11 @@ export default function selectServer({ navigation }: Props): JSX.Element {
         onChangeText={(text) => setUrl(text)}
         placeholder="https://example.com"
       />
-      <Button text="Connect To Server" onPress={checkServer} />
+      <Button
+        text="Connect To Server"
+        onPress={checkServer}
+        marginHorizontal={10}
+      />
     </View>
   );
 }

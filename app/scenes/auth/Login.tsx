@@ -92,7 +92,7 @@ export default function selectServer(): JSX.Element {
         onChangeText={(text) => setPassword(text)}
         placeholder="Password"
       />
-      <Button text="Login" onPress={login} />
+      <Button text="Login" onPress={login} marginHorizontal={10} />
     </View>
   );
 }

@@ -162,6 +162,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
                     }}
                   >
                     <ButtonComponent
+                      marginHorizontal={10}
                       text="Play"
                       onPress={() =>
                         navigation.navigate('Play', { itemId: item.id || '' })
@@ -213,6 +214,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
                 {item.name}
               </Text>
               <ButtonComponent
+                marginHorizontal={10}
                 text="Play"
                 onPress={() =>
                   navigation.navigate('Play', { itemId: item.id || '' })
@@ -235,7 +237,11 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
         </Text>
       </View>
       {item.type === 'Series' ? (
-        <SeasonView itemId={item.id || ''} colors={colors} />
+        <SeasonView
+          itemId={item.id || ''}
+          colors={colors}
+          navigation={navigation}
+        />
       ) : (
         <View></View>
       )}
