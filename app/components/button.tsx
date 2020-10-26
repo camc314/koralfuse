@@ -4,6 +4,7 @@ import { Pressable, Text, Dimensions } from 'react-native';
 interface ButtonComponentProps {
   onPress(): void;
   text: string;
+  marginHorizontal: number;
 }
 class ButtonComponent extends Component<ButtonComponentProps> {
   constructor(props: ButtonComponentProps) {
@@ -21,11 +22,13 @@ class ButtonComponent extends Component<ButtonComponentProps> {
           {
             backgroundColor: '#007AFF',
             borderRadius: 10,
-            marginHorizontal: 10,
             maxWidth: 300,
             width: '100%'
           },
-          deviceWidth < 500 ? { maxWidth: 500, marginHorizontal: 0 } : {}
+          deviceWidth < 500 ? { maxWidth: 500, marginHorizontal: 0 } : {},
+          {
+            marginHorizontal: this.props.marginHorizontal
+          }
         ]}
       >
         <Text
