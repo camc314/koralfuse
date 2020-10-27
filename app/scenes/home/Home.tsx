@@ -17,6 +17,7 @@ type Props = {
 export default function home({ navigation }: Props): JSX.Element {
   const [libraries, setLibraries] = useState([] as BaseItemDto[]);
   const [itemsResume, setItemsResume] = useState([] as BaseItemDto[]);
+  const [itemsNextUp, setItemsNextUp] = useState([] as BaseItemDto[]);
   const [itemsLatestMovies, setItemsLatestMovies] = useState(
     [] as BaseItemDto[]
   );
@@ -71,13 +72,22 @@ export default function home({ navigation }: Props): JSX.Element {
           }
         });
 
-        // Get Media to Resume
+        // Get Movies to Resume
         api.ItemsApi.getResumeItems({
+          userId: userInfoParsed.user?.id || '',
+          includeItemTypes: 'movie'
+        }).then((res) => {
+          if (res.items) {
+            setItemsResume([...itemsResume, ...res.items]);
+          }
+        });
+
+        // Get TV Shows to Resume OR to Continue
+        api.TvShowsApi.getNextUp({
           userId: userInfoParsed.user?.id || ''
         }).then((res) => {
-          console.log(res);
           if (res.items) {
-            setItemsResume(res.items);
+            setItemsNextUp([...res.items]);
           }
         });
 
@@ -174,7 +184,10 @@ export default function home({ navigation }: Props): JSX.Element {
           })}
         </ScrollView>
       </View>
-      <HomeSection sectionType="resumeItems" data={itemsResume} />
+      <HomeSection
+        sectionType="resumeItems"
+        data={[...itemsNextUp, ...itemsResume]}
+      />
       <HomeSection sectionType="latestMovies" data={itemsLatestMovies} />
       <HomeSection sectionType="latestTv" data={itemsLatestTv} />
     </ScrollView>

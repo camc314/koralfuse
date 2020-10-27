@@ -9,7 +9,8 @@ import {
   api,
   initItemsApi,
   initMediaInfoApi,
-  initUserLibraryApi
+  initUserLibraryApi,
+  initTvShowsApi
 } from '../app/services/api';
 
 const AuthContext = React.createContext({});
@@ -79,6 +80,7 @@ export default function router(): JSX.Element {
         await initUserLibraryApi();
         await initItemsApi();
         await initMediaInfoApi();
+        await initTvShowsApi();
       } catch (error) {
         console.error(error);
       }
