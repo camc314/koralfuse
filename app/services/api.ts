@@ -7,6 +7,7 @@ import {
   Configuration,
   ItemsApi,
   MediaInfoApi,
+  TvShowsApi,
   UserApi,
   UserLibraryApi
 } from './fetch-api';
@@ -58,6 +59,7 @@ interface ApiInterface {
   UserApi: UserApi;
   UserLibraryApi: UserLibraryApi;
   MediaInfoApi: MediaInfoApi;
+  TvShowsApi: TvShowsApi;
 }
 
 export const api = {} as ApiInterface;
@@ -105,6 +107,19 @@ export const initMediaInfoApi = async (): Promise<void> => {
   const token = await getHeaders(false);
   const baseUrl = await getBaseUrl();
   api.MediaInfoApi = new MediaInfoApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export const initTvShowsApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.TvShowsApi = new TvShowsApi(
     new Configuration({
       basePath: baseUrl,
       headers: {
