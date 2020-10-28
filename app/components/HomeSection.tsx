@@ -11,6 +11,7 @@ import {
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl, imageType } from '../services/api';
 import { useTheme, useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv';
 
@@ -80,18 +81,21 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       >
         <Pressable
           onPress={handleNavigation}
-          style={{
-            minWidth: 100,
-            height: 200,
-            aspectRatio: aspectRatio,
-            shadowRadius: 8,
-            shadowOffset: {
-              height: 2,
-              width: 0
+          style={[
+            {
+              minWidth: 100,
+              height: 200,
+              aspectRatio: aspectRatio,
+              shadowRadius: 8,
+              shadowOffset: {
+                height: 2,
+                width: 0
+              },
+              shadowOpacity: 0.3,
+              borderRadius: 10
             },
-            shadowOpacity: 0.3,
-            borderRadius: 10
-          }}
+            sectionType === 'resumeItems' ? { height: 225 } : {}
+          ]}
         >
           <Image
             style={{
@@ -105,6 +109,60 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
               uri: getImageUrl(item.id || '', imageType)
             }}
           />
+          {sectionType === 'resumeItems' &&
+          item.userData?.playedPercentage &&
+          item.userData.playbackPositionTicks &&
+          item.runTimeTicks ? (
+            <LinearGradient
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                flex: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                borderRadius: 10
+              }}
+              colors={['transparent', 'rgba(0,0,0,0)', 'rgba(0,0,0,0.8)']}
+            >
+              <Text
+                style={{
+                  color: '#fffd',
+                  alignSelf: 'flex-start',
+                  marginLeft: '2%',
+                  marginBottom: 2,
+                  fontSize: 16
+                }}
+              >
+                {`${Math.floor(
+                  (item.runTimeTicks - item.userData.playbackPositionTicks) /
+                    10000 /
+                    1000 /
+                    60
+                )} min`}
+              </Text>
+              <View
+                style={{
+                  marginBottom: '2%',
+                  width: '96%',
+                  borderRadius: 10,
+                  height: 2,
+                  backgroundColor: '#fff5'
+                }}
+              >
+                <View
+                  style={{
+                    width: `${item.userData?.playedPercentage}%`,
+                    height: '100%',
+                    borderRadius: 10,
+                    backgroundColor: '#007AFF'
+                  }}
+                />
+              </View>
+            </LinearGradient>
+          ) : (
+            <View />
+          )}
         </Pressable>
         <Text
           style={{
