@@ -12,18 +12,22 @@ import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl, imageType } from '../services/api';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../routes/home';
 
-type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv';
+type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv' | 'relatedItems';
 
 type Props = {
   data: BaseItemDto[];
   sectionType: sectionType;
 };
 
+type HomeSectionNavigationProps = StackNavigationProp<RootStackParamList>;
+
 export default function HomeSection({ data, sectionType }: Props): JSX.Element {
   const { colors, dark } = useTheme();
   const deviceWidth = Dimensions.get('window').width;
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeSectionNavigationProps>();
   let sectionTitle = '';
 
   switch (sectionType) {
@@ -35,6 +39,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       break;
     case 'latestTv':
       sectionTitle = 'Latest TV';
+      break;
+    case 'relatedItems':
+      sectionTitle = 'Related Items';
       break;
   }
 
@@ -66,9 +73,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
 
     const handleNavigation = () => {
       if (sectionType === 'resumeItems') {
-        navigation.navigate('Play', { itemId: item.id });
+        navigation.navigate('Play', { itemId: item.id || '' });
       } else {
-        navigation.navigate('Item', { itemId: item.id });
+        navigation.push('Item', { itemId: item.id || '' });
       }
     };
 
