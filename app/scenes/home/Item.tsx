@@ -17,6 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ButtonComponent from '../../components/button';
 import ScalableImage from 'react-native-scalable-image';
 import SeasonView from '../../components/SeasonView';
+import RelatedItems from '../../components/RelatedItems';
 
 type Props = StackScreenProps<RootStackParamList, 'Item'>;
 
@@ -245,6 +246,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
       ) : (
         <View></View>
       )}
+      <RelatedItems itemId={route.params.itemId || ''} />
     </ScrollView>
   );
 }

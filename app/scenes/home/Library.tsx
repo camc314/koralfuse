@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, View, Text } from 'react-native';
 import { api } from '../../services/api';
 import { BaseItemDto } from '../../services/fetch-api';
-import { card } from '../../components/Card';
+import Card from '../../components/Card';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
@@ -87,7 +87,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
     <View>
       <FlatList
         data={libraryItem}
-        renderItem={(item) => card(item, theme, navigation)}
+        renderItem={({ item }) => <Card item={item} />}
         horizontal={false}
         removeClippedSubviews={true}
         style={{

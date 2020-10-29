@@ -6,6 +6,7 @@ import {
   AuthenticationResult,
   Configuration,
   ItemsApi,
+  LibraryApi,
   MediaInfoApi,
   TvShowsApi,
   UserApi,
@@ -60,6 +61,7 @@ interface ApiInterface {
   UserLibraryApi: UserLibraryApi;
   MediaInfoApi: MediaInfoApi;
   TvShowsApi: TvShowsApi;
+  LibraryApi: LibraryApi;
 }
 
 export const api = {} as ApiInterface;
@@ -120,6 +122,19 @@ export const initTvShowsApi = async (): Promise<void> => {
   const token = await getHeaders(false);
   const baseUrl = await getBaseUrl();
   api.TvShowsApi = new TvShowsApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export const initLibraryApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.LibraryApi = new LibraryApi(
     new Configuration({
       basePath: baseUrl,
       headers: {

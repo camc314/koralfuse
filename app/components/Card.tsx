@@ -1,22 +1,17 @@
-import { Theme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { View, Pressable, Image, Text } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
 import { getImageUrl } from '../services/api';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '../routes/home';
-
-type navigationProp = StackScreenProps<RootStackParamList, 'Library'>;
 
 type Props = {
   item: BaseItemDto;
 };
 
-export function card(
-  { item }: Props,
-  theme: Theme,
-  navigation: navigationProp['navigation']
-): JSX.Element {
+export default function Card({ item }: Props): JSX.Element {
+  const theme = useTheme();
+  const navigation = useNavigation();
+
   const onPress = () => {
     navigation.navigate('Item', { itemId: item.id || '' });
   };
