@@ -15,7 +15,7 @@ import AboutScreen from '../scenes/home/UserSettings/About';
 
 export type RootStackParamList = {
   Home: undefined;
-  Library: { libraryId: string; libraryName: string };
+  Library: { libraryId: string; libraryName: string; libraryType: string };
   Play: { itemId: string };
   Item: { itemId: string };
   'User Settings': undefined;

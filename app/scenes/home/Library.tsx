@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, View, Text } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  View,
+  Text,
+  ActivityIndicator
+} from 'react-native';
 import { api } from '../../services/api';
 import { BaseItemDto } from '../../services/fetch-api';
 import Card from '../../components/Card';
@@ -12,6 +18,7 @@ type Props = StackScreenProps<RootStackParamList, 'Library'>;
 export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const [libraryItem, setLibraryItems] = useState([] as BaseItemDto[]);
   const [refreshing, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(true);
   const deviceWidth = Dimensions.get('window').width;
   const deviceHeight = Dimensions.get('window').height;
   const theme = useTheme();
@@ -23,15 +30,31 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
 
   const getItems = () => {
     setRefresh(true);
-    api.ItemsApi.getItems({
+
+    const options = {
       uId: api.userInfo?.user?.id || '',
       userId: api.userInfo?.user?.id,
       parentId: route.params.libraryId,
-      sortBy: 'sortName'
-    }).then((results) => {
+      sortBy: 'sortName',
+      includeItemTypes: ''
+    };
+
+    switch (route.params.libraryType) {
+      case 'movies':
+        options.includeItemTypes = 'movie';
+        break;
+      case 'tvshows':
+        options.includeItemTypes = 'series';
+        break;
+    }
+
+    api.ItemsApi.getItems(options).then((results) => {
       if (results.items) {
         setLibraryItems(results.items);
         setRefresh(false);
+      }
+      if (loading) {
+        setLoading(false);
       }
     });
   };
@@ -82,6 +105,19 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
       return <View />;
     }
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}
+      >
+        <ActivityIndicator size="small" />
+      </View>
+    );
+  }
 
   return (
     <View>
