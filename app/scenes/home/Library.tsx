@@ -12,10 +12,12 @@ import Card from '../../components/Card';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
+import { useTranslation } from 'react-i18next';
 
 type Props = StackScreenProps<RootStackParamList, 'Library'>;
 
 export default function LibraryView({ route, navigation }: Props): JSX.Element {
+  const { t } = useTranslation();
   const [libraryItem, setLibraryItems] = useState([] as BaseItemDto[]);
   const [refreshing, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -70,10 +72,10 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         }}
       >
         <Text style={{ fontSize: 30, color: theme.colors.text }}>
-          There&apos;s nothing here...
+          {t('emptyLibrary')}
         </Text>
         <Text style={{ color: theme.colors.text, marginTop: 20 }}>
-          Add items to the library in the admin dashboard
+          {t('addItemsAdmin')}
         </Text>
       </View>
     );

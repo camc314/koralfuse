@@ -1,7 +1,9 @@
 {
     "about": "About",
+    "addItemsAdmin": "Add items to the library in the admin dashboard",
     "connectServer": "Connect to Server",
     "continueWatching": "Continue Watching",
+    "emptyLibrary": "There's nothing here...",
     "home": "Home",
     "item": "Item",
     "latestMovies": "Latest Movies",
