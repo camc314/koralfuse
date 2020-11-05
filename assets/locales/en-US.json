@@ -1,10 +1,13 @@
 {
     "about": "About",
     "addItemsAdmin": "Add items to the library in the admin dashboard",
+    "badRequest": "Bad Request, Try again",
+    "checkServerAddress": "Make sure the server address is spelt correctly",
     "connectServer": "Connect to Server",
     "continueWatching": "Continue Watching",
     "emptyLibrary": "There's nothing here...",
     "home": "Home",
+    "invalidLogin": "Incorrect Username or Password. Try again",
     "item": "Item",
     "latestMovies": "Latest Movies",
     "latestTv": "Latest TV",
@@ -13,5 +16,6 @@
     "logout": "Logout",
     "moreLikeThis": "More Like This",
     "play": "Play",
+    "unableToConnect": "Unable to connect to the selected server",
     "userSettings": "User Settings"
   }

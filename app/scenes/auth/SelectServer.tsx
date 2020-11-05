@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Alert, TextInput, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Button from '../../components/button';
 import { useColorScheme } from 'react-native-appearance';
@@ -32,6 +32,7 @@ export default function selectServer({ navigation }: Props): JSX.Element {
       }
     } catch (error) {
       console.error(error);
+      Alert.alert(t('unableToConnect'), t('checkServerAddress'));
     }
   };
 

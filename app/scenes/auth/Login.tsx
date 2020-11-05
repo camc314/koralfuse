@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Alert, TextInput, View } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import Button from '../../components/button';
@@ -33,6 +33,11 @@ export default function selectServer(): JSX.Element {
         api.userInfo = response;
       }
     } catch (error) {
+      if (error.status === 401 || error.status === 500) {
+        Alert.alert(t('invalidLogin'));
+      } else {
+        Alert.alert(t('badRequest'));
+      }
       console.error(error);
     }
   };
