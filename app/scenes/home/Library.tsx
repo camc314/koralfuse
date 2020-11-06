@@ -129,15 +129,24 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         horizontal={false}
         removeClippedSubviews={true}
         style={{
-          marginLeft: (deviceWidth % 150) / 2,
+          // marginLeft: (deviceWidth % 150) / 2,
           width: '100%',
           height: '100%'
         }}
-        numColumns={Math.floor(deviceWidth / 150)}
+        numColumns={
+          deviceWidth < 700
+            ? Math.floor(deviceWidth / 120)
+            : Math.floor(deviceWidth / 150)
+        }
         ListEmptyComponent={renderEmptyContainer()}
         refreshing={refreshing}
         onRefresh={getItems}
         ListFooterComponent={footerComponent}
+        columnWrapperStyle={{
+          flex: 1,
+          justifyContent: 'space-around',
+          paddingHorizontal: 5
+        }}
       />
     </View>
   );
