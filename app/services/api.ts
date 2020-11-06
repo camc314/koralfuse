@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   AuthenticationResult,
   Configuration,
+  ItemRefreshApi,
   ItemsApi,
   LibraryApi,
   MediaInfoApi,
@@ -64,6 +65,7 @@ interface ApiInterface {
   TvShowsApi: TvShowsApi;
   LibraryApi: LibraryApi;
   PlaystateApi: PlaystateApi;
+  ItemRefreshApi: ItemRefreshApi;
 }
 
 export const api = {} as ApiInterface;
@@ -150,6 +152,19 @@ export const initPlayStateApi = async (): Promise<void> => {
   const token = await getHeaders(false);
   const baseUrl = await getBaseUrl();
   api.PlaystateApi = new PlaystateApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export const initItemsRefreshApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.ItemRefreshApi = new ItemRefreshApi(
     new Configuration({
       basePath: baseUrl,
       headers: {
