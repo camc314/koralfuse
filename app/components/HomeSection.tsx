@@ -103,7 +103,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
               shadowOpacity: 0.3,
               borderRadius: 10
             },
-            sectionType === 'resumeItems' ? { height: 225 } : {}
+            sectionType === 'resumeItems'
+              ? { height: 225, maxHeight: (deviceWidth * 0.8 * 9) / 16 }
+              : {}
           ]}
         >
           <Image

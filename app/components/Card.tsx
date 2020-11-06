@@ -22,7 +22,7 @@ export default function Card({ item }: Props): JSX.Element {
       style={{
         padding: 5,
         marginBottom: 5,
-        flexGrow: 2,
+        flex: 1,
         maxWidth: 150,
         maxHeight: 250
       }}
@@ -79,7 +79,6 @@ export default function Card({ item }: Props): JSX.Element {
           width: 100,
           textAlign: 'center',
           marginTop: 4,
-          minHeight: 80,
           margin: 'auto',
           color: theme.colors.text
         }}
