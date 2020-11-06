@@ -132,6 +132,35 @@ export default function home({ navigation }: Props): JSX.Element {
     }
   };
 
+  const libraryActionSheet = async (libraryId: string) => {
+    const options = ['Cancel'];
+
+    if (api.userInfo.user?.policy?.isAdministrator) {
+      options.push('Scan Library');
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: options,
+          cancelButtonIndex: 0
+        },
+        async (buttonIndex) => {
+          if (buttonIndex === 1) {
+            try {
+              await api.ItemRefreshApi.post({
+                itemId: libraryId,
+                replaceAllImages: false,
+                replaceAllMetadata: false
+              });
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        }
+      );
+    } else {
+      return;
+    }
+  };
+
   const getIconType = (collectionType: string) => {
     switch (collectionType) {
       case 'tvshows':
@@ -149,6 +178,7 @@ export default function home({ navigation }: Props): JSX.Element {
         onPress={() =>
           goToLibraries(item.id, item.name || '', item.collectionType || '')
         }
+        onLongPress={() => libraryActionSheet(item.id || '')}
         style={{
           flex: 1,
           flexDirection: 'row',
