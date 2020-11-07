@@ -104,7 +104,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
               borderRadius: 10
             },
             sectionType === 'resumeItems'
-              ? { height: 225, maxHeight: (deviceWidth * 0.8 * 9) / 16 }
+              ? deviceWidth < 500
+                ? { height: (deviceWidth * 0.8 * 9) / 16 }
+                : { height: 225 }
               : {}
           ]}
         >
