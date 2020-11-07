@@ -178,11 +178,17 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
           )}
         </Pressable>
         <Text
-          style={{
-            marginTop: 5,
-            fontSize: 16,
-            color: colors.text
-          }}
+          style={[
+            {
+              marginTop: 5,
+              fontSize: 16,
+              color: colors.text
+            },
+            sectionType !== 'resumeItems'
+              ? { maxWidth: (200 * 2) / 3, textAlign: 'center' }
+              : {}
+          ]}
+          numberOfLines={2}
         >
           {cardTitle}
         </Text>
