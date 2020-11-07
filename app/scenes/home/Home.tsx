@@ -1,11 +1,10 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text } from 'react-native';
+import { ActionSheetIOS, Pressable, ScrollView, Text } from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
 import { api } from '../../services/api';
-import { AuthenticationResult, BaseItemDto } from '../../services/fetch-api';
+import { BaseItemDto } from '../../services/fetch-api';
 import HomeSection from '../../components/HomeSection';
 import { Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
@@ -52,66 +51,59 @@ export default function home({ navigation }: Props): JSX.Element {
       )
     });
 
-    AsyncStorage.getItem('userInfo').then((userInfo) => {
-      if (userInfo) {
-        const userInfoParsed = JSON.parse(userInfo) as AuthenticationResult;
+    // Get Libraries
+    api.ItemsApi.getItems({
+      uId: api.userInfo.user?.id || '',
+      userId: api.userInfo.user?.id
+    }).then((result) => {
+      // Only TV Shows and movies are currently supported
+      const filteredResults = result?.items?.filter((item) => {
+        return (
+          item.collectionType === 'movies' || item.collectionType === 'tvshows'
+        );
+      });
 
-        // Get Libraries
-        api.ItemsApi.getItems({
-          uId: userInfoParsed.user?.id || '',
-          userId: userInfoParsed.user?.id
-        }).then((result) => {
-          // Only TV Shows and movies are currently supported
-          const filteredResults = result?.items?.filter((item) => {
-            return (
-              item.collectionType === 'movies' ||
-              item.collectionType === 'tvshows'
-            );
-          });
+      if (filteredResults) {
+        setLibraries(filteredResults);
+      }
+    });
 
-          if (filteredResults) {
-            setLibraries(filteredResults);
-          }
-        });
+    // Get Movies to Resume
+    api.ItemsApi.getResumeItems({
+      userId: api.userInfo.user?.id || '',
+      includeItemTypes: 'movie'
+    }).then((res) => {
+      if (res.items) {
+        setItemsResume([...itemsResume, ...res.items]);
+      }
+    });
 
-        // Get Movies to Resume
-        api.ItemsApi.getResumeItems({
-          userId: userInfoParsed.user?.id || '',
-          includeItemTypes: 'movie'
-        }).then((res) => {
-          if (res.items) {
-            setItemsResume([...itemsResume, ...res.items]);
-          }
-        });
+    // Get TV Shows to Resume OR to Continue
+    api.TvShowsApi.getNextUp({
+      userId: api.userInfo.user?.id || ''
+    }).then((res) => {
+      if (res.items) {
+        setItemsNextUp([...res.items]);
+      }
+    });
 
-        // Get TV Shows to Resume OR to Continue
-        api.TvShowsApi.getNextUp({
-          userId: userInfoParsed.user?.id || ''
-        }).then((res) => {
-          if (res.items) {
-            setItemsNextUp([...res.items]);
-          }
-        });
+    // Get Latest Movies
+    api.UserLibraryApi.getLatestMedia({
+      userId: api.userInfo.user?.id || '',
+      includeItemTypes: 'movie'
+    }).then((result) => {
+      if (result) {
+        setItemsLatestMovies(result);
+      }
+    });
 
-        // Get Latest Movies
-        api.UserLibraryApi.getLatestMedia({
-          userId: userInfoParsed.user?.id || '',
-          includeItemTypes: 'movie'
-        }).then((result) => {
-          if (result) {
-            setItemsLatestMovies(result);
-          }
-        });
-
-        // Get Latest TV Shows
-        api.UserLibraryApi.getLatestMedia({
-          userId: userInfoParsed.user?.id || '',
-          includeItemTypes: 'series'
-        }).then((result) => {
-          if (result) {
-            setItemsLatestTv(result);
-          }
-        });
+    // Get Latest TV Shows
+    api.UserLibraryApi.getLatestMedia({
+      userId: api.userInfo.user?.id || '',
+      includeItemTypes: 'series'
+    }).then((result) => {
+      if (result) {
+        setItemsLatestTv(result);
       }
     });
   }, []);
