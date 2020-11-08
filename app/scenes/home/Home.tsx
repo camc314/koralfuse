@@ -1,12 +1,14 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text } from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
 import { api } from '../../services/api';
 import { AuthenticationResult, BaseItemDto } from '../../services/fetch-api';
 import HomeSection from '../../components/HomeSection';
+import { Ionicons } from '@expo/vector-icons';
+import { FlatList } from 'react-native-gesture-handler';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -130,6 +132,54 @@ export default function home({ navigation }: Props): JSX.Element {
     }
   };
 
+  const getIconType = (collectionType: string) => {
+    switch (collectionType) {
+      case 'tvshows':
+        return 'ios-tv';
+      case 'movies':
+        return 'ios-film';
+      default:
+        return '';
+    }
+  };
+
+  const renderLibraryLink = ({ item }: { item: BaseItemDto }) => {
+    return (
+      <Pressable
+        onPress={() =>
+          goToLibraries(item.id, item.name || '', item.collectionType || '')
+        }
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 10,
+          paddingHorizontal: 15,
+          marginHorizontal: 10,
+          borderRadius: 10,
+          backgroundColor: '#007AFF'
+        }}
+      >
+        <Ionicons
+          name={getIconType(item.collectionType || '')}
+          size={28}
+          color="white"
+        />
+        <Text
+          style={{
+            textAlignVertical: 'center',
+            fontSize: 18,
+            color: '#fff',
+            marginLeft: 10
+          }}
+        >
+          {item.name}
+        </Text>
+      </Pressable>
+    );
+  };
+
   return (
     <ScrollView
       style={{
@@ -137,61 +187,19 @@ export default function home({ navigation }: Props): JSX.Element {
         flex: 1
       }}
     >
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          padding: 10
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        data={libraries}
+        renderItem={renderLibraryLink}
+        contentContainerStyle={{
+          justifyContent: 'space-around'
         }}
-      >
-        <ScrollView
-          style={{
-            height: '100%',
-            flex: 1
-          }}
-          horizontal={true}
-        >
-          {libraries.map((data: BaseItemDto, idx: number) => {
-            return (
-              <View
-                key={idx}
-                style={{
-                  padding: 10,
-                  flexGrow: 1
-                }}
-              >
-                <Pressable
-                  onPress={() =>
-                    goToLibraries(
-                      data.id,
-                      data.name || '',
-                      data.collectionType || ''
-                    )
-                  }
-                  style={{
-                    backgroundColor: '#007AFF',
-                    borderRadius: 10,
-                    width: '100%',
-                    flex: 1
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      textAlignVertical: 'center',
-                      fontSize: 18,
-                      color: 'white',
-                      margin: 16
-                    }}
-                  >
-                    {data.name}
-                  </Text>
-                </Pressable>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
+        style={{
+          marginTop: 10
+        }}
+      />
+
       <HomeSection
         sectionType="resumeItems"
         data={[...itemsNextUp, ...itemsResume]}
