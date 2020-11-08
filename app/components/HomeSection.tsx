@@ -28,9 +28,14 @@ type HomeSectionNavigationProps = StackNavigationProp<RootStackParamList>;
 export default function HomeSection({ data, sectionType }: Props): JSX.Element {
   const { colors, dark } = useTheme();
   const { t } = useTranslation();
+  const [sectionData, setSectionData] = useState([] as BaseItemDto[]);
   const deviceWidth = Dimensions.get('window').width;
   const navigation = useNavigation<HomeSectionNavigationProps>();
   let sectionTitle = '';
+
+  useEffect(() => {
+    setSectionData(data);
+  }, [data]);
 
   switch (sectionType) {
     case 'resumeItems':
@@ -81,6 +86,45 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       }
     };
 
+    const handleLongPress = () => {
+      if (sectionType === 'resumeItems') {
+        ActionSheetIOS.showActionSheetWithOptions(
+          {
+            options: [
+              'Cancel',
+              'Play',
+              'Play from beginning',
+              'Mark as Played'
+            ],
+            cancelButtonIndex: 0
+          },
+          (buttonIndex) => {
+            switch (buttonIndex) {
+              case 1:
+                navigation.navigate('Play', { itemId: item.id || '' });
+                break;
+              case 2:
+                navigation.navigate('Play', {
+                  itemId: item.id || '',
+                  playFromStart: true
+                });
+                break;
+              case 3: {
+                api.PlaystateApi.markPlayedItem({
+                  userId: api.userInfo.user?.id || '',
+                  itemId: item.id || ''
+                });
+                setSectionData(
+                  sectionData.filter((dataItem) => dataItem.id !== item.id)
+                );
+                break;
+              }
+            }
+          }
+        );
+      }
+    };
+
     return (
       <View
         style={{
@@ -90,6 +134,7 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       >
         <Pressable
           onPress={handleNavigation}
+          onLongPress={handleLongPress}
           style={[
             {
               minWidth: 100,
@@ -233,7 +278,7 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        data={data}
+        data={sectionData}
         renderItem={renderItem}
         ListHeaderComponent={
           <View

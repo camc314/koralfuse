@@ -92,7 +92,10 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
 
   const reportBeginPlayback = (playbackReport: AVPlaybackStatus) => {
     if (playbackReport.isLoaded) {
-      if (itemInfo.userData?.playbackPositionTicks) {
+      if (
+        itemInfo.userData?.playbackPositionTicks &&
+        !route.params.playFromStart
+      ) {
         console.log('Resuming!');
         player.current?.playFromPositionAsync(
           itemInfo.userData?.playbackPositionTicks / 10000
