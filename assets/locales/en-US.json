@@ -15,6 +15,7 @@
     "login": "Login",
     "logout": "Logout",
     "moreLikeThis": "More Like This",
+    "personDoesNotStar": "Unable to find any media that this person stars in.",
     "play": "Play",
     "unableToConnect": "Unable to connect to the selected server",
     "userSettings": "User Settings"

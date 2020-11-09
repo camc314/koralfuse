@@ -10,6 +10,7 @@ import HomeScreen from '../scenes/home/Home';
 import LibraryScreen from '../scenes/home/Library';
 import PlayScreen from '../scenes/home/Play';
 import ItemScreen from '../scenes/home/Item';
+import PeopleScreen from '../scenes/home/People';
 import SettingsScreen from '../scenes/home/UserSettings';
 import AboutScreen from '../scenes/home/UserSettings/About';
 
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Library: { libraryId: string; libraryName: string; libraryType: string };
   Play: { itemId: string; playFromStart?: boolean };
   Item: { itemId: string };
+  People: { personId: string };
   'User Settings': undefined;
   About: undefined;
 };
@@ -53,6 +55,11 @@ export default function HomeStack(): JSX.Element {
           name="Item"
           component={ItemScreen}
           options={{ title: t('item') }}
+        />
+        <Stack.Screen
+          name="People"
+          component={PeopleScreen}
+          options={{ title: t('people') }}
         />
         <Stack.Screen
           name="User Settings"
