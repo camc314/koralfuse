@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  ActionSheetIOS,
   Dimensions,
   FlatList,
   Image,
@@ -9,12 +10,13 @@ import {
   View
 } from 'react-native';
 import { BaseItemDto } from '../services/fetch-api';
-import { getImageUrl, imageType } from '../services/api';
+import { api, getImageUrl, imageType } from '../services/api';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../routes/home';
 import { useTranslation } from 'react-i18next';
+import { FontAwesome } from '@expo/vector-icons';
 
 type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv' | 'relatedItems';
 
@@ -125,6 +127,13 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       }
     };
 
+    const itemHeight =
+      sectionType === 'resumeItems'
+        ? deviceWidth < 500
+          ? (deviceWidth * 0.8 * 9) / 16
+          : 225
+        : 200;
+
     return (
       <View
         style={{
@@ -138,7 +147,7 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
           style={[
             {
               minWidth: 100,
-              height: 200,
+              height: itemHeight,
               aspectRatio: aspectRatio,
               shadowRadius: 8,
               shadowOffset: {
@@ -147,26 +156,35 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
               },
               shadowOpacity: 0.3,
               borderRadius: 10
-            },
-            sectionType === 'resumeItems'
-              ? deviceWidth < 500
-                ? { height: (deviceWidth * 0.8 * 9) / 16 }
-                : { height: 225 }
-              : {}
+            }
           ]}
         >
-          <Image
-            style={{
-              flex: 1,
-              width: '100%',
-              backgroundColor: '#848484',
-              borderRadius: 10,
-              resizeMode: 'cover'
-            }}
-            source={{
-              uri: getImageUrl(item.id || '', imageType)
-            }}
-          />
+          {item.imageTags?.primary ? (
+            <Image
+              style={{
+                flex: 1,
+                width: '100%',
+                backgroundColor: '#848484',
+                borderRadius: 10,
+                resizeMode: 'cover'
+              }}
+              source={{
+                uri: getImageUrl(item.id || '', imageType)
+              }}
+            />
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#848484',
+                borderRadius: 10
+              }}
+            >
+              <FontAwesome name="tv" color={dark ? '#333' : '#ccc'} size={45} />
+            </View>
+          )}
           {sectionType === 'resumeItems' &&
           item.userData?.playedPercentage &&
           item.userData.playbackPositionTicks &&
@@ -231,9 +249,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
             },
             sectionType !== 'resumeItems'
               ? { maxWidth: (200 * 2) / 3, textAlign: 'center' }
-              : {}
+              : { maxWidth: (itemHeight * 16) / 9 }
           ]}
-          numberOfLines={2}
+          numberOfLines={sectionType !== 'resumeItems' ? 2 : 1}
         >
           {cardTitle}
         </Text>
