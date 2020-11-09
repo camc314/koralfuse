@@ -247,6 +247,12 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
         <View></View>
       )}
       <RelatedItems itemId={route.params.itemId || ''} />
+      <View
+        style={{
+          height: 50,
+          width: '100%'
+        }}
+      />
     </ScrollView>
   );
 }
