@@ -5,9 +5,13 @@ import HomeSection from './HomeSection';
 
 type Props = {
   itemId: string;
+  emptySectionCallback?: () => void;
 };
 
-export default function RelatedItems({ itemId }: Props): JSX.Element {
+export default function RelatedItems({
+  itemId,
+  emptySectionCallback
+}: Props): JSX.Element {
   const [relatedItems, setRelatedItems] = useState([] as BaseItemDto[]);
 
   useEffect(() => {
@@ -17,9 +21,11 @@ export default function RelatedItems({ itemId }: Props): JSX.Element {
     }).then((result) => {
       if (result.items) {
         setRelatedItems(result.items);
+      } else {
+        if (emptySectionCallback) emptySectionCallback();
       }
     });
   }, []);
 
-  return <HomeSection data={relatedItems} sectionType={'relatedItems'} />;
+  return <HomeSection data={relatedItems} sectionType="relatedItems" />;
 }
