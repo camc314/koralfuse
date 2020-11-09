@@ -13,7 +13,8 @@ import {
   initTvShowsApi,
   initLibraryApi,
   initPlayStateApi,
-  initItemsRefreshApi
+  initItemsRefreshApi,
+  initUserViewsApi
 } from '../app/services/api';
 
 const AuthContext = React.createContext({});
@@ -87,6 +88,7 @@ export default function router(): JSX.Element {
         await initLibraryApi();
         await initPlayStateApi();
         await initItemsRefreshApi();
+        await initUserViewsApi();
       } catch (error) {
         console.error(error);
       }

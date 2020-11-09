@@ -52,9 +52,8 @@ export default function home({ navigation }: Props): JSX.Element {
     });
 
     // Get Libraries
-    api.ItemsApi.getItems({
-      uId: api.userInfo.user?.id || '',
-      userId: api.userInfo.user?.id
+    api.UserViewsApi.getUserViews({
+      userId: api.userInfo.user?.id || ''
     }).then((result) => {
       // Only TV Shows and movies are currently supported
       const filteredResults = result?.items?.filter((item) => {
