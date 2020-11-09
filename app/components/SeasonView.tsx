@@ -185,50 +185,54 @@ export default class SeasonView extends Component<
           ) : (
             <View />
           )}
-          <View
-            style={[
-              { marginLeft: 20, width: '70%' },
-              deviceWidth < 500 ? { width: 'auto', marginLeft: 0 } : {}
-            ]}
-          >
-            <Text
-              style={{
-                color: this.props.colors.text,
-                fontSize: 20,
-                fontWeight: '500'
-              }}
+          {this.state.selectedEpisode ? (
+            <View
+              style={[
+                { marginLeft: 20, width: '70%' },
+                deviceWidth < 500 ? { width: 'auto', marginLeft: 0 } : {}
+              ]}
             >
-              {this.state.selectedEpisode.name}
-            </Text>
-            <Text
-              style={{ color: this.props.colors.text, fontWeight: '300' }}
-            >{`Season ${this.state.selectedEpisode.parentIndexNumber} Episode ${
-              this.state.selectedEpisode.indexNumber
-            }${
-              this.state.selectedEpisode.officialRating
-                ? ` • ${this.state.selectedEpisode.officialRating}`
-                : ''
-            }`}</Text>
-            <Text
-              style={{
-                color: this.props.colors.text,
-                maxWidth: '100%',
-                marginTop: 10,
-                marginBottom: 20
-              }}
-            >
-              {this.state.selectedEpisode.overview}
-            </Text>
-            <ButtonComponent
-              text={`Play Episode ${this.state.selectedEpisode.indexNumber}`}
-              onPress={() =>
-                this.props.navigation.navigate('Play', {
-                  itemId: this.state.selectedEpisode.id || ''
-                })
-              }
-              marginHorizontal={0}
-            />
-          </View>
+              <Text
+                style={{
+                  color: this.props.colors.text,
+                  fontSize: 20,
+                  fontWeight: '500'
+                }}
+              >
+                {this.state.selectedEpisode.name}
+              </Text>
+              <Text
+                style={{ color: this.props.colors.text, fontWeight: '300' }}
+              >{`Season ${
+                this.state.selectedEpisode.parentIndexNumber
+              } Episode ${this.state.selectedEpisode.indexNumber}${
+                this.state.selectedEpisode.officialRating
+                  ? ` • ${this.state.selectedEpisode.officialRating}`
+                  : ''
+              }`}</Text>
+              <Text
+                style={{
+                  color: this.props.colors.text,
+                  maxWidth: '100%',
+                  marginTop: 10,
+                  marginBottom: 20
+                }}
+              >
+                {this.state.selectedEpisode.overview}
+              </Text>
+              <ButtonComponent
+                text={`Play Episode ${this.state.selectedEpisode.indexNumber}`}
+                onPress={() =>
+                  this.props.navigation.navigate('Play', {
+                    itemId: this.state.selectedEpisode.id || ''
+                  })
+                }
+                marginHorizontal={0}
+              />
+            </View>
+          ) : (
+            <View />
+          )}
         </View>
       </View>
     );
