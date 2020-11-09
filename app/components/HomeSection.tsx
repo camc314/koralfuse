@@ -18,7 +18,13 @@ import { RootStackParamList } from '../routes/home';
 import { useTranslation } from 'react-i18next';
 import { FontAwesome } from '@expo/vector-icons';
 
-type sectionType = 'resumeItems' | 'latestMovies' | 'latestTv' | 'relatedItems';
+type sectionType =
+  | 'resumeItems'
+  | 'latestMovies'
+  | 'latestTv'
+  | 'relatedItems'
+  | 'personTv'
+  | 'personMovies';
 
 type Props = {
   data: BaseItemDto[];
@@ -51,6 +57,12 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
       break;
     case 'relatedItems':
       sectionTitle = t('moreLikeThis');
+      break;
+    case 'personTv':
+      sectionTitle = t('shows');
+      break;
+    case 'personMovies':
+      sectionTitle = t('movies');
       break;
   }
 
