@@ -134,6 +134,10 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
           : 225
         : 200;
 
+    if (!sectionData) {
+      return <View />;
+    }
+
     return (
       <View
         style={{
