@@ -10,13 +10,14 @@ import { useTranslation } from 'react-i18next';
 
 type Props = StackScreenProps<RootStackParamList, 'People'>;
 
-type emptySectionProps = 'personTv' | 'personMovies';
+type emptySectionProps = 'personTv' | 'personMovies' | 'personEpisodes';
 
 export default function ItemView({ route, navigation }: Props): JSX.Element {
   const [person, setPerson] = useState({} as BaseItemDto);
   const [emptySection, setEmptySection] = useState({
     personTv: false,
-    personMovies: false
+    personMovies: false,
+    personEpisodes: false
   });
   const { t } = useTranslation();
   const deviceWidth = Dimensions.get('window').width;
@@ -96,7 +97,9 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
       ) : (
         <View />
       )}
-      {!emptySection.personMovies && !emptySection.personTv ? (
+      {!emptySection.personMovies &&
+      !emptySection.personTv &&
+      !emptySection.personEpisodes ? (
         <>
           <PersonItems
             sectionType="personTv"
@@ -107,6 +110,11 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
             sectionType="personMovies"
             itemId={route.params.personId}
             emptySectionCallback={() => emptySectionCallback('personMovies')}
+          />
+          <PersonItems
+            sectionType="personEpisodes"
+            itemId={route.params.personId}
+            emptySectionCallback={() => emptySectionCallback('personEpisodes')}
           />
         </>
       ) : (

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../services/api';
-import { BaseItemDto } from '../services/fetch-api';
+import { BaseItemDto, GetItemsRequest } from '../services/fetch-api';
 import HomeSection from './HomeSection';
 
-type sectionType = 'personMovies' | 'personTv';
+type sectionType = 'personTv' | 'personMovies' | 'personEpisodes';
 
 type Props = {
   itemId: string;
@@ -25,7 +25,7 @@ export default function personItems({
       includeItemTypes: '',
       recursive: true,
       personIds: itemId
-    };
+    } as GetItemsRequest;
 
     switch (sectionType) {
       case 'personMovies':
@@ -33,6 +33,9 @@ export default function personItems({
         break;
       case 'personTv':
         options.includeItemTypes = 'Series';
+        break;
+      case 'personEpisodes':
+        options.includeItemTypes = 'Episode';
         break;
     }
 

@@ -24,7 +24,8 @@ type sectionType =
   | 'latestTv'
   | 'relatedItems'
   | 'personTv'
-  | 'personMovies';
+  | 'personMovies'
+  | 'personEpisodes';
 
 type Props = {
   data: BaseItemDto[];
@@ -64,6 +65,9 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
     case 'personMovies':
       sectionTitle = t('movies');
       break;
+    case 'personEpisodes':
+      sectionTitle = t('episodes');
+      break;
   }
 
   const renderItem: ListRenderItem<BaseItemDto> = ({ item }) => {
@@ -86,6 +90,10 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
         cardTitle = item.name || '';
         cardSubtitle = 'CONTINUE';
       }
+    } else if (sectionType === 'personEpisodes') {
+      imageType = 'Primary';
+      cardTitle = item.seriesName || '';
+      cardSubtitle = `S${item.parentIndexNumber} • E${item.indexNumber}`;
     } else {
       cardTitle = item.name || '';
       aspectRatio = 0.666;
@@ -140,7 +148,7 @@ export default function HomeSection({ data, sectionType }: Props): JSX.Element {
     };
 
     const itemHeight =
-      sectionType === 'resumeItems'
+      sectionType === 'resumeItems' || sectionType === 'personEpisodes'
         ? deviceWidth < 500
           ? (deviceWidth * 0.8 * 9) / 16
           : 225
