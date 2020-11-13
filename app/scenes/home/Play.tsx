@@ -6,10 +6,12 @@ import { IOSPlaybackProfile } from '../../services/playback-profiles/playbackPro
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
 import { BaseItemDto, PlaybackInfoResponse } from '../../services/fetch-api';
+import { LoadingComponent } from '../../components/LoadingComponent';
 
 type Props = StackScreenProps<RootStackParamList, 'Play'>;
 
 export default function VideoPlayer({ route }: Props): JSX.Element {
+  const [ready, setReady] = useState(false);
   const [streamUrl, setStreamUrl] = useState('');
   const [itemInfo, setItemInfo] = useState({} as BaseItemDto);
   const [playbackInfo, setPlaybackInfo] = useState({} as PlaybackInfoResponse);
@@ -87,6 +89,7 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
   }, []);
 
   const goFullScreen = () => {
+    setReady(true);
     player.current?.presentFullscreenPlayer();
   };
 
@@ -135,6 +138,10 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
       }
     }
   };
+
+  if (!ready) {
+    return <LoadingComponent />;
+  }
 
   return (
     <View>
