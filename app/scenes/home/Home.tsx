@@ -1,6 +1,12 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { ActionSheetIOS, Pressable, ScrollView, Text } from 'react-native';
+import {
+  ActionSheetIOS,
+  Pressable,
+  ScrollView,
+  Text,
+  View
+} from 'react-native';
 
 import { RootStackParamList } from '../../routes/home';
 import { api } from '../../services/api';
@@ -8,6 +14,8 @@ import { BaseItemDto } from '../../services/fetch-api';
 import HomeSection from '../../components/HomeSection';
 import { Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
+import { LoadingComponent } from '../../components/LoadingComponent';
+import { useTranslation } from 'react-i18next';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -16,6 +24,8 @@ type Props = {
 };
 
 export default function home({ navigation }: Props): JSX.Element {
+  const { t } = useTranslation();
+  const [loaded, setLoaded] = useState(false);
   const [libraries, setLibraries] = useState([] as BaseItemDto[]);
   const [itemsResume, setItemsResume] = useState([] as BaseItemDto[]);
   const [itemsNextUp, setItemsNextUp] = useState([] as BaseItemDto[]);
@@ -64,6 +74,7 @@ export default function home({ navigation }: Props): JSX.Element {
 
       if (filteredResults) {
         setLibraries(filteredResults);
+        setLoaded(true);
       }
     });
 
@@ -200,6 +211,21 @@ export default function home({ navigation }: Props): JSX.Element {
       </Pressable>
     );
   };
+
+  if (!loaded) {
+    return <LoadingComponent />;
+  } else if (!libraries.length) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}
+      >
+        <Text>{t('noLibrariesFound')}</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView

@@ -8,8 +8,7 @@ import {
   ScrollView
 } from 'react-native';
 import { api, getImageUrl } from '../../services/api';
-import { AuthenticationResult, BaseItemDto } from '../../services/fetch-api';
-import AsyncStorage from '@react-native-community/async-storage';
+import { BaseItemDto } from '../../services/fetch-api';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
@@ -19,33 +18,32 @@ import ScalableImage from 'react-native-scalable-image';
 import SeasonView from '../../components/SeasonView';
 import RelatedItems from '../../components/RelatedItems';
 import PeopleView from '../../components/PeopleView';
+import { LoadingComponent } from '../../components/LoadingComponent';
 
 type Props = StackScreenProps<RootStackParamList, 'Item'>;
 
 export default function ItemView({ route, navigation }: Props): JSX.Element {
   const [item, setItem] = useState({} as BaseItemDto);
+  const [loaded, setLoaded] = useState(false);
   const deviceWidth = Dimensions.get('window').width;
   const deviceHeight = Dimensions.get('window').height;
 
   const { colors } = useTheme();
 
   useEffect(() => {
-    AsyncStorage.getItem('userInfo').then((userInfo) => {
-      if (userInfo) {
-        const userInfoParsed = JSON.parse(userInfo) as AuthenticationResult;
-        api.ItemsApi.getItems({
-          uId: userInfoParsed?.user?.id || '',
-          userId: userInfoParsed?.user?.id,
-          ids: route.params.itemId,
-          fields: 'overview,genres'
-        }).then((results) => {
-          if (results.items) {
-            setItem(results.items[0]);
-            getSubtitle(results.items[0]);
-            navigation.setOptions({ title: results.items[0].name || '' });
-          }
-        });
+    api.ItemsApi.getItems({
+      uId: api.userInfo?.user?.id || '',
+      userId: api.userInfo?.user?.id,
+      ids: route.params.itemId,
+      fields: 'overview,genres'
+    }).then((results) => {
+      if (results.items) {
+        setItem(results.items[0]);
+        getSubtitle(results.items[0]);
+        navigation.setOptions({ title: results.items[0].name || '' });
       }
+
+      setLoaded(true);
     });
   }, []);
 
@@ -87,6 +85,10 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
 
     return response.join(' • ');
   };
+
+  if (!loaded) {
+    return <LoadingComponent />;
+  }
 
   return (
     <ScrollView>

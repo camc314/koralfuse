@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  View,
-  Text,
-  ActivityIndicator,
-  TextInput
-} from 'react-native';
+import { Dimensions, FlatList, View, Text, TextInput } from 'react-native';
 import { api } from '../../services/api';
 import { BaseItemDto } from '../../services/fetch-api';
 import Card from '../../components/Card';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
+import { LoadingComponent } from '../../components/LoadingComponent';
 import { useTranslation } from 'react-i18next';
 
 type Props = StackScreenProps<RootStackParamList, 'Library'>;
@@ -25,7 +19,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLibrary, setFilteredLibrary] = useState([] as BaseItemDto[]);
   const [refreshing, setRefresh] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const deviceWidth = Dimensions.get('window').width;
   const deviceHeight = Dimensions.get('window').height;
   const theme = useTheme();
@@ -65,8 +59,8 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         setFilteredLibrary(results.items);
         setRefresh(false);
       }
-      if (loading) {
-        setLoading(false);
+      if (!loaded) {
+        setLoaded(true);
       }
     });
   };
@@ -190,17 +184,8 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
     setFilteredLibrary(newData);
   };
 
-  if (loading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center'
-        }}
-      >
-        <ActivityIndicator size="small" />
-      </View>
-    );
+  if (!loaded) {
+    return <LoadingComponent />;
   }
 
   return (

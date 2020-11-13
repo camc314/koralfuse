@@ -7,12 +7,14 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
 import PersonItems from '../../components/PersonItems';
 import { useTranslation } from 'react-i18next';
+import { LoadingComponent } from '../../components/LoadingComponent';
 
 type Props = StackScreenProps<RootStackParamList, 'People'>;
 
 type emptySectionProps = 'personTv' | 'personMovies' | 'personEpisodes';
 
 export default function ItemView({ route, navigation }: Props): JSX.Element {
+  const [loaded, setLoaded] = useState(false);
   const [person, setPerson] = useState({} as BaseItemDto);
   const [emptySection, setEmptySection] = useState({
     personTv: false,
@@ -35,12 +37,17 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
         setPerson(res.items[0]);
         navigation.setOptions({ title: res.items[0].name || '' });
       }
+      setLoaded(true);
     });
   }, []);
 
   const emptySectionCallback = (type: emptySectionProps) => {
     setEmptySection({ ...emptySection, [type]: true });
   };
+
+  if (!loaded) {
+    return <LoadingComponent />;
+  }
 
   return (
     <ScrollView>
