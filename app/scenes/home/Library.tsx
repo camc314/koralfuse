@@ -210,6 +210,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         onRefresh={getItems}
         ListHeaderComponent={ListHeader()}
         ListFooterComponent={footerComponent}
+        scrollIndicatorInsets={{ right: 1 }}
         columnWrapperStyle={{
           flex: 1,
           justifyContent: 'space-around',

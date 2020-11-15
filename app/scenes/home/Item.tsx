@@ -91,7 +91,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
   }
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
       <View>
         {deviceWidth > 500 ? (
           <View
