@@ -50,7 +50,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
   }
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
       <Text
         style={[
           {
