@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { AVPlaybackStatus, Video } from 'expo-av';
 import { api } from '../../services/api';
 import { IOSPlaybackProfile } from '../../services/playback-profiles/playbackProfile';
@@ -26,6 +26,7 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
       itemId: route.params.itemId,
       deviceProfileDto: IOSPlaybackProfile
     }).then((res) => {
+      console.log(res);
       setPlaybackInfo(res);
       // If direct Play is supported
       if (
@@ -33,6 +34,7 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
         res?.mediaSources[0] &&
         res?.mediaSources[0].supportsDirectStream
       ) {
+        console.log('DirPlay');
         const directOptions = {
           static: 'true',
           mediaSourceId: res?.mediaSources[0].id || '',
@@ -53,10 +55,12 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
         setStreamUrl(source);
       } else if (res?.mediaSources && res?.mediaSources[0]) {
         // If transcoding is required
+        console.log('transcode');
         const source = `${api.baseUrl}${res?.mediaSources[0].transcodingUrl}`;
-
+        console.log(source);
         setStreamUrl(source);
       }
+      setReady(true);
       return;
     });
   };
@@ -89,7 +93,6 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
   }, []);
 
   const goFullScreen = () => {
-    setReady(true);
     player.current?.presentFullscreenPlayer();
   };
 
@@ -160,6 +163,7 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
         style={{ width: '100%', height: '100%' }}
         onPlaybackStatusUpdate={reportPlaybackStatus}
         onLoad={reportBeginPlayback}
+        onError={(a) => Alert.alert(a)}
       />
     </View>
   );
