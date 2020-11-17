@@ -2,6 +2,7 @@
     "about": "About",
     "addItemsAdmin": "Add items to the library in the admin dashboard",
     "badRequest": "Bad Request, Try again",
+    "castCrew": "Cast and Crew",
     "checkServerAddress": "Make sure the server address is spelt correctly",
     "connectServer": "Connect to Server",
     "continueWatching": "Continue Watching",
@@ -15,8 +16,10 @@
     "login": "Login",
     "logout": "Logout",
     "moreLikeThis": "More Like This",
+    "movies": "Movies",
     "personDoesNotStar": "Unable to find any media that this person stars in.",
     "play": "Play",
+    "shows": "Shows",
     "unableToConnect": "Unable to connect to the selected server",
     "userSettings": "User Settings"
   }

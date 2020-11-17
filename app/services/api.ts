@@ -12,7 +12,8 @@ import {
   PlaystateApi,
   TvShowsApi,
   UserApi,
-  UserLibraryApi
+  UserLibraryApi,
+  UserViewsApi
 } from './fetch-api';
 
 export const getHeaders = async (replace: boolean): Promise<string> => {
@@ -66,6 +67,7 @@ interface ApiInterface {
   LibraryApi: LibraryApi;
   PlaystateApi: PlaystateApi;
   ItemRefreshApi: ItemRefreshApi;
+  UserViewsApi: UserViewsApi;
 }
 
 export const api = {} as ApiInterface;
@@ -165,6 +167,19 @@ export const initItemsRefreshApi = async (): Promise<void> => {
   const token = await getHeaders(false);
   const baseUrl = await getBaseUrl();
   api.ItemRefreshApi = new ItemRefreshApi(
+    new Configuration({
+      basePath: baseUrl,
+      headers: {
+        'X-Emby-Authorization': token
+      }
+    })
+  );
+};
+
+export const initUserViewsApi = async (): Promise<void> => {
+  const token = await getHeaders(false);
+  const baseUrl = await getBaseUrl();
+  api.UserViewsApi = new UserViewsApi(
     new Configuration({
       basePath: baseUrl,
       headers: {
