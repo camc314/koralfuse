@@ -12,6 +12,7 @@ export default function selectServer(): JSX.Element {
   const { colors } = useTheme();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function selectServer(): JSX.Element {
 
   const login = async () => {
     try {
+      setLoading(true);
       const response = await api.UserApi.authenticateUserByName({
         authenticateUserByName: { username: username, pw: password }
       });
@@ -40,6 +42,7 @@ export default function selectServer(): JSX.Element {
       }
       console.error(error);
     }
+    setLoading(false);
   };
 
   const scheme = useColorScheme();
@@ -99,7 +102,12 @@ export default function selectServer(): JSX.Element {
         onChangeText={(text) => setPassword(text)}
         placeholder={t('password')}
       />
-      <Button text={t('login')} onPress={login} marginHorizontal={10} />
+      <Button
+        text={t('login')}
+        onPress={login}
+        marginHorizontal={10}
+        loading={loading}
+      />
     </View>
   );
 }

@@ -21,9 +21,11 @@ export default function selectServer({ navigation }: Props): JSX.Element {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const [serverUrl, setUrl] = useState('http://192.168.0.100:8096');
+  const [loading, setLoading] = useState(false);
 
   const checkServer = async () => {
     try {
+      setLoading(true);
       const response = await getPublicSysteminfo(serverUrl);
 
       if (response.Id) {
@@ -34,6 +36,7 @@ export default function selectServer({ navigation }: Props): JSX.Element {
       console.error(error);
       Alert.alert(t('unableToConnect'), t('checkServerAddress'));
     }
+    setLoading(false);
   };
 
   const scheme = useColorScheme();
@@ -71,6 +74,7 @@ export default function selectServer({ navigation }: Props): JSX.Element {
       />
       <Button
         text={t('connectServer')}
+        loading={loading}
         onPress={checkServer}
         marginHorizontal={10}
       />

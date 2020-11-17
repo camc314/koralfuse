@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { Pressable, Text, Dimensions } from 'react-native';
+import {
+  Pressable,
+  Text,
+  Dimensions,
+  View,
+  ActivityIndicator
+} from 'react-native';
 
 interface ButtonComponentProps {
   onPress(): void;
   text: string;
   marginHorizontal: number;
+  loading?: boolean;
 }
 class ButtonComponent extends Component<ButtonComponentProps> {
   constructor(props: ButtonComponentProps) {
@@ -31,17 +38,27 @@ class ButtonComponent extends Component<ButtonComponentProps> {
           }
         ]}
       >
-        <Text
-          style={{
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            fontSize: 18,
-            color: 'white',
-            margin: 16
-          }}
-        >
-          {text}
-        </Text>
+        {this.props.loading ? (
+          <View
+            style={{
+              margin: 16
+            }}
+          >
+            <ActivityIndicator />
+          </View>
+        ) : (
+          <Text
+            style={{
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              fontSize: 18,
+              color: 'white',
+              margin: 16
+            }}
+          >
+            {text}
+          </Text>
+        )}
       </Pressable>
     );
   }
