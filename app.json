@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "org.jellyfin.koralfuse"
+      "bundleIdentifier": "org.jellyfin.koralfuse",
+      "buildNumber": "2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
