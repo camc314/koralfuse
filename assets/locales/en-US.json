@@ -17,9 +17,13 @@
     "logout": "Logout",
     "moreLikeThis": "More Like This",
     "movies": "Movies",
+    "noResultFound": "No results found.",
     "personDoesNotStar": "Unable to find any media that this person stars in.",
     "play": "Play",
+    "searchMovies": "Search Movies",
+    "searchShows": "Search Shows",
     "shows": "Shows",
+    "trySomethingElse": "Try something else.",
     "unableToConnect": "Unable to connect to the selected server",
     "userSettings": "User Settings"
   }

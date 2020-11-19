@@ -4,7 +4,8 @@ import {
   FlatList,
   View,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from 'react-native';
 import { api } from '../../services/api';
 import { BaseItemDto } from '../../services/fetch-api';
@@ -18,7 +19,11 @@ type Props = StackScreenProps<RootStackParamList, 'Library'>;
 
 export default function LibraryView({ route, navigation }: Props): JSX.Element {
   const { t } = useTranslation();
-  const [libraryItem, setLibraryItems] = useState([] as BaseItemDto[]);
+  const [unfilteredLibrary, setUnfilteredLibrary] = useState(
+    [] as BaseItemDto[]
+  );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredLibrary, setFilteredLibrary] = useState([] as BaseItemDto[]);
   const [refreshing, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
   const deviceWidth = Dimensions.get('window').width;
@@ -29,6 +34,10 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
     navigation.setOptions({ title: route.params.libraryName });
     getItems();
   }, []);
+
+  useEffect(() => {
+    searchFilterFunction();
+  }, [searchQuery]);
 
   const getItems = () => {
     setRefresh(true);
@@ -52,7 +61,8 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
 
     api.ItemsApi.getItems(options).then((results) => {
       if (results.items) {
-        setLibraryItems(results.items);
+        setUnfilteredLibrary(results.items);
+        setFilteredLibrary(results.items);
         setRefresh(false);
       }
       if (loading) {
@@ -62,32 +72,62 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
   };
 
   const renderEmptyContainer = () => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          height: deviceHeight * 0.8,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text style={{ fontSize: 30, color: theme.colors.text }}>
-          {t('emptyLibrary')}
-        </Text>
-        <Text style={{ color: theme.colors.text, marginTop: 20 }}>
-          {t('addItemsAdmin')}
-        </Text>
-      </View>
-    );
+    if (unfilteredLibrary.length) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            height: deviceHeight * 0.8,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{ fontSize: 30, color: theme.colors.text }}>
+            {t('noResultFound')}
+          </Text>
+          <Text style={{ color: theme.colors.text, marginTop: 20 }}>
+            {t('trySomethingElse')}
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={{
+            flex: 1,
+            height: deviceHeight * 0.8,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{ fontSize: 30, color: theme.colors.text }}>
+            {t('emptyLibrary')}
+          </Text>
+          <Text style={{ color: theme.colors.text, marginTop: 20 }}>
+            {t('addItemsAdmin')}
+          </Text>
+        </View>
+      );
+    }
   };
 
   const footerComponent = () => {
-    if (libraryItem[0]) {
+    if (filteredLibrary.length !== unfilteredLibrary.length) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+          <Text style={{ color: theme.colors.text }}>
+            {filteredLibrary.length} Items
+          </Text>
+        </View>
+      );
+    }
+
+    if (unfilteredLibrary[0]) {
       let totalRunTime = 0;
       let runTimeText = '';
 
-      if (libraryItem[0].type === 'Movie') {
-        for (const item of libraryItem) {
+      if (unfilteredLibrary[0].type === 'Movie') {
+        for (const item of unfilteredLibrary) {
           totalRunTime += item.runTimeTicks || 0;
         }
 
@@ -99,13 +139,55 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
           <Text style={{ color: theme.colors.text }}>
-            {libraryItem.length} Items{runTimeText ? `, ${runTimeText}` : ''}
+            {unfilteredLibrary.length} Items
+            {runTimeText ? `, ${runTimeText}` : ''}
           </Text>
         </View>
       );
     } else {
       return <View />;
     }
+  };
+
+  const ListHeader = () => {
+    if (!unfilteredLibrary.length) {
+      return <View />;
+    }
+
+    return (
+      <>
+        <TextInput
+          placeholder={
+            route.params.libraryType === 'movies'
+              ? t('searchMovies')
+              : t('searchShows')
+          }
+          style={[
+            {
+              height: 40,
+              padding: 10,
+              borderRadius: 10,
+              margin: 10,
+              color: theme.colors.text
+            },
+            !theme.dark
+              ? { backgroundColor: '#ddd' }
+              : { backgroundColor: '#4c4c4c' }
+          ]}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          clearButtonMode="always"
+        />
+      </>
+    );
+  };
+
+  const searchFilterFunction = () => {
+    const newData = unfilteredLibrary.filter((item) => {
+      const itemData = `${item.name?.toLowerCase()}`;
+      return itemData.indexOf(searchQuery.toLowerCase()) > -1;
+    });
+    setFilteredLibrary(newData);
   };
 
   if (loading) {
@@ -124,7 +206,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
   return (
     <View>
       <FlatList
-        data={libraryItem}
+        data={filteredLibrary}
         renderItem={({ item }) => <Card item={item} />}
         horizontal={false}
         removeClippedSubviews={true}
@@ -141,6 +223,7 @@ export default function LibraryView({ route, navigation }: Props): JSX.Element {
         ListEmptyComponent={renderEmptyContainer()}
         refreshing={refreshing}
         onRefresh={getItems}
+        ListHeaderComponent={ListHeader()}
         ListFooterComponent={footerComponent}
         columnWrapperStyle={{
           flex: 1,
