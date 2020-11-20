@@ -60,7 +60,7 @@ export interface PublicSystemInfo {
      * @type {boolean}
      * @memberof PublicSystemInfo
      */
-    startupWizardCompleted?: boolean;
+    startupWizardCompleted?: boolean | null;
 }
 
 export function PublicSystemInfoFromJSON(json: any): PublicSystemInfo {

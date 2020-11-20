@@ -34,7 +34,7 @@ export class VideoAttachmentsApi extends runtime.BaseAPI {
     /**
      * Get video attachment.
      */
-    async getAttachmentRaw(requestParameters: GetAttachmentRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getAttachmentRaw(requestParameters: GetAttachmentRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.videoId === null || requestParameters.videoId === undefined) {
             throw new runtime.RequiredError('videoId','Required parameter requestParameters.videoId was null or undefined when calling getAttachment.');
         }
@@ -62,15 +62,14 @@ export class VideoAttachmentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Get video attachment.
      */
-    async getAttachment(requestParameters: GetAttachmentRequest): Promise<Blob> {
-        const response = await this.getAttachmentRaw(requestParameters);
-        return await response.value();
+    async getAttachment(requestParameters: GetAttachmentRequest): Promise<void> {
+        await this.getAttachmentRaw(requestParameters);
     }
 
 }

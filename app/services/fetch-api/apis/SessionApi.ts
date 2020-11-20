@@ -66,7 +66,7 @@ export interface PlayRequest {
 export interface PostCapabilitiesRequest {
     id?: string | null;
     playableMediaTypes?: string | null;
-    supportedCommands?: string | null;
+    supportedCommands?: Array<GeneralCommandType> | null;
     supportsMediaControl?: boolean;
     supportsSync?: boolean;
     supportsPersistentIdentifier?: boolean;
@@ -384,7 +384,7 @@ export class SessionApi extends runtime.BaseAPI {
             queryParameters['playableMediaTypes'] = requestParameters.playableMediaTypes;
         }
 
-        if (requestParameters.supportedCommands !== undefined) {
+        if (requestParameters.supportedCommands) {
             queryParameters['supportedCommands'] = requestParameters.supportedCommands;
         }
 

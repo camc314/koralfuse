@@ -39,6 +39,7 @@ export interface InstallPackageRequest {
     name: string;
     assemblyGuid?: string | null;
     version?: string | null;
+    repositoryUrl?: string | null;
 }
 
 export interface SetRepositoriesRequest {
@@ -199,6 +200,10 @@ export class PackageApi extends runtime.BaseAPI {
             queryParameters['version'] = requestParameters.version;
         }
 
+        if (requestParameters.repositoryUrl !== undefined) {
+            queryParameters['repositoryUrl'] = requestParameters.repositoryUrl;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -238,7 +243,7 @@ export class PackageApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/Repositories`,
-            method: 'OPTIONS',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters.repositoryInfo.map(RepositoryInfoToJSON),

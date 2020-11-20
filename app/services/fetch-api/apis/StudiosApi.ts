@@ -21,6 +21,12 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
 } from '../models';
 
 export interface GetStudioRequest {
@@ -29,30 +35,17 @@ export interface GetStudioRequest {
 }
 
 export interface GetStudiosRequest {
-    minCommunityRating?: number | null;
     startIndex?: number | null;
     limit?: number | null;
     searchTerm?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     excludeItemTypes?: string | null;
     includeItemTypes?: string | null;
-    filters?: string | null;
     isFavorite?: boolean | null;
-    mediaTypes?: string | null;
-    genres?: string | null;
-    genreIds?: string | null;
-    officialRatings?: string | null;
-    tags?: string | null;
-    years?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
-    person?: string | null;
-    personIds?: string | null;
-    personTypes?: string | null;
-    studios?: string | null;
-    studioIds?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     userId?: string | null;
     nameStartsWithOrGreater?: string | null;
     nameStartsWith?: string | null;
@@ -110,10 +103,6 @@ export class StudiosApi extends runtime.BaseAPI {
     async getStudiosRaw(requestParameters: GetStudiosRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         const queryParameters: any = {};
 
-        if (requestParameters.minCommunityRating !== undefined) {
-            queryParameters['minCommunityRating'] = requestParameters.minCommunityRating;
-        }
-
         if (requestParameters.startIndex !== undefined) {
             queryParameters['startIndex'] = requestParameters.startIndex;
         }
@@ -130,7 +119,7 @@ export class StudiosApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -142,36 +131,8 @@ export class StudiosApi extends runtime.BaseAPI {
             queryParameters['includeItemTypes'] = requestParameters.includeItemTypes;
         }
 
-        if (requestParameters.filters !== undefined) {
-            queryParameters['filters'] = requestParameters.filters;
-        }
-
         if (requestParameters.isFavorite !== undefined) {
             queryParameters['isFavorite'] = requestParameters.isFavorite;
-        }
-
-        if (requestParameters.mediaTypes !== undefined) {
-            queryParameters['mediaTypes'] = requestParameters.mediaTypes;
-        }
-
-        if (requestParameters.genres !== undefined) {
-            queryParameters['genres'] = requestParameters.genres;
-        }
-
-        if (requestParameters.genreIds !== undefined) {
-            queryParameters['genreIds'] = requestParameters.genreIds;
-        }
-
-        if (requestParameters.officialRatings !== undefined) {
-            queryParameters['officialRatings'] = requestParameters.officialRatings;
-        }
-
-        if (requestParameters.tags !== undefined) {
-            queryParameters['tags'] = requestParameters.tags;
-        }
-
-        if (requestParameters.years !== undefined) {
-            queryParameters['years'] = requestParameters.years;
         }
 
         if (requestParameters.enableUserData !== undefined) {
@@ -182,28 +143,8 @@ export class StudiosApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
-        }
-
-        if (requestParameters.person !== undefined) {
-            queryParameters['person'] = requestParameters.person;
-        }
-
-        if (requestParameters.personIds !== undefined) {
-            queryParameters['personIds'] = requestParameters.personIds;
-        }
-
-        if (requestParameters.personTypes !== undefined) {
-            queryParameters['personTypes'] = requestParameters.personTypes;
-        }
-
-        if (requestParameters.studios !== undefined) {
-            queryParameters['studios'] = requestParameters.studios;
-        }
-
-        if (requestParameters.studioIds !== undefined) {
-            queryParameters['studioIds'] = requestParameters.studioIds;
         }
 
         if (requestParameters.userId !== undefined) {

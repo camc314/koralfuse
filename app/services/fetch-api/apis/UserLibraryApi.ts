@@ -21,6 +21,12 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     UserItemDataDto,
     UserItemDataDtoFromJSON,
     UserItemDataDtoToJSON,
@@ -44,12 +50,12 @@ export interface GetItemRequest {
 export interface GetLatestMediaRequest {
     userId: string;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     includeItemTypes?: string | null;
     isPlayed?: boolean | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
     limit?: number;
     groupItems?: boolean;
@@ -218,7 +224,7 @@ export class UserLibraryApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -238,7 +244,7 @@ export class UserLibraryApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

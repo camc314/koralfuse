@@ -33,6 +33,12 @@ import {
     GuideInfo,
     GuideInfoFromJSON,
     GuideInfoToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     ListingsProviderInfo,
     ListingsProviderInfoFromJSON,
     ListingsProviderInfoToJSON,
@@ -158,8 +164,8 @@ export interface GetLiveTvChannelsRequest {
     isDisliked?: boolean | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
-    fields?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
+    fields?: Array<ItemFields> | null;
     enableUserData?: boolean | null;
     sortBy?: string | null;
     sortOrder?: SortOrder;
@@ -189,11 +195,11 @@ export interface GetLiveTvProgramsRequest {
     genreIds?: string | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
     seriesTimerId?: string | null;
     librarySeriesId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableTotalRecordCount?: boolean;
 }
 
@@ -218,9 +224,9 @@ export interface GetRecommendedProgramsRequest {
     isSports?: boolean | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     genreIds?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableUserData?: boolean | null;
     enableTotalRecordCount?: boolean;
 }
@@ -252,8 +258,8 @@ export interface GetRecordingsRequest {
     seriesTimerId?: string | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
-    fields?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
+    fields?: Array<ItemFields> | null;
     enableUserData?: boolean | null;
     isMovie?: boolean | null;
     isSeries?: boolean | null;
@@ -275,8 +281,8 @@ export interface GetRecordingsSeriesRequest {
     seriesTimerId?: string | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
-    fields?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
+    fields?: Array<ItemFields> | null;
     enableUserData?: boolean | null;
     enableTotalRecordCount?: boolean;
 }
@@ -1013,11 +1019,11 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -1185,7 +1191,7 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -1201,7 +1207,7 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['librarySeriesId'] = requestParameters.librarySeriesId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -1354,7 +1360,7 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -1362,7 +1368,7 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['genreIds'] = requestParameters.genreIds;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -1579,11 +1585,11 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -1689,11 +1695,11 @@ export class LiveTvApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 

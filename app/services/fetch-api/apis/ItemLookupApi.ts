@@ -55,7 +55,6 @@ import {
 
 export interface ApplySearchCriteriaRequest {
     itemId: string;
-    id: string;
     remoteSearchResult: RemoteSearchResult;
     replaceAllImages?: boolean;
 }
@@ -118,10 +117,6 @@ export class ItemLookupApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling applySearchCriteria.');
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling applySearchCriteria.');
-        }
-
         if (requestParameters.remoteSearchResult === null || requestParameters.remoteSearchResult === undefined) {
             throw new runtime.RequiredError('remoteSearchResult','Required parameter requestParameters.remoteSearchResult was null or undefined when calling applySearchCriteria.');
         }
@@ -141,7 +136,7 @@ export class ItemLookupApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/Items/RemoteSearch/Apply/{id}`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/Items/RemoteSearch/Apply/{itemId}`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

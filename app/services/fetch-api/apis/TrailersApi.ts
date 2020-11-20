@@ -18,6 +18,18 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
+    ItemFilter,
+    ItemFilterFromJSON,
+    ItemFilterToJSON,
+    LocationType,
+    LocationTypeFromJSON,
+    LocationTypeToJSON,
 } from '../models';
 
 export interface GetTrailersRequest {
@@ -34,7 +46,7 @@ export interface GetTrailersRequest {
     isHd?: boolean | null;
     is4K?: boolean | null;
     locationTypes?: string | null;
-    excludeLocationTypes?: string | null;
+    excludeLocationTypes?: Array<LocationType> | null;
     isMissing?: boolean | null;
     isUnaired?: boolean | null;
     minCommunityRating?: number | null;
@@ -54,12 +66,12 @@ export interface GetTrailersRequest {
     searchTerm?: string | null;
     sortOrder?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     excludeItemTypes?: string | null;
-    filters?: string | null;
+    filters?: Array<ItemFilter> | null;
     isFavorite?: boolean | null;
     mediaTypes?: string | null;
-    imageTypes?: string | null;
+    imageTypes?: Array<ImageType> | null;
     sortBy?: string | null;
     isPlayed?: boolean | null;
     genres?: string | null;
@@ -68,7 +80,7 @@ export interface GetTrailersRequest {
     years?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     person?: string | null;
     personIds?: string | null;
     personTypes?: string | null;
@@ -165,7 +177,7 @@ export class TrailersApi extends runtime.BaseAPI {
             queryParameters['locationTypes'] = requestParameters.locationTypes;
         }
 
-        if (requestParameters.excludeLocationTypes !== undefined) {
+        if (requestParameters.excludeLocationTypes) {
             queryParameters['excludeLocationTypes'] = requestParameters.excludeLocationTypes;
         }
 
@@ -245,7 +257,7 @@ export class TrailersApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -253,7 +265,7 @@ export class TrailersApi extends runtime.BaseAPI {
             queryParameters['excludeItemTypes'] = requestParameters.excludeItemTypes;
         }
 
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
@@ -265,7 +277,7 @@ export class TrailersApi extends runtime.BaseAPI {
             queryParameters['mediaTypes'] = requestParameters.mediaTypes;
         }
 
-        if (requestParameters.imageTypes !== undefined) {
+        if (requestParameters.imageTypes) {
             queryParameters['imageTypes'] = requestParameters.imageTypes;
         }
 
@@ -301,7 +313,7 @@ export class TrailersApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

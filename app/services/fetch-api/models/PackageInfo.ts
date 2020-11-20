@@ -69,6 +69,18 @@ export interface PackageInfo {
      * @memberof PackageInfo
      */
     versions?: Array<VersionInfo> | null;
+    /**
+     * Gets or sets the repository name.
+     * @type {string}
+     * @memberof PackageInfo
+     */
+    repositoryName?: string | null;
+    /**
+     * Gets or sets the repository url.
+     * @type {string}
+     * @memberof PackageInfo
+     */
+    repositoryUrl?: string | null;
 }
 
 export function PackageInfoFromJSON(json: any): PackageInfo {
@@ -88,6 +100,8 @@ export function PackageInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'category': !exists(json, 'category') ? undefined : json['category'],
         'guid': !exists(json, 'guid') ? undefined : json['guid'],
         'versions': !exists(json, 'versions') ? undefined : (json['versions'] === null ? null : (json['versions'] as Array<any>).map(VersionInfoFromJSON)),
+        'repositoryName': !exists(json, 'repositoryName') ? undefined : json['repositoryName'],
+        'repositoryUrl': !exists(json, 'repositoryUrl') ? undefined : json['repositoryUrl'],
     };
 }
 
@@ -107,6 +121,8 @@ export function PackageInfoToJSON(value?: PackageInfo | null): any {
         'category': value.category,
         'guid': value.guid,
         'versions': value.versions === undefined ? undefined : (value.versions === null ? null : (value.versions as Array<any>).map(VersionInfoToJSON)),
+        'repositoryName': value.repositoryName,
+        'repositoryUrl': value.repositoryUrl,
     };
 }
 

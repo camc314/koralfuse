@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 
 export interface GetUniversalAudioStreamRequest {
     itemId: string;
-    container: string | null;
+    container?: string | null;
     mediaSourceId?: string | null;
     deviceId?: string | null;
     userId?: string | null;
@@ -25,26 +25,7 @@ export interface GetUniversalAudioStreamRequest {
     maxAudioChannels?: number | null;
     transcodingAudioChannels?: number | null;
     maxStreamingBitrate?: number | null;
-    startTimeTicks?: number | null;
-    transcodingContainer?: string | null;
-    transcodingProtocol?: string | null;
-    maxAudioSampleRate?: number | null;
-    maxAudioBitDepth?: number | null;
-    enableRemoteMedia?: boolean | null;
-    breakOnNonKeyFrames?: boolean;
-    enableRedirection?: boolean;
-}
-
-export interface GetUniversalAudioStream2Request {
-    itemId: string;
-    container: string | null;
-    mediaSourceId?: string | null;
-    deviceId?: string | null;
-    userId?: string | null;
-    audioCodec?: string | null;
-    maxAudioChannels?: number | null;
-    transcodingAudioChannels?: number | null;
-    maxStreamingBitrate?: number | null;
+    audioBitRate?: number | null;
     startTimeTicks?: number | null;
     transcodingContainer?: string | null;
     transcodingProtocol?: string | null;
@@ -57,7 +38,7 @@ export interface GetUniversalAudioStream2Request {
 
 export interface HeadUniversalAudioStreamRequest {
     itemId: string;
-    container: string | null;
+    container?: string | null;
     mediaSourceId?: string | null;
     deviceId?: string | null;
     userId?: string | null;
@@ -65,26 +46,7 @@ export interface HeadUniversalAudioStreamRequest {
     maxAudioChannels?: number | null;
     transcodingAudioChannels?: number | null;
     maxStreamingBitrate?: number | null;
-    startTimeTicks?: number | null;
-    transcodingContainer?: string | null;
-    transcodingProtocol?: string | null;
-    maxAudioSampleRate?: number | null;
-    maxAudioBitDepth?: number | null;
-    enableRemoteMedia?: boolean | null;
-    breakOnNonKeyFrames?: boolean;
-    enableRedirection?: boolean;
-}
-
-export interface HeadUniversalAudioStream2Request {
-    itemId: string;
-    container: string | null;
-    mediaSourceId?: string | null;
-    deviceId?: string | null;
-    userId?: string | null;
-    audioCodec?: string | null;
-    maxAudioChannels?: number | null;
-    transcodingAudioChannels?: number | null;
-    maxStreamingBitrate?: number | null;
+    audioBitRate?: number | null;
     startTimeTicks?: number | null;
     transcodingContainer?: string | null;
     transcodingProtocol?: string | null;
@@ -108,11 +70,11 @@ export class UniversalAudioApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getUniversalAudioStream.');
         }
 
-        if (requestParameters.container === null || requestParameters.container === undefined) {
-            throw new runtime.RequiredError('container','Required parameter requestParameters.container was null or undefined when calling getUniversalAudioStream.');
-        }
-
         const queryParameters: any = {};
+
+        if (requestParameters.container !== undefined) {
+            queryParameters['container'] = requestParameters.container;
+        }
 
         if (requestParameters.mediaSourceId !== undefined) {
             queryParameters['mediaSourceId'] = requestParameters.mediaSourceId;
@@ -140,6 +102,10 @@ export class UniversalAudioApi extends runtime.BaseAPI {
 
         if (requestParameters.maxStreamingBitrate !== undefined) {
             queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
+        }
+
+        if (requestParameters.audioBitRate !== undefined) {
+            queryParameters['audioBitRate'] = requestParameters.audioBitRate;
         }
 
         if (requestParameters.startTimeTicks !== undefined) {
@@ -181,7 +147,7 @@ export class UniversalAudioApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/Audio/{itemId}/universal`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"container"}}`, encodeURIComponent(String(requestParameters.container))),
+            path: `/Audio/{itemId}/universal`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -201,114 +167,16 @@ export class UniversalAudioApi extends runtime.BaseAPI {
     /**
      * Gets an audio stream.
      */
-    async getUniversalAudioStream2Raw(requestParameters: GetUniversalAudioStream2Request): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getUniversalAudioStream2.');
-        }
-
-        if (requestParameters.container === null || requestParameters.container === undefined) {
-            throw new runtime.RequiredError('container','Required parameter requestParameters.container was null or undefined when calling getUniversalAudioStream2.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.mediaSourceId !== undefined) {
-            queryParameters['mediaSourceId'] = requestParameters.mediaSourceId;
-        }
-
-        if (requestParameters.deviceId !== undefined) {
-            queryParameters['deviceId'] = requestParameters.deviceId;
-        }
-
-        if (requestParameters.userId !== undefined) {
-            queryParameters['userId'] = requestParameters.userId;
-        }
-
-        if (requestParameters.audioCodec !== undefined) {
-            queryParameters['audioCodec'] = requestParameters.audioCodec;
-        }
-
-        if (requestParameters.maxAudioChannels !== undefined) {
-            queryParameters['maxAudioChannels'] = requestParameters.maxAudioChannels;
-        }
-
-        if (requestParameters.transcodingAudioChannels !== undefined) {
-            queryParameters['transcodingAudioChannels'] = requestParameters.transcodingAudioChannels;
-        }
-
-        if (requestParameters.maxStreamingBitrate !== undefined) {
-            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
-        }
-
-        if (requestParameters.startTimeTicks !== undefined) {
-            queryParameters['startTimeTicks'] = requestParameters.startTimeTicks;
-        }
-
-        if (requestParameters.transcodingContainer !== undefined) {
-            queryParameters['transcodingContainer'] = requestParameters.transcodingContainer;
-        }
-
-        if (requestParameters.transcodingProtocol !== undefined) {
-            queryParameters['transcodingProtocol'] = requestParameters.transcodingProtocol;
-        }
-
-        if (requestParameters.maxAudioSampleRate !== undefined) {
-            queryParameters['maxAudioSampleRate'] = requestParameters.maxAudioSampleRate;
-        }
-
-        if (requestParameters.maxAudioBitDepth !== undefined) {
-            queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
-        }
-
-        if (requestParameters.enableRemoteMedia !== undefined) {
-            queryParameters['enableRemoteMedia'] = requestParameters.enableRemoteMedia;
-        }
-
-        if (requestParameters.breakOnNonKeyFrames !== undefined) {
-            queryParameters['breakOnNonKeyFrames'] = requestParameters.breakOnNonKeyFrames;
-        }
-
-        if (requestParameters.enableRedirection !== undefined) {
-            queryParameters['enableRedirection'] = requestParameters.enableRedirection;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
-        }
-
-        const response = await this.request({
-            path: `/Audio/{itemId}/universal.{container}`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"container"}}`, encodeURIComponent(String(requestParameters.container))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.TextApiResponse(response) as any;
-    }
-
-    /**
-     * Gets an audio stream.
-     */
-    async getUniversalAudioStream2(requestParameters: GetUniversalAudioStream2Request): Promise<any> {
-        const response = await this.getUniversalAudioStream2Raw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Gets an audio stream.
-     */
     async headUniversalAudioStreamRaw(requestParameters: HeadUniversalAudioStreamRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
             throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling headUniversalAudioStream.');
         }
 
-        if (requestParameters.container === null || requestParameters.container === undefined) {
-            throw new runtime.RequiredError('container','Required parameter requestParameters.container was null or undefined when calling headUniversalAudioStream.');
-        }
-
         const queryParameters: any = {};
+
+        if (requestParameters.container !== undefined) {
+            queryParameters['container'] = requestParameters.container;
+        }
 
         if (requestParameters.mediaSourceId !== undefined) {
             queryParameters['mediaSourceId'] = requestParameters.mediaSourceId;
@@ -336,6 +204,10 @@ export class UniversalAudioApi extends runtime.BaseAPI {
 
         if (requestParameters.maxStreamingBitrate !== undefined) {
             queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
+        }
+
+        if (requestParameters.audioBitRate !== undefined) {
+            queryParameters['audioBitRate'] = requestParameters.audioBitRate;
         }
 
         if (requestParameters.startTimeTicks !== undefined) {
@@ -377,7 +249,7 @@ export class UniversalAudioApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/Audio/{itemId}/universal`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"container"}}`, encodeURIComponent(String(requestParameters.container))),
+            path: `/Audio/{itemId}/universal`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))),
             method: 'HEAD',
             headers: headerParameters,
             query: queryParameters,
@@ -391,104 +263,6 @@ export class UniversalAudioApi extends runtime.BaseAPI {
      */
     async headUniversalAudioStream(requestParameters: HeadUniversalAudioStreamRequest): Promise<any> {
         const response = await this.headUniversalAudioStreamRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Gets an audio stream.
-     */
-    async headUniversalAudioStream2Raw(requestParameters: HeadUniversalAudioStream2Request): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling headUniversalAudioStream2.');
-        }
-
-        if (requestParameters.container === null || requestParameters.container === undefined) {
-            throw new runtime.RequiredError('container','Required parameter requestParameters.container was null or undefined when calling headUniversalAudioStream2.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.mediaSourceId !== undefined) {
-            queryParameters['mediaSourceId'] = requestParameters.mediaSourceId;
-        }
-
-        if (requestParameters.deviceId !== undefined) {
-            queryParameters['deviceId'] = requestParameters.deviceId;
-        }
-
-        if (requestParameters.userId !== undefined) {
-            queryParameters['userId'] = requestParameters.userId;
-        }
-
-        if (requestParameters.audioCodec !== undefined) {
-            queryParameters['audioCodec'] = requestParameters.audioCodec;
-        }
-
-        if (requestParameters.maxAudioChannels !== undefined) {
-            queryParameters['maxAudioChannels'] = requestParameters.maxAudioChannels;
-        }
-
-        if (requestParameters.transcodingAudioChannels !== undefined) {
-            queryParameters['transcodingAudioChannels'] = requestParameters.transcodingAudioChannels;
-        }
-
-        if (requestParameters.maxStreamingBitrate !== undefined) {
-            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
-        }
-
-        if (requestParameters.startTimeTicks !== undefined) {
-            queryParameters['startTimeTicks'] = requestParameters.startTimeTicks;
-        }
-
-        if (requestParameters.transcodingContainer !== undefined) {
-            queryParameters['transcodingContainer'] = requestParameters.transcodingContainer;
-        }
-
-        if (requestParameters.transcodingProtocol !== undefined) {
-            queryParameters['transcodingProtocol'] = requestParameters.transcodingProtocol;
-        }
-
-        if (requestParameters.maxAudioSampleRate !== undefined) {
-            queryParameters['maxAudioSampleRate'] = requestParameters.maxAudioSampleRate;
-        }
-
-        if (requestParameters.maxAudioBitDepth !== undefined) {
-            queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
-        }
-
-        if (requestParameters.enableRemoteMedia !== undefined) {
-            queryParameters['enableRemoteMedia'] = requestParameters.enableRemoteMedia;
-        }
-
-        if (requestParameters.breakOnNonKeyFrames !== undefined) {
-            queryParameters['breakOnNonKeyFrames'] = requestParameters.breakOnNonKeyFrames;
-        }
-
-        if (requestParameters.enableRedirection !== undefined) {
-            queryParameters['enableRedirection'] = requestParameters.enableRedirection;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
-        }
-
-        const response = await this.request({
-            path: `/Audio/{itemId}/universal.{container}`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"container"}}`, encodeURIComponent(String(requestParameters.container))),
-            method: 'HEAD',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.TextApiResponse(response) as any;
-    }
-
-    /**
-     * Gets an audio stream.
-     */
-    async headUniversalAudioStream2(requestParameters: HeadUniversalAudioStream2Request): Promise<any> {
-        const response = await this.headUniversalAudioStream2Raw(requestParameters);
         return await response.value();
     }
 

@@ -26,6 +26,10 @@ import {
     ClientCapabilitiesFromJSON,
     ClientCapabilitiesFromJSONTyped,
     ClientCapabilitiesToJSON,
+    GeneralCommandType,
+    GeneralCommandTypeFromJSON,
+    GeneralCommandTypeFromJSONTyped,
+    GeneralCommandTypeToJSON,
     PlayerStateInfo,
     PlayerStateInfoFromJSON,
     PlayerStateInfoFromJSONTyped,
@@ -214,10 +218,10 @@ export interface SessionInfo {
     userPrimaryImageTag?: string | null;
     /**
      * Gets or sets the supported commands.
-     * @type {Array<string>}
+     * @type {Array<GeneralCommandType>}
      * @memberof SessionInfo
      */
-    readonly supportedCommands?: Array<string> | null;
+    readonly supportedCommands?: Array<GeneralCommandType> | null;
 }
 
 export function SessionInfoFromJSON(json: any): SessionInfo {
@@ -257,7 +261,7 @@ export function SessionInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'playlistItemId': !exists(json, 'PlaylistItemId') ? undefined : json['PlaylistItemId'],
         'serverId': !exists(json, 'ServerId') ? undefined : json['ServerId'],
         'userPrimaryImageTag': !exists(json, 'UserPrimaryImageTag') ? undefined : json['UserPrimaryImageTag'],
-        'supportedCommands': !exists(json, 'SupportedCommands') ? undefined : json['SupportedCommands'],
+        'supportedCommands': !exists(json, 'SupportedCommands') ? undefined : (json['SupportedCommands'] === null ? null : (json['SupportedCommands'] as Array<any>).map(GeneralCommandTypeFromJSON)),
     };
 }
 

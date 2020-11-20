@@ -13,6 +13,17 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeFromJSONTyped,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsFromJSONTyped,
+    ItemFieldsToJSON,
+} from './';
+
 /**
  * Get programs dto.
  * @export
@@ -170,10 +181,10 @@ export interface GetProgramsDto {
     /**
      * Gets or sets the image types to include in the output.
      * Optional.
-     * @type {string}
+     * @type {Array<ImageType>}
      * @memberof GetProgramsDto
      */
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     /**
      * Gets or sets include user data.
      * Optional.
@@ -198,10 +209,10 @@ export interface GetProgramsDto {
     /**
      * Gets or sets specify additional fields of information to return in the output. This allows multiple, comma delimited. Options: Budget, Chapters, DateCreated, Genres, HomePageUrl, IndexOptions, MediaStreams, Overview, ParentId, Path, People, ProviderIds, PrimaryImageAspectRatio, Revenue, SortName, Studios, Taglines.
      * Optional.
-     * @type {string}
+     * @type {Array<ItemFields>}
      * @memberof GetProgramsDto
      */
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
 export function GetProgramsDtoFromJSON(json: any): GetProgramsDto {
@@ -236,11 +247,11 @@ export function GetProgramsDtoFromJSONTyped(json: any, ignoreDiscriminator: bool
         'enableImages': !exists(json, 'EnableImages') ? undefined : json['EnableImages'],
         'enableTotalRecordCount': !exists(json, 'EnableTotalRecordCount') ? undefined : json['EnableTotalRecordCount'],
         'imageTypeLimit': !exists(json, 'ImageTypeLimit') ? undefined : json['ImageTypeLimit'],
-        'enableImageTypes': !exists(json, 'EnableImageTypes') ? undefined : json['EnableImageTypes'],
+        'enableImageTypes': !exists(json, 'EnableImageTypes') ? undefined : (json['EnableImageTypes'] === null ? null : (json['EnableImageTypes'] as Array<any>).map(ImageTypeFromJSON)),
         'enableUserData': !exists(json, 'EnableUserData') ? undefined : json['EnableUserData'],
         'seriesTimerId': !exists(json, 'SeriesTimerId') ? undefined : json['SeriesTimerId'],
         'librarySeriesId': !exists(json, 'LibrarySeriesId') ? undefined : json['LibrarySeriesId'],
-        'fields': !exists(json, 'Fields') ? undefined : json['Fields'],
+        'fields': !exists(json, 'Fields') ? undefined : (json['Fields'] === null ? null : (json['Fields'] as Array<any>).map(ItemFieldsFromJSON)),
     };
 }
 
@@ -275,11 +286,11 @@ export function GetProgramsDtoToJSON(value?: GetProgramsDto | null): any {
         'EnableImages': value.enableImages,
         'EnableTotalRecordCount': value.enableTotalRecordCount,
         'ImageTypeLimit': value.imageTypeLimit,
-        'EnableImageTypes': value.enableImageTypes,
+        'EnableImageTypes': value.enableImageTypes === undefined ? undefined : (value.enableImageTypes === null ? null : (value.enableImageTypes as Array<any>).map(ImageTypeToJSON)),
         'EnableUserData': value.enableUserData,
         'SeriesTimerId': value.seriesTimerId,
         'LibrarySeriesId': value.librarySeriesId,
-        'Fields': value.fields,
+        'Fields': value.fields === undefined ? undefined : (value.fields === null ? null : (value.fields as Array<any>).map(ItemFieldsToJSON)),
     };
 }
 

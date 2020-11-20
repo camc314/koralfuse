@@ -15,12 +15,18 @@
 
 import * as runtime from '../runtime';
 import {
+    FontFile,
+    FontFileFromJSON,
+    FontFileToJSON,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
     RemoteSubtitleInfo,
     RemoteSubtitleInfoFromJSON,
     RemoteSubtitleInfoToJSON,
+    UploadSubtitleDto,
+    UploadSubtitleDtoFromJSON,
+    UploadSubtitleDtoToJSON,
 } from '../models';
 
 export interface DeleteSubtitleRequest {
@@ -31,6 +37,10 @@ export interface DeleteSubtitleRequest {
 export interface DownloadRemoteSubtitlesRequest {
     itemId: string;
     subtitleId: string;
+}
+
+export interface GetFallbackFontRequest {
+    name: string;
 }
 
 export interface GetRemoteSubtitlesRequest {
@@ -70,6 +80,11 @@ export interface SearchRemoteSubtitlesRequest {
     itemId: string;
     language: string;
     isPerfectMatch?: boolean | null;
+}
+
+export interface UploadSubtitleRequest {
+    itemId: string;
+    uploadSubtitleDto: UploadSubtitleDto;
 }
 
 /**
@@ -149,6 +164,69 @@ export class SubtitleApi extends runtime.BaseAPI {
      */
     async downloadRemoteSubtitles(requestParameters: DownloadRemoteSubtitlesRequest): Promise<void> {
         await this.downloadRemoteSubtitlesRaw(requestParameters);
+    }
+
+    /**
+     * Gets a fallback font file.
+     */
+    async getFallbackFontRaw(requestParameters: GetFallbackFontRequest): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getFallbackFont.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
+        }
+
+        const response = await this.request({
+            path: `/FallbackFont/Fonts/{name}`.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters.name))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Gets a fallback font file.
+     */
+    async getFallbackFont(requestParameters: GetFallbackFontRequest): Promise<void> {
+        await this.getFallbackFontRaw(requestParameters);
+    }
+
+    /**
+     * Gets a list of available fallback font files.
+     */
+    async getFallbackFontListRaw(): Promise<runtime.ApiResponse<Array<FontFile>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
+        }
+
+        const response = await this.request({
+            path: `/FallbackFont/Fonts`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(FontFileFromJSON));
+    }
+
+    /**
+     * Gets a list of available fallback font files.
+     */
+    async getFallbackFontList(): Promise<Array<FontFile>> {
+        const response = await this.getFallbackFontListRaw();
+        return await response.value();
     }
 
     /**
@@ -399,6 +477,46 @@ export class SubtitleApi extends runtime.BaseAPI {
     async searchRemoteSubtitles(requestParameters: SearchRemoteSubtitlesRequest): Promise<Array<RemoteSubtitleInfo>> {
         const response = await this.searchRemoteSubtitlesRaw(requestParameters);
         return await response.value();
+    }
+
+    /**
+     * Upload an external subtitle file.
+     */
+    async uploadSubtitleRaw(requestParameters: UploadSubtitleRequest): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling uploadSubtitle.');
+        }
+
+        if (requestParameters.uploadSubtitleDto === null || requestParameters.uploadSubtitleDto === undefined) {
+            throw new runtime.RequiredError('uploadSubtitleDto','Required parameter requestParameters.uploadSubtitleDto was null or undefined when calling uploadSubtitle.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
+        }
+
+        const response = await this.request({
+            path: `/Videos/{itemId}/Subtitles`.replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UploadSubtitleDtoToJSON(requestParameters.uploadSubtitleDto),
+        });
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Upload an external subtitle file.
+     */
+    async uploadSubtitle(requestParameters: UploadSubtitleRequest): Promise<void> {
+        await this.uploadSubtitleRaw(requestParameters);
     }
 
 }

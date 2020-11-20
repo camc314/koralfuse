@@ -21,6 +21,15 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
+    ItemFilter,
+    ItemFilterFromJSON,
+    ItemFilterToJSON,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
@@ -32,36 +41,19 @@ export interface GetPersonRequest {
 }
 
 export interface GetPersonsRequest {
-    minCommunityRating?: number | null;
-    startIndex?: number | null;
     limit?: number | null;
     searchTerm?: string | null;
-    parentId?: string | null;
-    fields?: string | null;
-    excludeItemTypes?: string | null;
-    includeItemTypes?: string | null;
-    filters?: string | null;
+    fields?: Array<ItemFields> | null;
+    filters?: Array<ItemFilter> | null;
     isFavorite?: boolean | null;
-    mediaTypes?: string | null;
-    genres?: string | null;
-    genreIds?: string | null;
-    officialRatings?: string | null;
-    tags?: string | null;
-    years?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
-    person?: string | null;
-    personIds?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
+    excludePersonTypes?: string | null;
     personTypes?: string | null;
-    studios?: string | null;
-    studioIds?: string | null;
+    appearsInItemId?: string | null;
     userId?: string | null;
-    nameStartsWithOrGreater?: string | null;
-    nameStartsWith?: string | null;
-    nameLessThan?: string | null;
     enableImages?: boolean | null;
-    enableTotalRecordCount?: boolean;
 }
 
 /**
@@ -108,18 +100,10 @@ export class PersonsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all persons from a given item, folder, or the entire library.
+     * Gets all persons.
      */
     async getPersonsRaw(requestParameters: GetPersonsRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         const queryParameters: any = {};
-
-        if (requestParameters.minCommunityRating !== undefined) {
-            queryParameters['minCommunityRating'] = requestParameters.minCommunityRating;
-        }
-
-        if (requestParameters.startIndex !== undefined) {
-            queryParameters['startIndex'] = requestParameters.startIndex;
-        }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
@@ -129,52 +113,16 @@ export class PersonsApi extends runtime.BaseAPI {
             queryParameters['searchTerm'] = requestParameters.searchTerm;
         }
 
-        if (requestParameters.parentId !== undefined) {
-            queryParameters['parentId'] = requestParameters.parentId;
-        }
-
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
-        if (requestParameters.excludeItemTypes !== undefined) {
-            queryParameters['excludeItemTypes'] = requestParameters.excludeItemTypes;
-        }
-
-        if (requestParameters.includeItemTypes !== undefined) {
-            queryParameters['includeItemTypes'] = requestParameters.includeItemTypes;
-        }
-
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
         if (requestParameters.isFavorite !== undefined) {
             queryParameters['isFavorite'] = requestParameters.isFavorite;
-        }
-
-        if (requestParameters.mediaTypes !== undefined) {
-            queryParameters['mediaTypes'] = requestParameters.mediaTypes;
-        }
-
-        if (requestParameters.genres !== undefined) {
-            queryParameters['genres'] = requestParameters.genres;
-        }
-
-        if (requestParameters.genreIds !== undefined) {
-            queryParameters['genreIds'] = requestParameters.genreIds;
-        }
-
-        if (requestParameters.officialRatings !== undefined) {
-            queryParameters['officialRatings'] = requestParameters.officialRatings;
-        }
-
-        if (requestParameters.tags !== undefined) {
-            queryParameters['tags'] = requestParameters.tags;
-        }
-
-        if (requestParameters.years !== undefined) {
-            queryParameters['years'] = requestParameters.years;
         }
 
         if (requestParameters.enableUserData !== undefined) {
@@ -185,52 +133,28 @@ export class PersonsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
-        if (requestParameters.person !== undefined) {
-            queryParameters['person'] = requestParameters.person;
-        }
-
-        if (requestParameters.personIds !== undefined) {
-            queryParameters['personIds'] = requestParameters.personIds;
+        if (requestParameters.excludePersonTypes !== undefined) {
+            queryParameters['excludePersonTypes'] = requestParameters.excludePersonTypes;
         }
 
         if (requestParameters.personTypes !== undefined) {
             queryParameters['personTypes'] = requestParameters.personTypes;
         }
 
-        if (requestParameters.studios !== undefined) {
-            queryParameters['studios'] = requestParameters.studios;
-        }
-
-        if (requestParameters.studioIds !== undefined) {
-            queryParameters['studioIds'] = requestParameters.studioIds;
+        if (requestParameters.appearsInItemId !== undefined) {
+            queryParameters['appearsInItemId'] = requestParameters.appearsInItemId;
         }
 
         if (requestParameters.userId !== undefined) {
             queryParameters['userId'] = requestParameters.userId;
         }
 
-        if (requestParameters.nameStartsWithOrGreater !== undefined) {
-            queryParameters['nameStartsWithOrGreater'] = requestParameters.nameStartsWithOrGreater;
-        }
-
-        if (requestParameters.nameStartsWith !== undefined) {
-            queryParameters['nameStartsWith'] = requestParameters.nameStartsWith;
-        }
-
-        if (requestParameters.nameLessThan !== undefined) {
-            queryParameters['nameLessThan'] = requestParameters.nameLessThan;
-        }
-
         if (requestParameters.enableImages !== undefined) {
             queryParameters['enableImages'] = requestParameters.enableImages;
-        }
-
-        if (requestParameters.enableTotalRecordCount !== undefined) {
-            queryParameters['enableTotalRecordCount'] = requestParameters.enableTotalRecordCount;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -250,7 +174,7 @@ export class PersonsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all persons from a given item, folder, or the entire library.
+     * Gets all persons.
      */
     async getPersons(requestParameters: GetPersonsRequest): Promise<BaseItemDtoQueryResult> {
         const response = await this.getPersonsRaw(requestParameters);

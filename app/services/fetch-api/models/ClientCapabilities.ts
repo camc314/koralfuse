@@ -18,6 +18,10 @@ import {
     DeviceProfileFromJSON,
     DeviceProfileFromJSONTyped,
     DeviceProfileToJSON,
+    GeneralCommandType,
+    GeneralCommandTypeFromJSON,
+    GeneralCommandTypeFromJSONTyped,
+    GeneralCommandTypeToJSON,
 } from './';
 
 /**
@@ -34,10 +38,10 @@ export interface ClientCapabilities {
     playableMediaTypes?: Array<string> | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<GeneralCommandType>}
      * @memberof ClientCapabilities
      */
-    supportedCommands?: Array<string> | null;
+    supportedCommands?: Array<GeneralCommandType> | null;
     /**
      * 
      * @type {boolean}
@@ -99,7 +103,7 @@ export function ClientCapabilitiesFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'playableMediaTypes': !exists(json, 'PlayableMediaTypes') ? undefined : json['PlayableMediaTypes'],
-        'supportedCommands': !exists(json, 'SupportedCommands') ? undefined : json['SupportedCommands'],
+        'supportedCommands': !exists(json, 'SupportedCommands') ? undefined : (json['SupportedCommands'] === null ? null : (json['SupportedCommands'] as Array<any>).map(GeneralCommandTypeFromJSON)),
         'supportsMediaControl': !exists(json, 'SupportsMediaControl') ? undefined : json['SupportsMediaControl'],
         'supportsContentUploading': !exists(json, 'SupportsContentUploading') ? undefined : json['SupportsContentUploading'],
         'messageCallbackUrl': !exists(json, 'MessageCallbackUrl') ? undefined : json['MessageCallbackUrl'],
@@ -121,7 +125,7 @@ export function ClientCapabilitiesToJSON(value?: ClientCapabilities | null): any
     return {
         
         'PlayableMediaTypes': value.playableMediaTypes,
-        'SupportedCommands': value.supportedCommands,
+        'SupportedCommands': value.supportedCommands === undefined ? undefined : (value.supportedCommands === null ? null : (value.supportedCommands as Array<any>).map(GeneralCommandTypeToJSON)),
         'SupportsMediaControl': value.supportsMediaControl,
         'SupportsContentUploading': value.supportsContentUploading,
         'MessageCallbackUrl': value.messageCallbackUrl,

@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  * @interface ProblemDetails
  */
 export interface ProblemDetails {
-    [key: string]: object | any;
+    [key: string]: any | any;
     /**
      * 
      * @type {string}

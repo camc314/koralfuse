@@ -27,24 +27,6 @@ import {
  */
 export interface AlbumInfo {
     /**
-     * Gets or sets the album artist.
-     * @type {Array<string>}
-     * @memberof AlbumInfo
-     */
-    albumArtists?: Array<string> | null;
-    /**
-     * Gets or sets the artist provider ids.
-     * @type {{ [key: string]: string; }}
-     * @memberof AlbumInfo
-     */
-    artistProviderIds?: { [key: string]: string; } | null;
-    /**
-     * 
-     * @type {Array<SongInfo>}
-     * @memberof AlbumInfo
-     */
-    songInfos?: Array<SongInfo> | null;
-    /**
      * Gets or sets the name.
      * @type {string}
      * @memberof AlbumInfo
@@ -104,6 +86,24 @@ export interface AlbumInfo {
      * @memberof AlbumInfo
      */
     isAutomated?: boolean;
+    /**
+     * Gets or sets the album artist.
+     * @type {Array<string>}
+     * @memberof AlbumInfo
+     */
+    albumArtists?: Array<string> | null;
+    /**
+     * Gets or sets the artist provider ids.
+     * @type {{ [key: string]: string; }}
+     * @memberof AlbumInfo
+     */
+    artistProviderIds?: { [key: string]: string; } | null;
+    /**
+     * 
+     * @type {Array<SongInfo>}
+     * @memberof AlbumInfo
+     */
+    songInfos?: Array<SongInfo> | null;
 }
 
 export function AlbumInfoFromJSON(json: any): AlbumInfo {
@@ -116,9 +116,6 @@ export function AlbumInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'albumArtists': !exists(json, 'AlbumArtists') ? undefined : json['AlbumArtists'],
-        'artistProviderIds': !exists(json, 'ArtistProviderIds') ? undefined : json['ArtistProviderIds'],
-        'songInfos': !exists(json, 'SongInfos') ? undefined : (json['SongInfos'] === null ? null : (json['SongInfos'] as Array<any>).map(SongInfoFromJSON)),
         'name': !exists(json, 'Name') ? undefined : json['Name'],
         'path': !exists(json, 'Path') ? undefined : json['Path'],
         'metadataLanguage': !exists(json, 'MetadataLanguage') ? undefined : json['MetadataLanguage'],
@@ -129,6 +126,9 @@ export function AlbumInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'parentIndexNumber': !exists(json, 'ParentIndexNumber') ? undefined : json['ParentIndexNumber'],
         'premiereDate': !exists(json, 'PremiereDate') ? undefined : (json['PremiereDate'] === null ? null : new Date(json['PremiereDate'])),
         'isAutomated': !exists(json, 'IsAutomated') ? undefined : json['IsAutomated'],
+        'albumArtists': !exists(json, 'AlbumArtists') ? undefined : json['AlbumArtists'],
+        'artistProviderIds': !exists(json, 'ArtistProviderIds') ? undefined : json['ArtistProviderIds'],
+        'songInfos': !exists(json, 'SongInfos') ? undefined : (json['SongInfos'] === null ? null : (json['SongInfos'] as Array<any>).map(SongInfoFromJSON)),
     };
 }
 
@@ -141,9 +141,6 @@ export function AlbumInfoToJSON(value?: AlbumInfo | null): any {
     }
     return {
         
-        'AlbumArtists': value.albumArtists,
-        'ArtistProviderIds': value.artistProviderIds,
-        'SongInfos': value.songInfos === undefined ? undefined : (value.songInfos === null ? null : (value.songInfos as Array<any>).map(SongInfoToJSON)),
         'Name': value.name,
         'Path': value.path,
         'MetadataLanguage': value.metadataLanguage,
@@ -154,6 +151,9 @@ export function AlbumInfoToJSON(value?: AlbumInfo | null): any {
         'ParentIndexNumber': value.parentIndexNumber,
         'PremiereDate': value.premiereDate === undefined ? undefined : (value.premiereDate === null ? null : value.premiereDate.toISOString()),
         'IsAutomated': value.isAutomated,
+        'AlbumArtists': value.albumArtists,
+        'ArtistProviderIds': value.artistProviderIds,
+        'SongInfos': value.songInfos === undefined ? undefined : (value.songInfos === null ? null : (value.songInfos as Array<any>).map(SongInfoToJSON)),
     };
 }
 

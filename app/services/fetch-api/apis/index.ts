@@ -1,5 +1,4 @@
 export * from './ActivityLogApi';
-export * from './AlbumsApi';
 export * from './ApiKeyApi';
 export * from './ArtistsApi';
 export * from './AudioApi';

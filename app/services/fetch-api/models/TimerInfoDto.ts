@@ -35,36 +35,6 @@ import {
  */
 export interface TimerInfoDto {
     /**
-     * 
-     * @type {RecordingStatus}
-     * @memberof TimerInfoDto
-     */
-    status?: RecordingStatus;
-    /**
-     * Gets or sets the series timer identifier.
-     * @type {string}
-     * @memberof TimerInfoDto
-     */
-    seriesTimerId?: string | null;
-    /**
-     * Gets or sets the external series timer identifier.
-     * @type {string}
-     * @memberof TimerInfoDto
-     */
-    externalSeriesTimerId?: string | null;
-    /**
-     * Gets or sets the run time ticks.
-     * @type {number}
-     * @memberof TimerInfoDto
-     */
-    runTimeTicks?: number | null;
-    /**
-     * 
-     * @type {BaseItemDto}
-     * @memberof TimerInfoDto
-     */
-    programInfo?: BaseItemDto;
-    /**
      * Id of the recording.
      * @type {string}
      * @memberof TimerInfoDto
@@ -202,6 +172,36 @@ export interface TimerInfoDto {
      * @memberof TimerInfoDto
      */
     keepUntil?: KeepUntil;
+    /**
+     * 
+     * @type {RecordingStatus}
+     * @memberof TimerInfoDto
+     */
+    status?: RecordingStatus;
+    /**
+     * Gets or sets the series timer identifier.
+     * @type {string}
+     * @memberof TimerInfoDto
+     */
+    seriesTimerId?: string | null;
+    /**
+     * Gets or sets the external series timer identifier.
+     * @type {string}
+     * @memberof TimerInfoDto
+     */
+    externalSeriesTimerId?: string | null;
+    /**
+     * Gets or sets the run time ticks.
+     * @type {number}
+     * @memberof TimerInfoDto
+     */
+    runTimeTicks?: number | null;
+    /**
+     * 
+     * @type {BaseItemDto}
+     * @memberof TimerInfoDto
+     */
+    programInfo?: BaseItemDto;
 }
 
 export function TimerInfoDtoFromJSON(json: any): TimerInfoDto {
@@ -214,11 +214,6 @@ export function TimerInfoDtoFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'status': !exists(json, 'Status') ? undefined : RecordingStatusFromJSON(json['Status']),
-        'seriesTimerId': !exists(json, 'SeriesTimerId') ? undefined : json['SeriesTimerId'],
-        'externalSeriesTimerId': !exists(json, 'ExternalSeriesTimerId') ? undefined : json['ExternalSeriesTimerId'],
-        'runTimeTicks': !exists(json, 'RunTimeTicks') ? undefined : json['RunTimeTicks'],
-        'programInfo': !exists(json, 'ProgramInfo') ? undefined : BaseItemDtoFromJSON(json['ProgramInfo']),
         'id': !exists(json, 'Id') ? undefined : json['Id'],
         'type': !exists(json, 'Type') ? undefined : json['Type'],
         'serverId': !exists(json, 'ServerId') ? undefined : json['ServerId'],
@@ -242,6 +237,11 @@ export function TimerInfoDtoFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'parentBackdropImageTags': !exists(json, 'ParentBackdropImageTags') ? undefined : json['ParentBackdropImageTags'],
         'isPostPaddingRequired': !exists(json, 'IsPostPaddingRequired') ? undefined : json['IsPostPaddingRequired'],
         'keepUntil': !exists(json, 'KeepUntil') ? undefined : KeepUntilFromJSON(json['KeepUntil']),
+        'status': !exists(json, 'Status') ? undefined : RecordingStatusFromJSON(json['Status']),
+        'seriesTimerId': !exists(json, 'SeriesTimerId') ? undefined : json['SeriesTimerId'],
+        'externalSeriesTimerId': !exists(json, 'ExternalSeriesTimerId') ? undefined : json['ExternalSeriesTimerId'],
+        'runTimeTicks': !exists(json, 'RunTimeTicks') ? undefined : json['RunTimeTicks'],
+        'programInfo': !exists(json, 'ProgramInfo') ? undefined : BaseItemDtoFromJSON(json['ProgramInfo']),
     };
 }
 
@@ -254,11 +254,6 @@ export function TimerInfoDtoToJSON(value?: TimerInfoDto | null): any {
     }
     return {
         
-        'Status': RecordingStatusToJSON(value.status),
-        'SeriesTimerId': value.seriesTimerId,
-        'ExternalSeriesTimerId': value.externalSeriesTimerId,
-        'RunTimeTicks': value.runTimeTicks,
-        'ProgramInfo': BaseItemDtoToJSON(value.programInfo),
         'Id': value.id,
         'Type': value.type,
         'ServerId': value.serverId,
@@ -282,6 +277,11 @@ export function TimerInfoDtoToJSON(value?: TimerInfoDto | null): any {
         'ParentBackdropImageTags': value.parentBackdropImageTags,
         'IsPostPaddingRequired': value.isPostPaddingRequired,
         'KeepUntil': KeepUntilToJSON(value.keepUntil),
+        'Status': RecordingStatusToJSON(value.status),
+        'SeriesTimerId': value.seriesTimerId,
+        'ExternalSeriesTimerId': value.externalSeriesTimerId,
+        'RunTimeTicks': value.runTimeTicks,
+        'ProgramInfo': BaseItemDtoToJSON(value.programInfo),
     };
 }
 

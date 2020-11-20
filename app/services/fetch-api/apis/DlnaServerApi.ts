@@ -14,11 +14,6 @@
 
 
 import * as runtime from '../runtime';
-import {
-    ControlResponse,
-    ControlResponseFromJSON,
-    ControlResponseToJSON,
-} from '../models';
 
 export interface GetConnectionManagerRequest {
     serverId: string;
@@ -539,7 +534,7 @@ export class DlnaServerApi extends runtime.BaseAPI {
     /**
      * Process a connection manager control request.
      */
-    async processConnectionManagerControlRequestRaw(requestParameters: ProcessConnectionManagerControlRequestRequest): Promise<runtime.ApiResponse<ControlResponse>> {
+    async processConnectionManagerControlRequestRaw(requestParameters: ProcessConnectionManagerControlRequestRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.serverId === null || requestParameters.serverId === undefined) {
             throw new runtime.RequiredError('serverId','Required parameter requestParameters.serverId was null or undefined when calling processConnectionManagerControlRequest.');
         }
@@ -559,13 +554,13 @@ export class DlnaServerApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ControlResponseFromJSON(jsonValue));
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Process a connection manager control request.
      */
-    async processConnectionManagerControlRequest(requestParameters: ProcessConnectionManagerControlRequestRequest): Promise<ControlResponse> {
+    async processConnectionManagerControlRequest(requestParameters: ProcessConnectionManagerControlRequestRequest): Promise<any> {
         const response = await this.processConnectionManagerControlRequestRaw(requestParameters);
         return await response.value();
     }
@@ -573,7 +568,7 @@ export class DlnaServerApi extends runtime.BaseAPI {
     /**
      * Process a content directory control request.
      */
-    async processContentDirectoryControlRequestRaw(requestParameters: ProcessContentDirectoryControlRequestRequest): Promise<runtime.ApiResponse<ControlResponse>> {
+    async processContentDirectoryControlRequestRaw(requestParameters: ProcessContentDirectoryControlRequestRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.serverId === null || requestParameters.serverId === undefined) {
             throw new runtime.RequiredError('serverId','Required parameter requestParameters.serverId was null or undefined when calling processContentDirectoryControlRequest.');
         }
@@ -593,13 +588,13 @@ export class DlnaServerApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ControlResponseFromJSON(jsonValue));
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Process a content directory control request.
      */
-    async processContentDirectoryControlRequest(requestParameters: ProcessContentDirectoryControlRequestRequest): Promise<ControlResponse> {
+    async processContentDirectoryControlRequest(requestParameters: ProcessContentDirectoryControlRequestRequest): Promise<any> {
         const response = await this.processContentDirectoryControlRequestRaw(requestParameters);
         return await response.value();
     }
@@ -607,7 +602,7 @@ export class DlnaServerApi extends runtime.BaseAPI {
     /**
      * Process a media receiver registrar control request.
      */
-    async processMediaReceiverRegistrarControlRequestRaw(requestParameters: ProcessMediaReceiverRegistrarControlRequestRequest): Promise<runtime.ApiResponse<ControlResponse>> {
+    async processMediaReceiverRegistrarControlRequestRaw(requestParameters: ProcessMediaReceiverRegistrarControlRequestRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.serverId === null || requestParameters.serverId === undefined) {
             throw new runtime.RequiredError('serverId','Required parameter requestParameters.serverId was null or undefined when calling processMediaReceiverRegistrarControlRequest.');
         }
@@ -627,13 +622,13 @@ export class DlnaServerApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ControlResponseFromJSON(jsonValue));
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Process a media receiver registrar control request.
      */
-    async processMediaReceiverRegistrarControlRequest(requestParameters: ProcessMediaReceiverRegistrarControlRequestRequest): Promise<ControlResponse> {
+    async processMediaReceiverRegistrarControlRequest(requestParameters: ProcessMediaReceiverRegistrarControlRequestRequest): Promise<any> {
         const response = await this.processMediaReceiverRegistrarControlRequestRaw(requestParameters);
         return await response.value();
     }
