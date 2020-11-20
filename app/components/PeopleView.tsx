@@ -12,7 +12,7 @@ import {
   Pressable
 } from 'react-native';
 import { api, getImageUrl } from '../services/api';
-import { BaseItemPerson } from '../services/fetch-api';
+import { BaseItemPerson, ItemFields } from '../services/fetch-api';
 
 type Props = {
   itemId: string;
@@ -30,7 +30,7 @@ export default function PeopleView({ itemId }: Props): JSX.Element {
       uId: api.userInfo.user?.id || '',
       userId: api.userInfo.user?.id,
       ids: itemId || '',
-      fields: 'people'
+      fields: [ItemFields.People]
     }).then((result) => {
       if (result.items && result.items[0].people) {
         setPeople(result.items[0].people);

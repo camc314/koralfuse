@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, View, Text, Image, ScrollView } from 'react-native';
 import { api, getImageUrl } from '../../services/api';
-import { BaseItemDto } from '../../services/fetch-api';
+import { BaseItemDto, ItemFields } from '../../services/fetch-api';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
@@ -31,7 +31,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
       uId: api?.userInfo?.user?.id || '',
       userId: api?.userInfo?.user?.id || '',
       ids: route.params.personId,
-      fields: 'overview'
+      fields: [ItemFields.Genres]
     }).then((res) => {
       if (res.items) {
         setPerson(res.items[0]);

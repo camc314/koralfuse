@@ -8,7 +8,7 @@ import {
   ScrollView
 } from 'react-native';
 import { api, getImageUrl } from '../../services/api';
-import { BaseItemDto } from '../../services/fetch-api';
+import { BaseItemDto, ItemFields } from '../../services/fetch-api';
 import { useTheme } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
@@ -35,7 +35,7 @@ export default function ItemView({ route, navigation }: Props): JSX.Element {
       uId: api.userInfo?.user?.id || '',
       userId: api.userInfo?.user?.id,
       ids: route.params.itemId,
-      fields: 'overview,genres'
+      fields: [ItemFields.Overview, ItemFields.Genres]
     }).then((results) => {
       if (results.items) {
         setItem(results.items[0]);
