@@ -21,6 +21,15 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
+    ItemFilter,
+    ItemFilterFromJSON,
+    ItemFilterToJSON,
 } from '../models';
 
 export interface GetAlbumArtistsRequest {
@@ -29,10 +38,10 @@ export interface GetAlbumArtistsRequest {
     limit?: number | null;
     searchTerm?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     excludeItemTypes?: string | null;
     includeItemTypes?: string | null;
-    filters?: string | null;
+    filters?: Array<ItemFilter> | null;
     isFavorite?: boolean | null;
     mediaTypes?: string | null;
     genres?: string | null;
@@ -42,7 +51,7 @@ export interface GetAlbumArtistsRequest {
     years?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     person?: string | null;
     personIds?: string | null;
     personTypes?: string | null;
@@ -67,10 +76,10 @@ export interface GetArtistsRequest {
     limit?: number | null;
     searchTerm?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     excludeItemTypes?: string | null;
     includeItemTypes?: string | null;
-    filters?: string | null;
+    filters?: Array<ItemFilter> | null;
     isFavorite?: boolean | null;
     mediaTypes?: string | null;
     genres?: string | null;
@@ -80,7 +89,7 @@ export interface GetArtistsRequest {
     years?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     person?: string | null;
     personIds?: string | null;
     personTypes?: string | null;
@@ -125,7 +134,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -137,7 +146,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['includeItemTypes'] = requestParameters.includeItemTypes;
         }
 
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
@@ -177,7 +186,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -313,7 +322,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -325,7 +334,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['includeItemTypes'] = requestParameters.includeItemTypes;
         }
 
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
@@ -365,7 +374,7 @@ export class ArtistsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

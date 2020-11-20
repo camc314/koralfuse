@@ -15,6 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
+    ImageFormat,
+    ImageFormatFromJSON,
+    ImageFormatToJSON,
     ImageInfo,
     ImageInfoFromJSON,
     ImageInfoToJSON,
@@ -57,7 +60,7 @@ export interface GetArtistImageRequest {
     imageType: ImageType;
     imageIndex: number;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -77,7 +80,7 @@ export interface GetGenreImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -103,7 +106,7 @@ export interface GetItemImageRequest {
     quality?: number | null;
     tag?: string | null;
     cropWhitespace?: boolean | null;
-    format?: string | null;
+    format?: ImageFormat;
     addPlayedIndicator?: boolean | null;
     percentPlayed?: number | null;
     unplayedCount?: number | null;
@@ -123,7 +126,7 @@ export interface GetItemImage2Request {
     quality?: number | null;
     tag?: string | null;
     cropWhitespace?: boolean | null;
-    format?: string | null;
+    format?: ImageFormat;
     addPlayedIndicator?: boolean | null;
     percentPlayed?: number | null;
     unplayedCount?: number | null;
@@ -138,7 +141,7 @@ export interface GetItemImage20Request {
     maxWidth: number;
     maxHeight: number;
     tag: string;
-    format: string;
+    format: ImageFormat;
     percentPlayed: number;
     unplayedCount: number;
     imageIndex: number;
@@ -161,7 +164,7 @@ export interface GetMusicGenreImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -181,7 +184,7 @@ export interface GetPersonImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -200,7 +203,7 @@ export interface GetStudioImageRequest {
     name: string;
     imageType: ImageType;
     tag: string;
-    format: string;
+    format: ImageFormat;
     imageIndex: number | null;
     maxWidth?: number | null;
     maxHeight?: number | null;
@@ -221,7 +224,7 @@ export interface GetUserImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -241,7 +244,7 @@ export interface HeadArtistImageRequest {
     imageType: ImageType;
     imageIndex: number;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -261,7 +264,7 @@ export interface HeadGenreImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -287,7 +290,7 @@ export interface HeadItemImageRequest {
     quality?: number | null;
     tag?: string | null;
     cropWhitespace?: boolean | null;
-    format?: string | null;
+    format?: ImageFormat;
     addPlayedIndicator?: boolean | null;
     percentPlayed?: number | null;
     unplayedCount?: number | null;
@@ -307,7 +310,7 @@ export interface HeadItemImage2Request {
     quality?: number | null;
     tag?: string | null;
     cropWhitespace?: boolean | null;
-    format?: string | null;
+    format?: ImageFormat;
     addPlayedIndicator?: boolean | null;
     percentPlayed?: number | null;
     unplayedCount?: number | null;
@@ -322,7 +325,7 @@ export interface HeadItemImage20Request {
     maxWidth: number;
     maxHeight: number;
     tag: string;
-    format: string;
+    format: ImageFormat;
     percentPlayed: number;
     unplayedCount: number;
     imageIndex: number;
@@ -341,7 +344,7 @@ export interface HeadMusicGenreImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -361,7 +364,7 @@ export interface HeadPersonImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;
@@ -380,7 +383,7 @@ export interface HeadStudioImageRequest {
     name: string;
     imageType: ImageType;
     tag: string;
-    format: string;
+    format: ImageFormat;
     imageIndex: number | null;
     maxWidth?: number | null;
     maxHeight?: number | null;
@@ -401,7 +404,7 @@ export interface HeadUserImageRequest {
     imageType: ImageType;
     imageIndex: number | null;
     tag?: string | null;
-    format?: string | null;
+    format?: ImageFormat;
     maxWidth?: number | null;
     maxHeight?: number | null;
     percentPlayed?: number | null;

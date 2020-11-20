@@ -18,6 +18,12 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
@@ -26,7 +32,7 @@ import {
 export interface GetEpisodesRequest {
     seriesId: string;
     userId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     season?: number | null;
     seasonId?: string | null;
     isMissing?: boolean | null;
@@ -36,7 +42,7 @@ export interface GetEpisodesRequest {
     limit?: number | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
     sortBy?: string | null;
 }
@@ -45,12 +51,12 @@ export interface GetNextUpRequest {
     userId?: string | null;
     startIndex?: number | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     seriesId?: string | null;
     parentId?: string | null;
     enableImges?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
     enableTotalRecordCount?: boolean;
 }
@@ -58,13 +64,13 @@ export interface GetNextUpRequest {
 export interface GetSeasonsRequest {
     seriesId: string;
     userId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     isSpecialSeason?: boolean | null;
     isMissing?: boolean | null;
     adjacentTo?: string | null;
     enableImages?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
 }
 
@@ -72,11 +78,11 @@ export interface GetUpcomingEpisodesRequest {
     userId?: string | null;
     startIndex?: number | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     parentId?: string | null;
     enableImges?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     enableUserData?: boolean | null;
 }
 
@@ -99,7 +105,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['userId'] = requestParameters.userId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -139,7 +145,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -193,7 +199,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -213,7 +219,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -263,7 +269,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['userId'] = requestParameters.userId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -287,7 +293,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -337,7 +343,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -353,7 +359,7 @@ export class TvShowsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

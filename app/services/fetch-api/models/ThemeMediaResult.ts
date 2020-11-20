@@ -27,12 +27,6 @@ import {
  */
 export interface ThemeMediaResult {
     /**
-     * Gets or sets the owner id.
-     * @type {string}
-     * @memberof ThemeMediaResult
-     */
-    ownerId?: string;
-    /**
      * Gets or sets the items.
      * @type {Array<BaseItemDto>}
      * @memberof ThemeMediaResult
@@ -50,6 +44,12 @@ export interface ThemeMediaResult {
      * @memberof ThemeMediaResult
      */
     startIndex?: number;
+    /**
+     * Gets or sets the owner id.
+     * @type {string}
+     * @memberof ThemeMediaResult
+     */
+    ownerId?: string;
 }
 
 export function ThemeMediaResultFromJSON(json: any): ThemeMediaResult {
@@ -62,10 +62,10 @@ export function ThemeMediaResultFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'ownerId': !exists(json, 'OwnerId') ? undefined : json['OwnerId'],
         'items': !exists(json, 'Items') ? undefined : (json['Items'] === null ? null : (json['Items'] as Array<any>).map(BaseItemDtoFromJSON)),
         'totalRecordCount': !exists(json, 'TotalRecordCount') ? undefined : json['TotalRecordCount'],
         'startIndex': !exists(json, 'StartIndex') ? undefined : json['StartIndex'],
+        'ownerId': !exists(json, 'OwnerId') ? undefined : json['OwnerId'],
     };
 }
 
@@ -78,10 +78,10 @@ export function ThemeMediaResultToJSON(value?: ThemeMediaResult | null): any {
     }
     return {
         
-        'OwnerId': value.ownerId,
         'Items': value.items === undefined ? undefined : (value.items === null ? null : (value.items as Array<any>).map(BaseItemDtoToJSON)),
         'TotalRecordCount': value.totalRecordCount,
         'StartIndex': value.startIndex,
+        'OwnerId': value.ownerId,
     };
 }
 

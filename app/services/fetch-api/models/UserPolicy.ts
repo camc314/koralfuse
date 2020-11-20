@@ -222,6 +222,12 @@ export interface UserPolicy {
     loginAttemptsBeforeLockout?: number;
     /**
      * 
+     * @type {number}
+     * @memberof UserPolicy
+     */
+    maxActiveSessions?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof UserPolicy
      */
@@ -305,6 +311,7 @@ export function UserPolicyFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'enableAllFolders': !exists(json, 'EnableAllFolders') ? undefined : json['EnableAllFolders'],
         'invalidLoginAttemptCount': !exists(json, 'InvalidLoginAttemptCount') ? undefined : json['InvalidLoginAttemptCount'],
         'loginAttemptsBeforeLockout': !exists(json, 'LoginAttemptsBeforeLockout') ? undefined : json['LoginAttemptsBeforeLockout'],
+        'maxActiveSessions': !exists(json, 'MaxActiveSessions') ? undefined : json['MaxActiveSessions'],
         'enablePublicSharing': !exists(json, 'EnablePublicSharing') ? undefined : json['EnablePublicSharing'],
         'blockedMediaFolders': !exists(json, 'BlockedMediaFolders') ? undefined : json['BlockedMediaFolders'],
         'blockedChannels': !exists(json, 'BlockedChannels') ? undefined : json['BlockedChannels'],
@@ -355,6 +362,7 @@ export function UserPolicyToJSON(value?: UserPolicy | null): any {
         'EnableAllFolders': value.enableAllFolders,
         'InvalidLoginAttemptCount': value.invalidLoginAttemptCount,
         'LoginAttemptsBeforeLockout': value.loginAttemptsBeforeLockout,
+        'MaxActiveSessions': value.maxActiveSessions,
         'EnablePublicSharing': value.enablePublicSharing,
         'BlockedMediaFolders': value.blockedMediaFolders,
         'BlockedChannels': value.blockedChannels,

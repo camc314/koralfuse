@@ -18,83 +18,89 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
 } from '../models';
 
 export interface GetInstantMixFromAlbumRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromArtistsRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromItemRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromMusicGenreRequest {
     name: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromMusicGenresRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromPlaylistRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface GetInstantMixFromSongRequest {
     id: string;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 /**
@@ -120,7 +126,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -136,7 +142,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -182,7 +188,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -198,7 +204,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -244,7 +250,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -260,7 +266,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -306,7 +312,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -322,7 +328,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -368,7 +374,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -384,7 +390,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -430,7 +436,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -446,7 +452,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 
@@ -492,7 +498,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -508,7 +514,7 @@ export class InstantMixApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

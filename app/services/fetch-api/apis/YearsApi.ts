@@ -21,6 +21,12 @@ import {
     BaseItemDtoQueryResult,
     BaseItemDtoQueryResultFromJSON,
     BaseItemDtoQueryResultToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
@@ -36,14 +42,14 @@ export interface GetYearsRequest {
     limit?: number | null;
     sortOrder?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     excludeItemTypes?: string | null;
     includeItemTypes?: string | null;
     mediaTypes?: string | null;
     sortBy?: string | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
     userId?: string | null;
     recursive?: boolean;
     enableImages?: boolean | null;
@@ -114,7 +120,7 @@ export class YearsApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -142,7 +148,7 @@ export class YearsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

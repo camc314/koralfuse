@@ -47,6 +47,37 @@ import {
  */
 export interface ServerConfiguration {
     /**
+     * Gets or sets the number of days we should retain log files.
+     * @type {number}
+     * @memberof ServerConfiguration
+     */
+    logFileRetentionDays?: number;
+    /**
+     * Gets or sets a value indicating whether this instance is first run.
+     * @type {boolean}
+     * @memberof ServerConfiguration
+     */
+    isStartupWizardCompleted?: boolean;
+    /**
+     * Gets or sets the cache path.
+     * @type {string}
+     * @memberof ServerConfiguration
+     */
+    cachePath?: string | null;
+    /**
+     * 
+     * @type {Version}
+     * @memberof ServerConfiguration
+     */
+    previousVersion?: Version;
+    /**
+     * Gets or sets the stringified PreviousVersion to be stored/loaded,
+     * because System.Version itself isn't xml-serializable.
+     * @type {string}
+     * @memberof ServerConfiguration
+     */
+    previousVersionStr?: string | null;
+    /**
      * Gets or sets a value indicating whether to enable automatic port forwarding.
      * @type {boolean}
      * @memberof ServerConfiguration
@@ -118,12 +149,6 @@ export interface ServerConfiguration {
      * @memberof ServerConfiguration
      */
     quickConnectAvailable?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServerConfiguration
-     */
-    autoRunWebApp?: boolean;
     /**
      * 
      * @type {boolean}
@@ -398,36 +423,11 @@ export interface ServerConfiguration {
      */
     knownProxies?: Array<string> | null;
     /**
-     * Gets or sets the number of days we should retain log files.
+     * Gets or sets the number of days we should retain activity logs.
      * @type {number}
      * @memberof ServerConfiguration
      */
-    logFileRetentionDays?: number;
-    /**
-     * Gets or sets a value indicating whether this instance is first run.
-     * @type {boolean}
-     * @memberof ServerConfiguration
-     */
-    isStartupWizardCompleted?: boolean;
-    /**
-     * Gets or sets the cache path.
-     * @type {string}
-     * @memberof ServerConfiguration
-     */
-    cachePath?: string | null;
-    /**
-     * 
-     * @type {Version}
-     * @memberof ServerConfiguration
-     */
-    previousVersion?: Version;
-    /**
-     * Gets or sets the stringified PreviousVersion to be stored/loaded,
-     * because System.Version itself isn't xml-serializable.
-     * @type {string}
-     * @memberof ServerConfiguration
-     */
-    previousVersionStr?: string | null;
+    activityLogRetentionDays?: number | null;
 }
 
 export function ServerConfigurationFromJSON(json: any): ServerConfiguration {
@@ -440,6 +440,11 @@ export function ServerConfigurationFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
+        'logFileRetentionDays': !exists(json, 'LogFileRetentionDays') ? undefined : json['LogFileRetentionDays'],
+        'isStartupWizardCompleted': !exists(json, 'IsStartupWizardCompleted') ? undefined : json['IsStartupWizardCompleted'],
+        'cachePath': !exists(json, 'CachePath') ? undefined : json['CachePath'],
+        'previousVersion': !exists(json, 'PreviousVersion') ? undefined : VersionFromJSON(json['PreviousVersion']),
+        'previousVersionStr': !exists(json, 'PreviousVersionStr') ? undefined : json['PreviousVersionStr'],
         'enableUPnP': !exists(json, 'EnableUPnP') ? undefined : json['EnableUPnP'],
         'enableMetrics': !exists(json, 'EnableMetrics') ? undefined : json['EnableMetrics'],
         'publicPort': !exists(json, 'PublicPort') ? undefined : json['PublicPort'],
@@ -452,7 +457,6 @@ export function ServerConfigurationFromJSONTyped(json: any, ignoreDiscriminator:
         'certificatePassword': !exists(json, 'CertificatePassword') ? undefined : json['CertificatePassword'],
         'isPortAuthorized': !exists(json, 'IsPortAuthorized') ? undefined : json['IsPortAuthorized'],
         'quickConnectAvailable': !exists(json, 'QuickConnectAvailable') ? undefined : json['QuickConnectAvailable'],
-        'autoRunWebApp': !exists(json, 'AutoRunWebApp') ? undefined : json['AutoRunWebApp'],
         'enableRemoteAccess': !exists(json, 'EnableRemoteAccess') ? undefined : json['EnableRemoteAccess'],
         'enableCaseSensitiveItemIds': !exists(json, 'EnableCaseSensitiveItemIds') ? undefined : json['EnableCaseSensitiveItemIds'],
         'disableLiveTvChannelUserDataName': !exists(json, 'DisableLiveTvChannelUserDataName') ? undefined : json['DisableLiveTvChannelUserDataName'],
@@ -498,11 +502,7 @@ export function ServerConfigurationFromJSONTyped(json: any, ignoreDiscriminator:
         'slowResponseThresholdMs': !exists(json, 'SlowResponseThresholdMs') ? undefined : json['SlowResponseThresholdMs'],
         'corsHosts': !exists(json, 'CorsHosts') ? undefined : json['CorsHosts'],
         'knownProxies': !exists(json, 'KnownProxies') ? undefined : json['KnownProxies'],
-        'logFileRetentionDays': !exists(json, 'LogFileRetentionDays') ? undefined : json['LogFileRetentionDays'],
-        'isStartupWizardCompleted': !exists(json, 'IsStartupWizardCompleted') ? undefined : json['IsStartupWizardCompleted'],
-        'cachePath': !exists(json, 'CachePath') ? undefined : json['CachePath'],
-        'previousVersion': !exists(json, 'PreviousVersion') ? undefined : VersionFromJSON(json['PreviousVersion']),
-        'previousVersionStr': !exists(json, 'PreviousVersionStr') ? undefined : json['PreviousVersionStr'],
+        'activityLogRetentionDays': !exists(json, 'ActivityLogRetentionDays') ? undefined : json['ActivityLogRetentionDays'],
     };
 }
 
@@ -515,6 +515,11 @@ export function ServerConfigurationToJSON(value?: ServerConfiguration | null): a
     }
     return {
         
+        'LogFileRetentionDays': value.logFileRetentionDays,
+        'IsStartupWizardCompleted': value.isStartupWizardCompleted,
+        'CachePath': value.cachePath,
+        'PreviousVersion': VersionToJSON(value.previousVersion),
+        'PreviousVersionStr': value.previousVersionStr,
         'EnableUPnP': value.enableUPnP,
         'EnableMetrics': value.enableMetrics,
         'PublicPort': value.publicPort,
@@ -527,7 +532,6 @@ export function ServerConfigurationToJSON(value?: ServerConfiguration | null): a
         'CertificatePassword': value.certificatePassword,
         'IsPortAuthorized': value.isPortAuthorized,
         'QuickConnectAvailable': value.quickConnectAvailable,
-        'AutoRunWebApp': value.autoRunWebApp,
         'EnableRemoteAccess': value.enableRemoteAccess,
         'EnableCaseSensitiveItemIds': value.enableCaseSensitiveItemIds,
         'DisableLiveTvChannelUserDataName': value.disableLiveTvChannelUserDataName,
@@ -573,11 +577,7 @@ export function ServerConfigurationToJSON(value?: ServerConfiguration | null): a
         'SlowResponseThresholdMs': value.slowResponseThresholdMs,
         'CorsHosts': value.corsHosts,
         'KnownProxies': value.knownProxies,
-        'LogFileRetentionDays': value.logFileRetentionDays,
-        'IsStartupWizardCompleted': value.isStartupWizardCompleted,
-        'CachePath': value.cachePath,
-        'PreviousVersion': VersionToJSON(value.previousVersion),
-        'PreviousVersionStr': value.previousVersionStr,
+        'ActivityLogRetentionDays': value.activityLogRetentionDays,
     };
 }
 

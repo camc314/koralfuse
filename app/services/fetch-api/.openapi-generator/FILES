@@ -1,5 +1,4 @@
 apis/ActivityLogApi.ts
-apis/AlbumsApi.ts
 apis/ApiKeyApi.ts
 apis/ArtistsApi.ts
 apis/AudioApi.ts
@@ -130,18 +129,21 @@ models/ExternalUrl.ts
 models/FFmpegLocation.ts
 models/FileSystemEntryInfo.ts
 models/FileSystemEntryType.ts
+models/FontFile.ts
 models/ForgotPasswordAction.ts
+models/ForgotPasswordDto.ts
 models/ForgotPasswordResult.ts
 models/GeneralCommand.ts
 models/GeneralCommandType.ts
 models/GetProgramsDto.ts
 models/GroupInfoView.ts
+models/GroupUpdateType.ts
 models/GuideInfo.ts
 models/HeaderMatchType.ts
 models/HttpHeaderInfo.ts
-models/IScheduledTask.ts
-models/IScheduledTaskWorker.ts
+models/IPlugin.ts
 models/ImageByNameInfo.ts
+models/ImageFormat.ts
 models/ImageInfo.ts
 models/ImageOption.ts
 models/ImageOrientation.ts
@@ -151,11 +153,14 @@ models/ImageType.ts
 models/InstallationInfo.ts
 models/IsoType.ts
 models/ItemCounts.ts
+models/ItemFields.ts
+models/ItemFilter.ts
 models/KeepUntil.ts
 models/LibraryOptionInfoDto.ts
 models/LibraryOptions.ts
 models/LibraryOptionsResultDto.ts
 models/LibraryTypeOptionsDto.ts
+models/LibraryUpdateInfo.ts
 models/ListingsProviderInfo.ts
 models/LiveStreamResponse.ts
 models/LiveTvInfo.ts
@@ -193,6 +198,7 @@ models/NotificationLevel.ts
 models/NotificationResultDto.ts
 models/NotificationTypeInfo.ts
 models/NotificationsSummaryDto.ts
+models/ObjectGroupUpdate.ts
 models/OpenLiveStreamDto.ts
 models/PackageInfo.ts
 models/ParentalRating.ts
@@ -203,6 +209,7 @@ models/PinRedeemResult.ts
 models/PlayAccess.ts
 models/PlayCommand.ts
 models/PlayMethod.ts
+models/PlayRequest.ts
 models/PlaybackErrorCode.ts
 models/PlaybackInfoResponse.ts
 models/PlaybackProgressInfo.ts
@@ -211,6 +218,7 @@ models/PlaybackStopInfo.ts
 models/PlayerStateInfo.ts
 models/PlaylistCreationResult.ts
 models/PlaystateCommand.ts
+models/PlaystateRequest.ts
 models/PluginInfo.ts
 models/PluginSecurityInfo.ts
 models/ProblemDetails.ts
@@ -239,6 +247,8 @@ models/ResponseProfile.ts
 models/ScrollDirection.ts
 models/SearchHint.ts
 models/SearchHintResult.ts
+models/SendCommand.ts
+models/SendCommandType.ts
 models/SeriesInfo.ts
 models/SeriesInfoRemoteSearchQuery.ts
 models/SeriesTimerInfoDto.ts
@@ -263,6 +273,7 @@ models/TaskResult.ts
 models/TaskState.ts
 models/TaskTriggerInfo.ts
 models/ThemeMediaResult.ts
+models/TimerEventInfo.ts
 models/TimerInfoDto.ts
 models/TimerInfoDtoQueryResult.ts
 models/TrailerInfo.ts
@@ -279,6 +290,7 @@ models/UnratedItem.ts
 models/UpdateLibraryOptionsDto.ts
 models/UpdateUserEasyPassword.ts
 models/UpdateUserPassword.ts
+models/UploadSubtitleDto.ts
 models/UserConfiguration.ts
 models/UserDto.ts
 models/UserItemDataDto.ts

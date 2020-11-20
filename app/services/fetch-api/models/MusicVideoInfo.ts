@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface MusicVideoInfo {
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof MusicVideoInfo
-     */
-    artists?: Array<string> | null;
-    /**
      * Gets or sets the name.
      * @type {string}
      * @memberof MusicVideoInfo
@@ -85,6 +79,12 @@ export interface MusicVideoInfo {
      * @memberof MusicVideoInfo
      */
     isAutomated?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MusicVideoInfo
+     */
+    artists?: Array<string> | null;
 }
 
 export function MusicVideoInfoFromJSON(json: any): MusicVideoInfo {
@@ -97,7 +97,6 @@ export function MusicVideoInfoFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'artists': !exists(json, 'Artists') ? undefined : json['Artists'],
         'name': !exists(json, 'Name') ? undefined : json['Name'],
         'path': !exists(json, 'Path') ? undefined : json['Path'],
         'metadataLanguage': !exists(json, 'MetadataLanguage') ? undefined : json['MetadataLanguage'],
@@ -108,6 +107,7 @@ export function MusicVideoInfoFromJSONTyped(json: any, ignoreDiscriminator: bool
         'parentIndexNumber': !exists(json, 'ParentIndexNumber') ? undefined : json['ParentIndexNumber'],
         'premiereDate': !exists(json, 'PremiereDate') ? undefined : (json['PremiereDate'] === null ? null : new Date(json['PremiereDate'])),
         'isAutomated': !exists(json, 'IsAutomated') ? undefined : json['IsAutomated'],
+        'artists': !exists(json, 'Artists') ? undefined : json['Artists'],
     };
 }
 
@@ -120,7 +120,6 @@ export function MusicVideoInfoToJSON(value?: MusicVideoInfo | null): any {
     }
     return {
         
-        'Artists': value.artists,
         'Name': value.name,
         'Path': value.path,
         'MetadataLanguage': value.metadataLanguage,
@@ -131,6 +130,7 @@ export function MusicVideoInfoToJSON(value?: MusicVideoInfo | null): any {
         'ParentIndexNumber': value.parentIndexNumber,
         'PremiereDate': value.premiereDate === undefined ? undefined : (value.premiereDate === null ? null : value.premiereDate.toISOString()),
         'IsAutomated': value.isAutomated,
+        'Artists': value.artists,
     };
 }
 

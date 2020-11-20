@@ -27,6 +27,9 @@ import {
     ItemCounts,
     ItemCountsFromJSON,
     ItemCountsToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     LibraryOptionsResultDto,
     LibraryOptionsResultDtoFromJSON,
     LibraryOptionsResultDtoToJSON,
@@ -80,20 +83,20 @@ export interface GetMediaFoldersRequest {
     isHidden?: boolean | null;
 }
 
-export interface GetSimilarAlbums2Request {
+export interface GetSimilarAlbumsRequest {
     itemId: string;
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
-export interface GetSimilarArtists2Request {
+export interface GetSimilarArtistsRequest {
     itemId: string;
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
 export interface GetSimilarItemsRequest {
@@ -101,31 +104,31 @@ export interface GetSimilarItemsRequest {
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
-export interface GetSimilarMovies2Request {
+export interface GetSimilarMoviesRequest {
     itemId: string;
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
-export interface GetSimilarShows2Request {
+export interface GetSimilarShowsRequest {
     itemId: string;
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
-export interface GetSimilarTrailers2Request {
+export interface GetSimilarTrailersRequest {
     itemId: string;
     excludeArtistIds?: string | null;
     userId?: string | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
 export interface GetThemeMediaRequest {
@@ -522,9 +525,9 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarAlbums2Raw(requestParameters: GetSimilarAlbums2Request): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
+    async getSimilarAlbumsRaw(requestParameters: GetSimilarAlbumsRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarAlbums2.');
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarAlbums.');
         }
 
         const queryParameters: any = {};
@@ -541,7 +544,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -564,17 +567,17 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarAlbums2(requestParameters: GetSimilarAlbums2Request): Promise<BaseItemDtoQueryResult> {
-        const response = await this.getSimilarAlbums2Raw(requestParameters);
+    async getSimilarAlbums(requestParameters: GetSimilarAlbumsRequest): Promise<BaseItemDtoQueryResult> {
+        const response = await this.getSimilarAlbumsRaw(requestParameters);
         return await response.value();
     }
 
     /**
      * Gets similar items.
      */
-    async getSimilarArtists2Raw(requestParameters: GetSimilarArtists2Request): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
+    async getSimilarArtistsRaw(requestParameters: GetSimilarArtistsRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarArtists2.');
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarArtists.');
         }
 
         const queryParameters: any = {};
@@ -591,7 +594,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -614,8 +617,8 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarArtists2(requestParameters: GetSimilarArtists2Request): Promise<BaseItemDtoQueryResult> {
-        const response = await this.getSimilarArtists2Raw(requestParameters);
+    async getSimilarArtists(requestParameters: GetSimilarArtistsRequest): Promise<BaseItemDtoQueryResult> {
+        const response = await this.getSimilarArtistsRaw(requestParameters);
         return await response.value();
     }
 
@@ -641,7 +644,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -672,9 +675,9 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarMovies2Raw(requestParameters: GetSimilarMovies2Request): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
+    async getSimilarMoviesRaw(requestParameters: GetSimilarMoviesRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarMovies2.');
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarMovies.');
         }
 
         const queryParameters: any = {};
@@ -691,7 +694,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -714,17 +717,17 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarMovies2(requestParameters: GetSimilarMovies2Request): Promise<BaseItemDtoQueryResult> {
-        const response = await this.getSimilarMovies2Raw(requestParameters);
+    async getSimilarMovies(requestParameters: GetSimilarMoviesRequest): Promise<BaseItemDtoQueryResult> {
+        const response = await this.getSimilarMoviesRaw(requestParameters);
         return await response.value();
     }
 
     /**
      * Gets similar items.
      */
-    async getSimilarShows2Raw(requestParameters: GetSimilarShows2Request): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
+    async getSimilarShowsRaw(requestParameters: GetSimilarShowsRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarShows2.');
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarShows.');
         }
 
         const queryParameters: any = {};
@@ -741,7 +744,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -764,17 +767,17 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarShows2(requestParameters: GetSimilarShows2Request): Promise<BaseItemDtoQueryResult> {
-        const response = await this.getSimilarShows2Raw(requestParameters);
+    async getSimilarShows(requestParameters: GetSimilarShowsRequest): Promise<BaseItemDtoQueryResult> {
+        const response = await this.getSimilarShowsRaw(requestParameters);
         return await response.value();
     }
 
     /**
      * Gets similar items.
      */
-    async getSimilarTrailers2Raw(requestParameters: GetSimilarTrailers2Request): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
+    async getSimilarTrailersRaw(requestParameters: GetSimilarTrailersRequest): Promise<runtime.ApiResponse<BaseItemDtoQueryResult>> {
         if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
-            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarTrailers2.');
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getSimilarTrailers.');
         }
 
         const queryParameters: any = {};
@@ -791,7 +794,7 @@ export class LibraryApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -814,8 +817,8 @@ export class LibraryApi extends runtime.BaseAPI {
     /**
      * Gets similar items.
      */
-    async getSimilarTrailers2(requestParameters: GetSimilarTrailers2Request): Promise<BaseItemDtoQueryResult> {
-        const response = await this.getSimilarTrailers2Raw(requestParameters);
+    async getSimilarTrailers(requestParameters: GetSimilarTrailersRequest): Promise<BaseItemDtoQueryResult> {
+        const response = await this.getSimilarTrailersRaw(requestParameters);
         return await response.value();
     }
 

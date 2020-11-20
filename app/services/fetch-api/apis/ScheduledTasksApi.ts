@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    IScheduledTaskWorker,
-    IScheduledTaskWorkerFromJSON,
-    IScheduledTaskWorkerToJSON,
     ProblemDetails,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
@@ -93,7 +90,7 @@ export class ScheduledTasksApi extends runtime.BaseAPI {
     /**
      * Get tasks.
      */
-    async getTasksRaw(requestParameters: GetTasksRequest): Promise<runtime.ApiResponse<Array<IScheduledTaskWorker>>> {
+    async getTasksRaw(requestParameters: GetTasksRequest): Promise<runtime.ApiResponse<Array<TaskInfo>>> {
         const queryParameters: any = {};
 
         if (requestParameters.isHidden !== undefined) {
@@ -117,13 +114,13 @@ export class ScheduledTasksApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IScheduledTaskWorkerFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TaskInfoFromJSON));
     }
 
     /**
      * Get tasks.
      */
-    async getTasks(requestParameters: GetTasksRequest): Promise<Array<IScheduledTaskWorker>> {
+    async getTasks(requestParameters: GetTasksRequest): Promise<Array<TaskInfo>> {
         const response = await this.getTasksRaw(requestParameters);
         return await response.value();
     }

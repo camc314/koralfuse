@@ -35,6 +35,48 @@ import {
  */
 export interface SystemInfo {
     /**
+     * Gets or sets the local address.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    localAddress?: string | null;
+    /**
+     * Gets or sets the name of the server.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    serverName?: string | null;
+    /**
+     * Gets or sets the server version.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    version?: string | null;
+    /**
+     * Gets or sets the product name. This is the AssemblyProduct name.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    productName?: string | null;
+    /**
+     * Gets or sets the operating system.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    operatingSystem?: string | null;
+    /**
+     * Gets or sets the id.
+     * @type {string}
+     * @memberof SystemInfo
+     */
+    id?: string | null;
+    /**
+     * Gets or sets a value indicating whether the startup wizard is completed.
+     * @type {boolean}
+     * @memberof SystemInfo
+     */
+    startupWizardCompleted?: boolean | null;
+    /**
      * Gets or sets the display name of the operating system.
      * @type {string}
      * @memberof SystemInfo
@@ -148,48 +190,6 @@ export interface SystemInfo {
      * @memberof SystemInfo
      */
     systemArchitecture?: Architecture;
-    /**
-     * Gets or sets the local address.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    localAddress?: string | null;
-    /**
-     * Gets or sets the name of the server.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    serverName?: string | null;
-    /**
-     * Gets or sets the server version.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    version?: string | null;
-    /**
-     * Gets or sets the product name. This is the AssemblyProduct name.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    productName?: string | null;
-    /**
-     * Gets or sets the operating system.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    operatingSystem?: string | null;
-    /**
-     * Gets or sets the id.
-     * @type {string}
-     * @memberof SystemInfo
-     */
-    id?: string | null;
-    /**
-     * Gets or sets a value indicating whether the startup wizard is completed.
-     * @type {boolean}
-     * @memberof SystemInfo
-     */
-    startupWizardCompleted?: boolean;
 }
 
 export function SystemInfoFromJSON(json: any): SystemInfo {
@@ -202,6 +202,13 @@ export function SystemInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
+        'localAddress': !exists(json, 'LocalAddress') ? undefined : json['LocalAddress'],
+        'serverName': !exists(json, 'ServerName') ? undefined : json['ServerName'],
+        'version': !exists(json, 'Version') ? undefined : json['Version'],
+        'productName': !exists(json, 'ProductName') ? undefined : json['ProductName'],
+        'operatingSystem': !exists(json, 'OperatingSystem') ? undefined : json['OperatingSystem'],
+        'id': !exists(json, 'Id') ? undefined : json['Id'],
+        'startupWizardCompleted': !exists(json, 'StartupWizardCompleted') ? undefined : json['StartupWizardCompleted'],
         'operatingSystemDisplayName': !exists(json, 'OperatingSystemDisplayName') ? undefined : json['OperatingSystemDisplayName'],
         'packageName': !exists(json, 'PackageName') ? undefined : json['PackageName'],
         'hasPendingRestart': !exists(json, 'HasPendingRestart') ? undefined : json['HasPendingRestart'],
@@ -221,13 +228,6 @@ export function SystemInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'hasUpdateAvailable': !exists(json, 'HasUpdateAvailable') ? undefined : json['HasUpdateAvailable'],
         'encoderLocation': !exists(json, 'EncoderLocation') ? undefined : FFmpegLocationFromJSON(json['EncoderLocation']),
         'systemArchitecture': !exists(json, 'SystemArchitecture') ? undefined : ArchitectureFromJSON(json['SystemArchitecture']),
-        'localAddress': !exists(json, 'LocalAddress') ? undefined : json['LocalAddress'],
-        'serverName': !exists(json, 'ServerName') ? undefined : json['ServerName'],
-        'version': !exists(json, 'Version') ? undefined : json['Version'],
-        'productName': !exists(json, 'ProductName') ? undefined : json['ProductName'],
-        'operatingSystem': !exists(json, 'OperatingSystem') ? undefined : json['OperatingSystem'],
-        'id': !exists(json, 'Id') ? undefined : json['Id'],
-        'startupWizardCompleted': !exists(json, 'StartupWizardCompleted') ? undefined : json['StartupWizardCompleted'],
     };
 }
 
@@ -240,6 +240,13 @@ export function SystemInfoToJSON(value?: SystemInfo | null): any {
     }
     return {
         
+        'LocalAddress': value.localAddress,
+        'ServerName': value.serverName,
+        'Version': value.version,
+        'ProductName': value.productName,
+        'OperatingSystem': value.operatingSystem,
+        'Id': value.id,
+        'StartupWizardCompleted': value.startupWizardCompleted,
         'OperatingSystemDisplayName': value.operatingSystemDisplayName,
         'PackageName': value.packageName,
         'HasPendingRestart': value.hasPendingRestart,
@@ -259,13 +266,6 @@ export function SystemInfoToJSON(value?: SystemInfo | null): any {
         'HasUpdateAvailable': value.hasUpdateAvailable,
         'EncoderLocation': FFmpegLocationToJSON(value.encoderLocation),
         'SystemArchitecture': ArchitectureToJSON(value.systemArchitecture),
-        'LocalAddress': value.localAddress,
-        'ServerName': value.serverName,
-        'Version': value.version,
-        'ProductName': value.productName,
-        'OperatingSystem': value.operatingSystem,
-        'Id': value.id,
-        'StartupWizardCompleted': value.startupWizardCompleted,
     };
 }
 

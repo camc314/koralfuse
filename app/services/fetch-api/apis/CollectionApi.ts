@@ -22,7 +22,7 @@ import {
 
 export interface AddToCollectionRequest {
     collectionId: string;
-    itemIds: string;
+    ids: string;
 }
 
 export interface CreateCollectionRequest {
@@ -34,7 +34,7 @@ export interface CreateCollectionRequest {
 
 export interface RemoveFromCollectionRequest {
     collectionId: string;
-    itemIds: string;
+    ids: string;
 }
 
 /**
@@ -50,14 +50,14 @@ export class CollectionApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('collectionId','Required parameter requestParameters.collectionId was null or undefined when calling addToCollection.');
         }
 
-        if (requestParameters.itemIds === null || requestParameters.itemIds === undefined) {
-            throw new runtime.RequiredError('itemIds','Required parameter requestParameters.itemIds was null or undefined when calling addToCollection.');
+        if (requestParameters.ids === null || requestParameters.ids === undefined) {
+            throw new runtime.RequiredError('ids','Required parameter requestParameters.ids was null or undefined when calling addToCollection.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.itemIds !== undefined) {
-            queryParameters['itemIds'] = requestParameters.itemIds;
+        if (requestParameters.ids !== undefined) {
+            queryParameters['ids'] = requestParameters.ids;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -137,14 +137,14 @@ export class CollectionApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('collectionId','Required parameter requestParameters.collectionId was null or undefined when calling removeFromCollection.');
         }
 
-        if (requestParameters.itemIds === null || requestParameters.itemIds === undefined) {
-            throw new runtime.RequiredError('itemIds','Required parameter requestParameters.itemIds was null or undefined when calling removeFromCollection.');
+        if (requestParameters.ids === null || requestParameters.ids === undefined) {
+            throw new runtime.RequiredError('ids','Required parameter requestParameters.ids was null or undefined when calling removeFromCollection.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.itemIds !== undefined) {
-            queryParameters['itemIds'] = requestParameters.itemIds;
+        if (requestParameters.ids !== undefined) {
+            queryParameters['ids'] = requestParameters.ids;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

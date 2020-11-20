@@ -21,6 +21,12 @@ import {
     ChannelFeatures,
     ChannelFeaturesFromJSON,
     ChannelFeaturesToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
+    ItemFilter,
+    ItemFilterFromJSON,
+    ItemFilterToJSON,
 } from '../models';
 
 export interface GetChannelFeaturesRequest {
@@ -34,9 +40,9 @@ export interface GetChannelItemsRequest {
     startIndex?: number | null;
     limit?: number | null;
     sortOrder?: string | null;
-    filters?: string | null;
+    filters?: Array<ItemFilter> | null;
     sortBy?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
 }
 
 export interface GetChannelsRequest {
@@ -52,8 +58,8 @@ export interface GetLatestChannelItemsRequest {
     userId?: string | null;
     startIndex?: number | null;
     limit?: number | null;
-    filters?: string | null;
-    fields?: string | null;
+    filters?: Array<ItemFilter> | null;
+    fields?: Array<ItemFields> | null;
     channelIds?: string | null;
 }
 
@@ -156,7 +162,7 @@ export class ChannelsApi extends runtime.BaseAPI {
             queryParameters['sortOrder'] = requestParameters.sortOrder;
         }
 
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
@@ -164,7 +170,7 @@ export class ChannelsApi extends runtime.BaseAPI {
             queryParameters['sortBy'] = requestParameters.sortBy;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -264,11 +270,11 @@ export class ChannelsApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.filters !== undefined) {
+        if (requestParameters.filters) {
             queryParameters['filters'] = requestParameters.filters;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 

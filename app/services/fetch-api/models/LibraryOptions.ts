@@ -56,12 +56,6 @@ export interface LibraryOptions {
     extractChapterImagesDuringLibraryScan?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof LibraryOptions
-     */
-    downloadImagesInAdvance?: boolean;
-    /**
-     * 
      * @type {Array<MediaPathInfo>}
      * @memberof LibraryOptions
      */
@@ -78,12 +72,6 @@ export interface LibraryOptions {
      * @memberof LibraryOptions
      */
     enableInternetProviders?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LibraryOptions
-     */
-    importMissingEpisodes?: boolean;
     /**
      * 
      * @type {boolean}
@@ -208,11 +196,9 @@ export function LibraryOptionsFromJSONTyped(json: any, ignoreDiscriminator: bool
         'enableRealtimeMonitor': !exists(json, 'EnableRealtimeMonitor') ? undefined : json['EnableRealtimeMonitor'],
         'enableChapterImageExtraction': !exists(json, 'EnableChapterImageExtraction') ? undefined : json['EnableChapterImageExtraction'],
         'extractChapterImagesDuringLibraryScan': !exists(json, 'ExtractChapterImagesDuringLibraryScan') ? undefined : json['ExtractChapterImagesDuringLibraryScan'],
-        'downloadImagesInAdvance': !exists(json, 'DownloadImagesInAdvance') ? undefined : json['DownloadImagesInAdvance'],
         'pathInfos': !exists(json, 'PathInfos') ? undefined : (json['PathInfos'] === null ? null : (json['PathInfos'] as Array<any>).map(MediaPathInfoFromJSON)),
         'saveLocalMetadata': !exists(json, 'SaveLocalMetadata') ? undefined : json['SaveLocalMetadata'],
         'enableInternetProviders': !exists(json, 'EnableInternetProviders') ? undefined : json['EnableInternetProviders'],
-        'importMissingEpisodes': !exists(json, 'ImportMissingEpisodes') ? undefined : json['ImportMissingEpisodes'],
         'enableAutomaticSeriesGrouping': !exists(json, 'EnableAutomaticSeriesGrouping') ? undefined : json['EnableAutomaticSeriesGrouping'],
         'enableEmbeddedTitles': !exists(json, 'EnableEmbeddedTitles') ? undefined : json['EnableEmbeddedTitles'],
         'enableEmbeddedEpisodeInfos': !exists(json, 'EnableEmbeddedEpisodeInfos') ? undefined : json['EnableEmbeddedEpisodeInfos'],
@@ -247,11 +233,9 @@ export function LibraryOptionsToJSON(value?: LibraryOptions | null): any {
         'EnableRealtimeMonitor': value.enableRealtimeMonitor,
         'EnableChapterImageExtraction': value.enableChapterImageExtraction,
         'ExtractChapterImagesDuringLibraryScan': value.extractChapterImagesDuringLibraryScan,
-        'DownloadImagesInAdvance': value.downloadImagesInAdvance,
         'PathInfos': value.pathInfos === undefined ? undefined : (value.pathInfos === null ? null : (value.pathInfos as Array<any>).map(MediaPathInfoToJSON)),
         'SaveLocalMetadata': value.saveLocalMetadata,
         'EnableInternetProviders': value.enableInternetProviders,
-        'ImportMissingEpisodes': value.importMissingEpisodes,
         'EnableAutomaticSeriesGrouping': value.enableAutomaticSeriesGrouping,
         'EnableEmbeddedTitles': value.enableEmbeddedTitles,
         'EnableEmbeddedEpisodeInfos': value.enableEmbeddedEpisodeInfos,

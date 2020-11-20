@@ -53,7 +53,12 @@ export enum GeneralCommandType {
     Guide = 'Guide',
     ToggleStats = 'ToggleStats',
     PlayMediaSource = 'PlayMediaSource',
-    PlayTrailers = 'PlayTrailers'
+    PlayTrailers = 'PlayTrailers',
+    SetShuffleQueue = 'SetShuffleQueue',
+    PlayState = 'PlayState',
+    PlayNext = 'PlayNext',
+    ToggleOsdMenu = 'ToggleOsdMenu',
+    Play = 'Play'
 }
 
 export function GeneralCommandTypeFromJSON(json: any): GeneralCommandType {

@@ -15,6 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     RecommendationDto,
     RecommendationDtoFromJSON,
     RecommendationDtoToJSON,
@@ -23,7 +26,7 @@ import {
 export interface GetMovieRecommendationsRequest {
     userId?: string | null;
     parentId?: string | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     categoryLimit?: number;
     itemLimit?: number;
 }
@@ -47,7 +50,7 @@ export class MoviesApi extends runtime.BaseAPI {
             queryParameters['parentId'] = requestParameters.parentId;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 

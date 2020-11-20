@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface BookInfo {
     /**
-     * 
-     * @type {string}
-     * @memberof BookInfo
-     */
-    seriesName?: string | null;
-    /**
      * Gets or sets the name.
      * @type {string}
      * @memberof BookInfo
@@ -85,6 +79,12 @@ export interface BookInfo {
      * @memberof BookInfo
      */
     isAutomated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookInfo
+     */
+    seriesName?: string | null;
 }
 
 export function BookInfoFromJSON(json: any): BookInfo {
@@ -97,7 +97,6 @@ export function BookInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'seriesName': !exists(json, 'SeriesName') ? undefined : json['SeriesName'],
         'name': !exists(json, 'Name') ? undefined : json['Name'],
         'path': !exists(json, 'Path') ? undefined : json['Path'],
         'metadataLanguage': !exists(json, 'MetadataLanguage') ? undefined : json['MetadataLanguage'],
@@ -108,6 +107,7 @@ export function BookInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'parentIndexNumber': !exists(json, 'ParentIndexNumber') ? undefined : json['ParentIndexNumber'],
         'premiereDate': !exists(json, 'PremiereDate') ? undefined : (json['PremiereDate'] === null ? null : new Date(json['PremiereDate'])),
         'isAutomated': !exists(json, 'IsAutomated') ? undefined : json['IsAutomated'],
+        'seriesName': !exists(json, 'SeriesName') ? undefined : json['SeriesName'],
     };
 }
 
@@ -120,7 +120,6 @@ export function BookInfoToJSON(value?: BookInfo | null): any {
     }
     return {
         
-        'SeriesName': value.seriesName,
         'Name': value.name,
         'Path': value.path,
         'MetadataLanguage': value.metadataLanguage,
@@ -131,6 +130,7 @@ export function BookInfoToJSON(value?: BookInfo | null): any {
         'ParentIndexNumber': value.parentIndexNumber,
         'PremiereDate': value.premiereDate === undefined ? undefined : (value.premiereDate === null ? null : value.premiereDate.toISOString()),
         'IsAutomated': value.isAutomated,
+        'SeriesName': value.seriesName,
     };
 }
 

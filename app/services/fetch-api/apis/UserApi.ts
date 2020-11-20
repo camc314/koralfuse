@@ -24,6 +24,9 @@ import {
     CreateUserByName,
     CreateUserByNameFromJSON,
     CreateUserByNameToJSON,
+    ForgotPasswordDto,
+    ForgotPasswordDtoFromJSON,
+    ForgotPasswordDtoToJSON,
     ForgotPasswordResult,
     ForgotPasswordResultFromJSON,
     ForgotPasswordResultToJSON,
@@ -76,7 +79,7 @@ export interface DeleteUserRequest {
 }
 
 export interface ForgotPasswordRequest {
-    body?: string | null;
+    forgotPasswordDto: ForgotPasswordDto;
 }
 
 export interface ForgotPasswordPinRequest {
@@ -312,6 +315,10 @@ export class UserApi extends runtime.BaseAPI {
      * Initiates the forgot password process for a local user.
      */
     async forgotPasswordRaw(requestParameters: ForgotPasswordRequest): Promise<runtime.ApiResponse<ForgotPasswordResult>> {
+        if (requestParameters.forgotPasswordDto === null || requestParameters.forgotPasswordDto === undefined) {
+            throw new runtime.RequiredError('forgotPasswordDto','Required parameter requestParameters.forgotPasswordDto was null or undefined when calling forgotPassword.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -327,7 +334,7 @@ export class UserApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: ForgotPasswordDtoToJSON(requestParameters.forgotPasswordDto),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ForgotPasswordResultFromJSON(jsonValue));
@@ -371,6 +378,36 @@ export class UserApi extends runtime.BaseAPI {
      */
     async forgotPasswordPin(requestParameters: ForgotPasswordPinRequest): Promise<PinRedeemResult> {
         const response = await this.forgotPasswordPinRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Gets the user based on auth token.
+     */
+    async getCurrentUserRaw(): Promise<runtime.ApiResponse<UserDto>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Emby-Authorization"] = this.configuration.apiKey("X-Emby-Authorization"); // CustomAuthentication authentication
+        }
+
+        const response = await this.request({
+            path: `/Users/Me`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoFromJSON(jsonValue));
+    }
+
+    /**
+     * Gets the user based on auth token.
+     */
+    async getCurrentUser(): Promise<UserDto> {
+        const response = await this.getCurrentUserRaw();
         return await response.value();
     }
 

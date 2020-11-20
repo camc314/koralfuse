@@ -27,12 +27,6 @@ import {
  */
 export interface ArtistInfo {
     /**
-     * 
-     * @type {Array<SongInfo>}
-     * @memberof ArtistInfo
-     */
-    songInfos?: Array<SongInfo> | null;
-    /**
      * Gets or sets the name.
      * @type {string}
      * @memberof ArtistInfo
@@ -92,6 +86,12 @@ export interface ArtistInfo {
      * @memberof ArtistInfo
      */
     isAutomated?: boolean;
+    /**
+     * 
+     * @type {Array<SongInfo>}
+     * @memberof ArtistInfo
+     */
+    songInfos?: Array<SongInfo> | null;
 }
 
 export function ArtistInfoFromJSON(json: any): ArtistInfo {
@@ -104,7 +104,6 @@ export function ArtistInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'songInfos': !exists(json, 'SongInfos') ? undefined : (json['SongInfos'] === null ? null : (json['SongInfos'] as Array<any>).map(SongInfoFromJSON)),
         'name': !exists(json, 'Name') ? undefined : json['Name'],
         'path': !exists(json, 'Path') ? undefined : json['Path'],
         'metadataLanguage': !exists(json, 'MetadataLanguage') ? undefined : json['MetadataLanguage'],
@@ -115,6 +114,7 @@ export function ArtistInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'parentIndexNumber': !exists(json, 'ParentIndexNumber') ? undefined : json['ParentIndexNumber'],
         'premiereDate': !exists(json, 'PremiereDate') ? undefined : (json['PremiereDate'] === null ? null : new Date(json['PremiereDate'])),
         'isAutomated': !exists(json, 'IsAutomated') ? undefined : json['IsAutomated'],
+        'songInfos': !exists(json, 'SongInfos') ? undefined : (json['SongInfos'] === null ? null : (json['SongInfos'] as Array<any>).map(SongInfoFromJSON)),
     };
 }
 
@@ -127,7 +127,6 @@ export function ArtistInfoToJSON(value?: ArtistInfo | null): any {
     }
     return {
         
-        'SongInfos': value.songInfos === undefined ? undefined : (value.songInfos === null ? null : (value.songInfos as Array<any>).map(SongInfoToJSON)),
         'Name': value.name,
         'Path': value.path,
         'MetadataLanguage': value.metadataLanguage,
@@ -138,6 +137,7 @@ export function ArtistInfoToJSON(value?: ArtistInfo | null): any {
         'ParentIndexNumber': value.parentIndexNumber,
         'PremiereDate': value.premiereDate === undefined ? undefined : (value.premiereDate === null ? null : value.premiereDate.toISOString()),
         'IsAutomated': value.isAutomated,
+        'SongInfos': value.songInfos === undefined ? undefined : (value.songInfos === null ? null : (value.songInfos as Array<any>).map(SongInfoToJSON)),
     };
 }
 

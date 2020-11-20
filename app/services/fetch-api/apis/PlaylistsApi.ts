@@ -21,6 +21,12 @@ import {
     CreatePlaylistDto,
     CreatePlaylistDtoFromJSON,
     CreatePlaylistDtoToJSON,
+    ImageType,
+    ImageTypeFromJSON,
+    ImageTypeToJSON,
+    ItemFields,
+    ItemFieldsFromJSON,
+    ItemFieldsToJSON,
     PlaylistCreationResult,
     PlaylistCreationResultFromJSON,
     PlaylistCreationResultToJSON,
@@ -41,11 +47,11 @@ export interface GetPlaylistItemsRequest {
     userId: string;
     startIndex?: number | null;
     limit?: number | null;
-    fields?: string | null;
+    fields?: Array<ItemFields> | null;
     enableImages?: boolean | null;
     enableUserData?: boolean | null;
     imageTypeLimit?: number | null;
-    enableImageTypes?: string | null;
+    enableImageTypes?: Array<ImageType> | null;
 }
 
 export interface MoveItemRequest {
@@ -168,7 +174,7 @@ export class PlaylistsApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.fields !== undefined) {
+        if (requestParameters.fields) {
             queryParameters['fields'] = requestParameters.fields;
         }
 
@@ -184,7 +190,7 @@ export class PlaylistsApi extends runtime.BaseAPI {
             queryParameters['imageTypeLimit'] = requestParameters.imageTypeLimit;
         }
 
-        if (requestParameters.enableImageTypes !== undefined) {
+        if (requestParameters.enableImageTypes) {
             queryParameters['enableImageTypes'] = requestParameters.enableImageTypes;
         }
 

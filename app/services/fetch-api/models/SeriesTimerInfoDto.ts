@@ -39,78 +39,6 @@ import {
  */
 export interface SeriesTimerInfoDto {
     /**
-     * Gets or sets a value indicating whether [record any time].
-     * @type {boolean}
-     * @memberof SeriesTimerInfoDto
-     */
-    recordAnyTime?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SeriesTimerInfoDto
-     */
-    skipEpisodesInLibrary?: boolean;
-    /**
-     * Gets or sets a value indicating whether [record any channel].
-     * @type {boolean}
-     * @memberof SeriesTimerInfoDto
-     */
-    recordAnyChannel?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof SeriesTimerInfoDto
-     */
-    keepUpTo?: number;
-    /**
-     * Gets or sets a value indicating whether [record new only].
-     * @type {boolean}
-     * @memberof SeriesTimerInfoDto
-     */
-    recordNewOnly?: boolean;
-    /**
-     * Gets or sets the days.
-     * @type {Array<DayOfWeek>}
-     * @memberof SeriesTimerInfoDto
-     */
-    days?: Array<DayOfWeek> | null;
-    /**
-     * 
-     * @type {DayPattern}
-     * @memberof SeriesTimerInfoDto
-     */
-    dayPattern?: DayPattern;
-    /**
-     * 
-     * @type {BaseItemDtoImageTags}
-     * @memberof SeriesTimerInfoDto
-     */
-    imageTags?: BaseItemDtoImageTags | null;
-    /**
-     * Gets or sets the parent thumb item id.
-     * @type {string}
-     * @memberof SeriesTimerInfoDto
-     */
-    parentThumbItemId?: string | null;
-    /**
-     * Gets or sets the parent thumb image tag.
-     * @type {string}
-     * @memberof SeriesTimerInfoDto
-     */
-    parentThumbImageTag?: string | null;
-    /**
-     * Gets or sets the parent primary image item identifier.
-     * @type {string}
-     * @memberof SeriesTimerInfoDto
-     */
-    parentPrimaryImageItemId?: string | null;
-    /**
-     * Gets or sets the parent primary image tag.
-     * @type {string}
-     * @memberof SeriesTimerInfoDto
-     */
-    parentPrimaryImageTag?: string | null;
-    /**
      * Id of the recording.
      * @type {string}
      * @memberof SeriesTimerInfoDto
@@ -248,6 +176,78 @@ export interface SeriesTimerInfoDto {
      * @memberof SeriesTimerInfoDto
      */
     keepUntil?: KeepUntil;
+    /**
+     * Gets or sets a value indicating whether [record any time].
+     * @type {boolean}
+     * @memberof SeriesTimerInfoDto
+     */
+    recordAnyTime?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SeriesTimerInfoDto
+     */
+    skipEpisodesInLibrary?: boolean;
+    /**
+     * Gets or sets a value indicating whether [record any channel].
+     * @type {boolean}
+     * @memberof SeriesTimerInfoDto
+     */
+    recordAnyChannel?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof SeriesTimerInfoDto
+     */
+    keepUpTo?: number;
+    /**
+     * Gets or sets a value indicating whether [record new only].
+     * @type {boolean}
+     * @memberof SeriesTimerInfoDto
+     */
+    recordNewOnly?: boolean;
+    /**
+     * Gets or sets the days.
+     * @type {Array<DayOfWeek>}
+     * @memberof SeriesTimerInfoDto
+     */
+    days?: Array<DayOfWeek> | null;
+    /**
+     * 
+     * @type {DayPattern}
+     * @memberof SeriesTimerInfoDto
+     */
+    dayPattern?: DayPattern;
+    /**
+     * 
+     * @type {BaseItemDtoImageTags}
+     * @memberof SeriesTimerInfoDto
+     */
+    imageTags?: BaseItemDtoImageTags | null;
+    /**
+     * Gets or sets the parent thumb item id.
+     * @type {string}
+     * @memberof SeriesTimerInfoDto
+     */
+    parentThumbItemId?: string | null;
+    /**
+     * Gets or sets the parent thumb image tag.
+     * @type {string}
+     * @memberof SeriesTimerInfoDto
+     */
+    parentThumbImageTag?: string | null;
+    /**
+     * Gets or sets the parent primary image item identifier.
+     * @type {string}
+     * @memberof SeriesTimerInfoDto
+     */
+    parentPrimaryImageItemId?: string | null;
+    /**
+     * Gets or sets the parent primary image tag.
+     * @type {string}
+     * @memberof SeriesTimerInfoDto
+     */
+    parentPrimaryImageTag?: string | null;
 }
 
 export function SeriesTimerInfoDtoFromJSON(json: any): SeriesTimerInfoDto {
@@ -260,18 +260,6 @@ export function SeriesTimerInfoDtoFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'recordAnyTime': !exists(json, 'RecordAnyTime') ? undefined : json['RecordAnyTime'],
-        'skipEpisodesInLibrary': !exists(json, 'SkipEpisodesInLibrary') ? undefined : json['SkipEpisodesInLibrary'],
-        'recordAnyChannel': !exists(json, 'RecordAnyChannel') ? undefined : json['RecordAnyChannel'],
-        'keepUpTo': !exists(json, 'KeepUpTo') ? undefined : json['KeepUpTo'],
-        'recordNewOnly': !exists(json, 'RecordNewOnly') ? undefined : json['RecordNewOnly'],
-        'days': !exists(json, 'Days') ? undefined : (json['Days'] === null ? null : (json['Days'] as Array<any>).map(DayOfWeekFromJSON)),
-        'dayPattern': !exists(json, 'DayPattern') ? undefined : DayPatternFromJSON(json['DayPattern']),
-        'imageTags': !exists(json, 'ImageTags') ? undefined : BaseItemDtoImageTagsFromJSON(json['ImageTags']),
-        'parentThumbItemId': !exists(json, 'ParentThumbItemId') ? undefined : json['ParentThumbItemId'],
-        'parentThumbImageTag': !exists(json, 'ParentThumbImageTag') ? undefined : json['ParentThumbImageTag'],
-        'parentPrimaryImageItemId': !exists(json, 'ParentPrimaryImageItemId') ? undefined : json['ParentPrimaryImageItemId'],
-        'parentPrimaryImageTag': !exists(json, 'ParentPrimaryImageTag') ? undefined : json['ParentPrimaryImageTag'],
         'id': !exists(json, 'Id') ? undefined : json['Id'],
         'type': !exists(json, 'Type') ? undefined : json['Type'],
         'serverId': !exists(json, 'ServerId') ? undefined : json['ServerId'],
@@ -295,6 +283,18 @@ export function SeriesTimerInfoDtoFromJSONTyped(json: any, ignoreDiscriminator: 
         'parentBackdropImageTags': !exists(json, 'ParentBackdropImageTags') ? undefined : json['ParentBackdropImageTags'],
         'isPostPaddingRequired': !exists(json, 'IsPostPaddingRequired') ? undefined : json['IsPostPaddingRequired'],
         'keepUntil': !exists(json, 'KeepUntil') ? undefined : KeepUntilFromJSON(json['KeepUntil']),
+        'recordAnyTime': !exists(json, 'RecordAnyTime') ? undefined : json['RecordAnyTime'],
+        'skipEpisodesInLibrary': !exists(json, 'SkipEpisodesInLibrary') ? undefined : json['SkipEpisodesInLibrary'],
+        'recordAnyChannel': !exists(json, 'RecordAnyChannel') ? undefined : json['RecordAnyChannel'],
+        'keepUpTo': !exists(json, 'KeepUpTo') ? undefined : json['KeepUpTo'],
+        'recordNewOnly': !exists(json, 'RecordNewOnly') ? undefined : json['RecordNewOnly'],
+        'days': !exists(json, 'Days') ? undefined : (json['Days'] === null ? null : (json['Days'] as Array<any>).map(DayOfWeekFromJSON)),
+        'dayPattern': !exists(json, 'DayPattern') ? undefined : DayPatternFromJSON(json['DayPattern']),
+        'imageTags': !exists(json, 'ImageTags') ? undefined : BaseItemDtoImageTagsFromJSON(json['ImageTags']),
+        'parentThumbItemId': !exists(json, 'ParentThumbItemId') ? undefined : json['ParentThumbItemId'],
+        'parentThumbImageTag': !exists(json, 'ParentThumbImageTag') ? undefined : json['ParentThumbImageTag'],
+        'parentPrimaryImageItemId': !exists(json, 'ParentPrimaryImageItemId') ? undefined : json['ParentPrimaryImageItemId'],
+        'parentPrimaryImageTag': !exists(json, 'ParentPrimaryImageTag') ? undefined : json['ParentPrimaryImageTag'],
     };
 }
 
@@ -307,18 +307,6 @@ export function SeriesTimerInfoDtoToJSON(value?: SeriesTimerInfoDto | null): any
     }
     return {
         
-        'RecordAnyTime': value.recordAnyTime,
-        'SkipEpisodesInLibrary': value.skipEpisodesInLibrary,
-        'RecordAnyChannel': value.recordAnyChannel,
-        'KeepUpTo': value.keepUpTo,
-        'RecordNewOnly': value.recordNewOnly,
-        'Days': value.days === undefined ? undefined : (value.days === null ? null : (value.days as Array<any>).map(DayOfWeekToJSON)),
-        'DayPattern': DayPatternToJSON(value.dayPattern),
-        'ImageTags': BaseItemDtoImageTagsToJSON(value.imageTags),
-        'ParentThumbItemId': value.parentThumbItemId,
-        'ParentThumbImageTag': value.parentThumbImageTag,
-        'ParentPrimaryImageItemId': value.parentPrimaryImageItemId,
-        'ParentPrimaryImageTag': value.parentPrimaryImageTag,
         'Id': value.id,
         'Type': value.type,
         'ServerId': value.serverId,
@@ -342,6 +330,18 @@ export function SeriesTimerInfoDtoToJSON(value?: SeriesTimerInfoDto | null): any
         'ParentBackdropImageTags': value.parentBackdropImageTags,
         'IsPostPaddingRequired': value.isPostPaddingRequired,
         'KeepUntil': KeepUntilToJSON(value.keepUntil),
+        'RecordAnyTime': value.recordAnyTime,
+        'SkipEpisodesInLibrary': value.skipEpisodesInLibrary,
+        'RecordAnyChannel': value.recordAnyChannel,
+        'KeepUpTo': value.keepUpTo,
+        'RecordNewOnly': value.recordNewOnly,
+        'Days': value.days === undefined ? undefined : (value.days === null ? null : (value.days as Array<any>).map(DayOfWeekToJSON)),
+        'DayPattern': DayPatternToJSON(value.dayPattern),
+        'ImageTags': BaseItemDtoImageTagsToJSON(value.imageTags),
+        'ParentThumbItemId': value.parentThumbItemId,
+        'ParentThumbImageTag': value.parentThumbImageTag,
+        'ParentPrimaryImageItemId': value.parentPrimaryImageItemId,
+        'ParentPrimaryImageTag': value.parentPrimaryImageTag,
     };
 }
 

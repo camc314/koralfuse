@@ -45,6 +45,7 @@ export interface GetHlsAudioSegmentRequest {
     breakOnNonKeyFrames?: boolean | null;
     audioSampleRate?: number | null;
     maxAudioBitDepth?: number | null;
+    maxStreamingBitrate?: number | null;
     audioBitRate?: number | null;
     audioChannels?: number | null;
     maxAudioChannels?: number | null;
@@ -150,6 +151,7 @@ export interface GetMasterHlsAudioPlaylistRequest {
     breakOnNonKeyFrames?: boolean | null;
     audioSampleRate?: number | null;
     maxAudioBitDepth?: number | null;
+    maxStreamingBitrate?: number | null;
     audioBitRate?: number | null;
     audioChannels?: number | null;
     maxAudioChannels?: number | null;
@@ -254,6 +256,7 @@ export interface GetVariantHlsAudioPlaylistRequest {
     breakOnNonKeyFrames?: boolean | null;
     audioSampleRate?: number | null;
     maxAudioBitDepth?: number | null;
+    maxStreamingBitrate?: number | null;
     audioBitRate?: number | null;
     audioChannels?: number | null;
     maxAudioChannels?: number | null;
@@ -356,6 +359,7 @@ export interface HeadMasterHlsAudioPlaylistRequest {
     breakOnNonKeyFrames?: boolean | null;
     audioSampleRate?: number | null;
     maxAudioBitDepth?: number | null;
+    maxStreamingBitrate?: number | null;
     audioBitRate?: number | null;
     audioChannels?: number | null;
     maxAudioChannels?: number | null;
@@ -534,6 +538,10 @@ export class DynamicHlsApi extends runtime.BaseAPI {
 
         if (requestParameters.maxAudioBitDepth !== undefined) {
             queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
+        }
+
+        if (requestParameters.maxStreamingBitrate !== undefined) {
+            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
         }
 
         if (requestParameters.audioBitRate !== undefined) {
@@ -996,6 +1004,10 @@ export class DynamicHlsApi extends runtime.BaseAPI {
             queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
         }
 
+        if (requestParameters.maxStreamingBitrate !== undefined) {
+            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
+        }
+
         if (requestParameters.audioBitRate !== undefined) {
             queryParameters['audioBitRate'] = requestParameters.audioBitRate;
         }
@@ -1452,6 +1464,10 @@ export class DynamicHlsApi extends runtime.BaseAPI {
             queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
         }
 
+        if (requestParameters.maxStreamingBitrate !== undefined) {
+            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
+        }
+
         if (requestParameters.audioBitRate !== undefined) {
             queryParameters['audioBitRate'] = requestParameters.audioBitRate;
         }
@@ -1898,6 +1914,10 @@ export class DynamicHlsApi extends runtime.BaseAPI {
 
         if (requestParameters.maxAudioBitDepth !== undefined) {
             queryParameters['maxAudioBitDepth'] = requestParameters.maxAudioBitDepth;
+        }
+
+        if (requestParameters.maxStreamingBitrate !== undefined) {
+            queryParameters['maxStreamingBitrate'] = requestParameters.maxStreamingBitrate;
         }
 
         if (requestParameters.audioBitRate !== undefined) {
