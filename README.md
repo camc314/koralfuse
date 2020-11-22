@@ -1,3 +1,6 @@
+<p align="center">
+  <img height=100 src="./assets/icon.png"/>
+</p>
 <h1 align="center">Koralfuse</h1>
 <h3 align="center">A Client for the <a href="https://jellyfin.org">Jellyfin Project</a></h3>
 
