@@ -1,12 +1,13 @@
 import React, { createRef, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
-import { AVPlaybackStatus, Video } from 'expo-av';
+import { AVPlaybackStatus, Video, Audio } from 'expo-av';
 import { api } from '../../services/api';
 import { IOSPlaybackProfile } from '../../services/playback-profiles/playbackProfile';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/home';
 import { BaseItemDto, PlaybackInfoResponse } from '../../services/fetch-api';
 import { LoadingComponent } from '../../components/LoadingComponent';
+import { INTERRUPTION_MODE_IOS_DO_NOT_MIX } from 'expo-av/build/Audio';
 
 type Props = StackScreenProps<RootStackParamList, 'Play'>;
 
@@ -71,6 +72,7 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
       userId: api.userInfo.user?.id,
       ids: route.params.itemId
     }).then((result) => {
+      console.log(result);
       if (result.items) {
         setItemInfo(result.items[0]);
       }
@@ -78,6 +80,10 @@ export default function VideoPlayer({ route }: Props): JSX.Element {
   };
 
   useEffect(() => {
+    Audio.setAudioModeAsync({
+      interruptionModeIOS: INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true
+    });
     getItemInfo();
     getVideoUrl();
     return function () {
