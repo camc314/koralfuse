@@ -15,8 +15,8 @@ import {
 
 export const IOSPlaybackProfile = {
   deviceProfile: {
-    maxStreamingBitrate: 12000000000,
-    maxStaticBitrate: 120000000000,
+    maxStreamingBitrate: 120000000,
+    maxStaticBitrate: 100000000,
     musicStreamingTranscodingBitrate: 192000,
     responseProfiles: [
       {
